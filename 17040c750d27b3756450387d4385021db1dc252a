@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "947da77a_4cedaa46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1020681
+      },
+      "writtenOn": "2022-11-04T14:37:15Z",
+      "side": 1,
+      "message": "xD",
+      "revId": "17040c750d27b3756450387d4385021db1dc252a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7992a65_1f3cea54",
+        "filename": "emilsfil.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1020681
+      },
+      "writtenOn": "2022-11-04T14:37:15Z",
+      "side": 1,
+      "message": "haha du skojar med mig!",
+      "revId": "17040c750d27b3756450387d4385021db1dc252a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
