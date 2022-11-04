@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89dce228_3e498cf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1020681
+      },
+      "writtenOn": "2022-11-04T14:36:26Z",
+      "side": 1,
+      "message": "donkey",
+      "revId": "10da64de852e319a5cf1b5646b4064d17bcf38f8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87a1e291_33ea5171",
@@ -14,6 +31,24 @@
       "writtenOn": "2022-11-04T14:35:36Z",
       "side": 1,
       "message": "hej?",
+      "revId": "10da64de852e319a5cf1b5646b4064d17bcf38f8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3261cc3b_8d71530f",
+        "filename": "test.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1020681
+      },
+      "writtenOn": "2022-11-04T14:36:26Z",
+      "side": 1,
+      "message": "bro stfu",
+      "parentUuid": "87a1e291_33ea5171",
       "revId": "10da64de852e319a5cf1b5646b4064d17bcf38f8",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
