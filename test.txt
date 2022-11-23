@@ -1,3 +1,0 @@
-hello world
-hejdå
-test commit 3
