@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.LoginActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotationY="0"
+        android:scaleX="1.17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/startingxifront"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/loginDatabase"
+        android:layout_width="146dp"
+        android:layout_height="60dp"
+        android:text="Login"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="510dp" />
+
+    <Button
+        android:id="@+id/loginDiscord"
+        android:layout_width="146dp"
+        android:layout_height="53dp"
+        android:text="Discord"
+        android:background="#7289d9"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="430dp"
+
+
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

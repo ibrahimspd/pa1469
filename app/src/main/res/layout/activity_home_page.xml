@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.HomePageActivity">
+
+
+
+    <Button
+        android:id="@+id/LineupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Lineup"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="488dp" />
+
+    <Button
+        android:id="@+id/GenerateLineupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate Lineup"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="593dp" />
+
+    <Button
+        android:id="@+id/PlayersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Players"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="382dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
