@@ -28,9 +28,14 @@ public class LoginActivity extends AppCompatActivity {
     private void showHompageOnClick(Button databaseLoginBtn) {
         databaseLoginBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setContentView(R.layout.activity_home_page);
+                openHomePageActivity();
             }
         });
+    }
+
+    private void openHomePageActivity(){
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
     }
 
 
