@@ -13,33 +13,41 @@
         android:layout_height="wrap_content"
         android:rotationY="0"
         android:scaleX="1.17"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/startingxifront"
-        tools:layout_editor_absoluteY="0dp" />
+        android:contentDescription="@string/todo" />
 
     <Button
         android:id="@+id/loginDatabase"
         android:layout_width="146dp"
         android:layout_height="60dp"
-        android:text="Login"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="510dp" />
+        android:text="@string/normalLoginText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginDiscord"
+        app:layout_constraintVertical_bias="0.236" />
 
     <Button
         android:id="@+id/loginDiscord"
         android:layout_width="146dp"
         android:layout_height="53dp"
-        android:text="Discord"
+
+
+        android:layout_marginTop="160dp"
         android:background="#7289d9"
-        tools:layout_editor_absoluteX="131dp"
-        tools:layout_editor_absoluteY="430dp"
-
-
-        />
-
-
+        android:text="@string/discord"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        tools:ignore="TextContrastCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

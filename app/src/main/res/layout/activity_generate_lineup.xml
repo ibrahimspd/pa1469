@@ -6,4 +6,392 @@
     android:layout_height="match_parent"
     tools:context=".Controller.GenerateLineupActivity">
 
+    <ScrollView
+        android:id="@+id/frame_1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="21dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/content_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/_bg__frame_1"
+                android:layout_width="390dp"
+                android:layout_height="848dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/_bg__frame_1_shape" />
+
+
+            <RelativeLayout
+                android:id="@+id/generate_lineup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="-10dp">
+
+                    <View
+                        android:id="@+id/rectangle_45"
+                        android:layout_width="390dp"
+                        android:layout_height="858dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_45_shape" />
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/rectangle_10"
+                    android:layout_width="335dp"
+                    android:layout_height="330dp"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="78dp"
+                    android:background="@drawable/rectangle_10_shape" />
+
+                <ImageView
+                    android:id="@+id/bild_4"
+                    android:layout_width="335dp"
+                    android:layout_height="333dp"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="78dp"
+                    android:contentDescription="bild_4"
+                    android:src="@drawable/bild_4" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="107dp"
+                    android:layout_marginTop="424dp">
+
+                    <View
+                        android:id="@+id/rectangle_3"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team"
+                        android:layout_width="98dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginLeft="26dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="end"
+                        android:text="@string/update_team_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/vector"
+                    android:layout_width="154dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="488dp"
+                    android:contentDescription="vector"
+                    android:src="@drawable/vector" />
+
+                <ImageView
+                    android:id="@+id/vector_ek1"
+                    android:layout_width="154dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="543dp"
+                    android:contentDescription="vector_ek1"
+                    android:src="@drawable/vector_ek1" />
+
+                <ImageView
+                    android:id="@+id/vector_ek2"
+                    android:layout_width="154dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="598dp"
+                    android:contentDescription="vector_ek2"
+                    android:src="@drawable/vector_ek2" />
+
+                <ImageView
+                    android:id="@+id/vector_ek3"
+                    android:layout_width="154dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="650dp"
+                    android:contentDescription="vector_ek3"
+                    android:src="@drawable/vector_ek3" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="27dp"
+                    android:layout_marginTop="705dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek1"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek1_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek1"
+                        android:layout_width="115dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek1_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="757dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek2"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek2_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek2"
+                        android:layout_width="118dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek2_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="488dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek3"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek3_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek3"
+                        android:layout_width="115dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek3_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="543dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek4"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek4_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek4"
+                        android:layout_width="115dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek4_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="598dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek5"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek5_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek5"
+                        android:layout_width="115dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek5_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="651dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek6"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek6_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek6"
+                        android:layout_width="115dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek6_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="704dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek7"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek7_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek7"
+                        android:layout_width="120dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="21dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek7_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rectangle_35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="757dp">
+
+                    <View
+                        android:id="@+id/rectangle_3_ek8"
+                        android:layout_width="156dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/rectangle_3_ek8_shape" />
+
+                    <TextView
+                        android:id="@+id/update_team_ek8"
+                        android:layout_width="82dp"
+                        android:layout_height="23dp"
+                        android:layout_gravity="center_horizontal|center"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="@string/update_team_ek8_string"
+                        android:textColor="@color/_bg__frame_1_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/generate_lineup_ek1"
+                    android:layout_width="205.5dp"
+                    android:layout_height="38.5dp"
+                    android:layout_marginLeft="108dp"
+                    android:layout_marginTop="41dp"
+                    android:text="@string/generate_lineup_ek1_string"
+                    android:textColor="@color/rectangle_3_color"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

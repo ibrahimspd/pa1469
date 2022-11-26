@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Starting XI</string>
     <!-- Settings Activity Title -->
     <string name="title_activity_settings">SettingsActivity</string>
 
@@ -17,4 +17,20 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="discord">Discord</string>
+    <string name="normalLoginText">Login</string>
+    <string name="todo">TODO</string>
+
+    <!-- Generate Lineup -->
+    <string name="ek_img_content">ExportKit Image</string>
+    <string name="update_team_string">Formation: 433</string>
+    <string name="update_team_ek1_string">Player 9:__________</string>
+    <string name="update_team_ek2_string">Player 11:__________</string>
+    <string name="update_team_ek3_string">Player 2:__________</string>
+    <string name="update_team_ek4_string">Player 4:__________</string>
+    <string name="update_team_ek5_string">Player 6:__________</string>
+    <string name="update_team_ek6_string">Player 8:__________</string>
+    <string name="update_team_ek7_string">Player 10:__________</string>
+    <string name="update_team_ek8_string">Share Image</string>
+    <string name="generate_lineup_ek1_string">Generate Lineup</string>
 </resources>
