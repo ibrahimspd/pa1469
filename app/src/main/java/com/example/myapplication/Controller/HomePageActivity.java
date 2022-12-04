@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,16 +27,16 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        LineupButton = findViewById(R.id.LineupButton);
+        LineupButton = findViewById(R.id.myTeamButton);
         LineupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMyLineupActivity();
+                openMyTeamActivity();
             }
         });
     }
-    private void openMyLineupActivity(){
-        Intent intent = new Intent(this, MyLineupActivity.class);
+    private void openMyTeamActivity(){
+        Intent intent = new Intent(this, TeamInfo.class);
         startActivity(intent);
     }
 
