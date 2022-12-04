@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.health.SystemHealthManager;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,10 +41,8 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottonnav);
 
-// Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.generateLineup);
 
-// Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -67,27 +64,24 @@ public class GenerateLineupActivity extends AppCompatActivity {
         });
 
         Spinner spinner = (Spinner) findViewById(R.id.formationSpinner);
-// Create an ArrayAdapter using the string array and a default spinner layout
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.formations, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
 
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);
 
         Button generateLineupButton = (Button) findViewById(R.id.generateLineup);
         generateLineupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String baseUrl = "http://78.141.233.225:4545";
-                // get value from spinner
+
                 Spinner spinner = (Spinner) findViewById(R.id.formationSpinner);
                 String formation = spinner.getSelectedItem().toString();
 
                 String url = baseUrl + "/lineup.png?formation=" + formation;
-
-                // get value from edit text
 
                 url += addPlayerUrl(R.id.positionInput,1);
                 url += addPlayerUrl(R.id.positionInput2,2);
@@ -100,8 +94,6 @@ public class GenerateLineupActivity extends AppCompatActivity {
                 url += addPlayerUrl(R.id.positionInput9,9);
                 url += addPlayerUrl(R.id.positionInput10,10);
                 url += addPlayerUrl(R.id.positionInput11, 11);
-
-                System.out.println(url);
                 
                 Glide.with(context).load(url).into((ImageView) findViewById(R.id.lineupImageView));
             }

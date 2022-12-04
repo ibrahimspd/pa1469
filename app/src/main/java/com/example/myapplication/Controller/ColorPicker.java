@@ -1,5 +1,18 @@
 package com.example.myapplication.Controller;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,35 +26,7 @@ import com.skydoves.colorpickerview.ColorPickerView;
 import com.skydoves.colorpickerview.flag.BubbleFlag;
 import com.skydoves.colorpickerview.flag.FlagMode;
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
-import com.skydoves.colorpickerview.listeners.ColorListener;
-import com.skydoves.colorpickerview.sliders.AlphaSlideBar;
 import com.skydoves.colorpickerview.sliders.BrightnessSlideBar;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.TableLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -51,24 +36,13 @@ import java.net.URL;
 
 public class ColorPicker extends AppCompatActivity {
 
-    private Context mContext;
-    private TeamInfo mActivity;
-
     private ColorPickerView colorPickerView;
-
-    private RelativeLayout mRelativeLayout;
-    private Button mButton;
-
-    private PopupWindow mPopupWindow;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.color_picker);
-
-        Intent intent = getIntent();
-        String teamName = intent.getStringExtra("colorType");
 
         Context context = this;
 
@@ -123,8 +97,6 @@ public class ColorPicker extends AppCompatActivity {
                                 public void onLoadCleared(@Nullable Drawable placeholder) {
                                 }
                             });
-                    // Drawable drawable = Glide.with(context).load("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png").r;
-
                 } catch ( Exception e) {
                     e.printStackTrace();
                 }
