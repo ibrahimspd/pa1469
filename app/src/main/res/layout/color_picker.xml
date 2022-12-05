@@ -70,27 +70,28 @@
 
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/confirmButton"
         android:layout_width="34dp"
         android:layout_height="31dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="24dp"
         android:background="@color/green"
+        android:contentDescription="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_baseline_check_24"
-        android:contentDescription="@string/confirm" />
+        app:srcCompat="@drawable/ic_baseline_check_24" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/cancelButton"
+        android:layout_width="34dp"
+        android:layout_height="31dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="24dp"
+        android:background="@color/red"
+        android:contentDescription="@string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_close_24"
-        android:contentDescription="@string/cancel" />
+        app:srcCompat="@drawable/ic_baseline_close_24" />
 
     <RadioGroup
         android:layout_width="wrap_content"

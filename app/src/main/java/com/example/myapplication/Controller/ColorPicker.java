@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -58,6 +59,22 @@ public class ColorPicker extends AppCompatActivity {
             @Override
             public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
                 setLayoutColor(envelope);
+            }
+        });
+
+        ImageButton confirmButton = findViewById(R.id.confirmButton);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        ImageButton cancelButton = findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -141,5 +158,4 @@ public class ColorPicker extends AppCompatActivity {
 
         return BitmapFactory.decodeStream(input);
     }
-
 }

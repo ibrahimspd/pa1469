@@ -16,10 +16,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button discordLoginBtn = (Button) findViewById(R.id.loginDiscord);
+        Button discordLoginBtn = findViewById(R.id.loginDiscord);
         showHompageOnClick(discordLoginBtn);
 
-        Button databaseLoginBtn = (Button) findViewById(R.id.loginDatabase);
+        Button databaseLoginBtn = findViewById(R.id.loginDatabase);
         showHompageOnClick(databaseLoginBtn);
     }
 

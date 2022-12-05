@@ -22,6 +22,11 @@ import java.nio.charset.StandardCharsets;
 
 public class TeamInfo extends AppCompatActivity {
 
+    private final static Gson gson = new Gson();
+    private static final int TEAM_INFO = R.id.teamInfo;
+    private static final int GENERATE_LINEUP = R.id.generateLineup;
+    private static final int PLAYERS = R.id.players;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -30,19 +35,19 @@ public class TeamInfo extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottonnav);
 
-        bottomNavigationView.setSelectedItemId(R.id.teamInfo);
+        bottomNavigationView.setSelectedItemId(TEAM_INFO);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.teamInfo:
+                    case TEAM_INFO:
                         return true;
-                    case R.id.generateLineup:
+                    case GENERATE_LINEUP:
                         startActivity(new Intent(getApplicationContext(), GenerateLineupActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
-                    case R.id.players:
+                    case PLAYERS:
                         startActivity(new Intent(getApplicationContext(), PlayersActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
@@ -51,19 +56,8 @@ public class TeamInfo extends AppCompatActivity {
             }
         });
 
-        String json = null;
-        try {
-            InputStream is = getAssets().open("teamData.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        String json = getJsonFromAssetFile("teamData.json");
 
-        Gson gson = new Gson();
         Team teamInfo = gson.fromJson(json, Team.class);
 
         TextView teamName = findViewById(R.id.teamName);
@@ -119,6 +113,20 @@ public class TeamInfo extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private String getJsonFromAssetFile(String fileName) {
+        try {
+            InputStream is = getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            return new String(buffer, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
 

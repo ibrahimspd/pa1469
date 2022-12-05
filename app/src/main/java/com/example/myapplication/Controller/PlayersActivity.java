@@ -1,22 +1,20 @@
 package com.example.myapplication.Controller;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.skydoves.colorpickerview.ColorPickerView;
-import com.skydoves.colorpickerview.flag.BubbleFlag;
-import com.skydoves.colorpickerview.flag.FlagMode;
-import com.skydoves.colorpickerview.sliders.AlphaSlideBar;
-import com.skydoves.colorpickerview.sliders.BrightnessSlideBar;
 
 public class PlayersActivity extends AppCompatActivity {
+
+    private static final int GENERATE_LINEUP = R.id.generateLineup;
+    private static final int PLAYERS = R.id.players;
+    private static final int TEAM_INFO = R.id.teamInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,24 +23,22 @@ public class PlayersActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottonnav);
 
-// Set Home selected
-        bottomNavigationView.setSelectedItemId(R.id.players);
+        bottomNavigationView.setSelectedItemId(PLAYERS);
 
-// Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.teamInfo:
+                    case TEAM_INFO:
                         startActivity(new Intent(getApplicationContext(), TeamInfo.class));
                         overridePendingTransition(0, 0);
                         return true;
-                    case R.id.generateLineup:
+                    case GENERATE_LINEUP:
                         startActivity(new Intent(getApplicationContext(), GenerateLineupActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
-                    case R.id.players:
+                    case PLAYERS:
                         return true;
                 }
                 return false;

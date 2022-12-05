@@ -53,22 +53,8 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Controller.MyLineupActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Controller.GenerateLineupActivity"
             android:label="@string/generateLineup"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Controller.HomePageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

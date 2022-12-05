@@ -33,6 +33,10 @@ import java.io.OutputStream;
 
 public class GenerateLineupActivity extends AppCompatActivity {
 
+    private static final int TEAM_INFO = R.id.teamInfo;
+    private static final int GENERATE_LINEUP = R.id.generateLineup;
+    private static final int PLAYERS = R.id.players;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,20 +45,20 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottonnav);
 
-        bottomNavigationView.setSelectedItemId(R.id.generateLineup);
+        bottomNavigationView.setSelectedItemId(GENERATE_LINEUP);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.teamInfo:
+                    case TEAM_INFO:
                         startActivity(new Intent(getApplicationContext(), TeamInfo.class));
                         overridePendingTransition(0, 0);
                         return true;
-                    case R.id.generateLineup:
+                    case GENERATE_LINEUP:
                         return true;
-                    case R.id.players:
+                    case PLAYERS:
                         startActivity(new Intent(getApplicationContext(), PlayersActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
@@ -63,7 +67,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
             }
         });
 
-        Spinner spinner = (Spinner) findViewById(R.id.formationSpinner);
+        Spinner spinner = findViewById(R.id.formationSpinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.formations, android.R.layout.simple_spinner_item);
@@ -72,13 +76,13 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        Button generateLineupButton = (Button) findViewById(R.id.generateLineup);
+        Button generateLineupButton = findViewById(GENERATE_LINEUP);
         generateLineupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String baseUrl = "http://78.141.233.225:4545";
 
-                Spinner spinner = (Spinner) findViewById(R.id.formationSpinner);
+                Spinner spinner = findViewById(R.id.formationSpinner);
                 String formation = spinner.getSelectedItem().toString();
 
                 String url = baseUrl + "/lineup.png?formation=" + formation;
@@ -104,7 +108,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bitmap bitmap = null;
-                ImageView imageView = (ImageView) findViewById(R.id.lineupImageView);
+                ImageView imageView = findViewById(R.id.lineupImageView);
                 imageView.setDrawingCacheEnabled(true);
                 bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
                 try {
@@ -144,7 +148,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
         }
 
         saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        // create toast
+
         Toast toast = Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT);
         toast.show();
 
@@ -153,7 +157,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
     }
 
     public String addPlayerUrl(int id, Integer index){
-        EditText editText = (EditText) findViewById(id);
+        EditText editText = findViewById(id);
         String player = editText.getText().toString();
         return "&player" + index.toString() + "=" + player;
     }
