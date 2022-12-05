@@ -86,3 +86,4 @@ lint/tmp/
 
 .vscode
 .idea/deploymentTargetDropDown.xml
+.idea/sonarlint/issuestore/index.pb

@@ -1,13 +1,12 @@
 package com.example.myapplication.Controller;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +20,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
@@ -47,7 +49,8 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
         bottomNavigationView.setSelectedItemId(GENERATE_LINEUP);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -62,8 +65,9 @@ public class GenerateLineupActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), PlayersActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 
@@ -118,10 +122,28 @@ public class GenerateLineupActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button ShareLineupButton = findViewById(R.id.shareLineup);
+        ShareLineupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageView imageView = findViewById(R.id.lineupImageView);
+                Drawable mDrawable = imageView.getDrawable();
+                Bitmap mBitmap = ((BitmapDrawable) mDrawable).getBitmap();
+
+                String path = MediaStore.Images.Media.insertImage(getContentResolver(), mBitmap, "Image Description", null);
+                Uri uri = Uri.parse(path);
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                startActivity(Intent.createChooser(intent, "Share Image"));
+            }
+        });
+
     }
 
     private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
-        boolean saved;
         OutputStream fos;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -147,7 +169,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
         }
 
-        saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 
         Toast toast = Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT);
         toast.show();
