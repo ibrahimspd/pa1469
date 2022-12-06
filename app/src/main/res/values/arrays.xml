@@ -1,5 +1,5 @@
 <resources>
-    <!-- Reply Preference -->
+
     <string-array name="reply_entries">
         <item>Reply</item>
         <item>Reply to all</item>
@@ -8,5 +8,27 @@
     <string-array name="reply_values">
         <item>reply</item>
         <item>reply_all</item>
+    </string-array>
+
+    <string-array name="formations">
+        <item>352</item>
+        <item>3142</item>
+        <item>343</item>
+        <item>3421</item>
+        <item>41212(2)</item>
+        <item>41212</item>
+        <item>433</item>
+        <item>433(2)</item>
+        <item>433(3)</item>
+        <item>433(4)</item>
+        <item>433(5)</item>
+        <item>451</item>
+        <item>4231</item>
+        <item>442</item>
+        <item>4321</item>
+        <item>4222</item>
+        <item>5212</item>
+        <item>532</item>
+        <item>4411</item>
     </string-array>
 </resources>

@@ -11,18 +11,16 @@ import com.example.myapplication.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button discordLoginBtn = (Button) findViewById(R.id.loginDiscord);
+        Button discordLoginBtn = findViewById(R.id.loginDiscord);
         showHompageOnClick(discordLoginBtn);
 
-        Button databaseLoginBtn = (Button) findViewById(R.id.loginDatabase);
+        Button databaseLoginBtn = findViewById(R.id.loginDatabase);
         showHompageOnClick(databaseLoginBtn);
-
     }
 
     private void showHompageOnClick(Button databaseLoginBtn) {
@@ -34,9 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void openHomePageActivity(){
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, GenerateLineupActivity.class);
         startActivity(intent);
     }
-
-
 }

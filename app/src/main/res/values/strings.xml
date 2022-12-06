@@ -22,15 +22,35 @@
     <string name="todo">TODO</string>
 
     <!-- Generate Lineup -->
-    <string name="ek_img_content">ExportKit Image</string>
-    <string name="update_team_string">Formation: 433</string>
-    <string name="update_team_ek1_string">Player 9:__________</string>
-    <string name="update_team_ek2_string">Player 11:__________</string>
-    <string name="update_team_ek3_string">Player 2:__________</string>
-    <string name="update_team_ek4_string">Player 4:__________</string>
-    <string name="update_team_ek5_string">Player 6:__________</string>
-    <string name="update_team_ek6_string">Player 8:__________</string>
-    <string name="update_team_ek7_string">Player 10:__________</string>
-    <string name="update_team_ek8_string">Share Image</string>
-    <string name="generate_lineup_ek1_string">Generate Lineup</string>
+
+
+
+    <string name="background_ek2_string">Background</string>
+    <string name="kit_string">Kit</string>
+    <string name="colors_ek1_string">Colors</string>
+    <string name="main__string">Main: </string>
+    <string name="secondary__string">Secondary: </string>
+    <string name="font__string">Font: </string>
+    <string name="teamLineupConfig">Lineup Config</string>
+    <string name="layout__default_string">Layout: Default</string>
+    <string name="kit_style__logo_string">Kit-Style: Logo </string>
+    <string name="font__monterrat_string">Font: Monterrat </string>
+    <string name="logo_ek1_string">Logo</string>
+    <string name="teamName">Name: Invincible Esports </string>
+    <string name="teamLanguage">Language: English </string>
+    <string name="teamManager">Manager: Gustafsson_45 </string>
+    <string name="team_string">Team</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">discard</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">Logo</string>
+    <string name="colorwheel">Color Wheel</string>
+    <string name="gallery">Gallery</string>
+    <string name="ffffff">#ffffff</string>
+    <string name="GenerateLineupTitle">Generate Lineup</string>
+    <string name="teamInfo">Team Info</string>
+    <string name="players">Players</string>
+    <string name="generateLineup">Generate Lineup</string>
+
 </resources>
