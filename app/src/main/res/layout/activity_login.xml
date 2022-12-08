@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginDiscord"
-        app:layout_constraintVertical_bias="0.236" />
+        app:layout_constraintVertical_bias="0.139" />
 
     <Button
         android:id="@+id/loginDiscord"
@@ -44,10 +44,24 @@
         android:text="@string/discord"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.413"
         tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="146dp"
+        android:layout_height="60dp"
+        android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/loginDiscord"
+        app:layout_constraintVertical_bias="0.495" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
