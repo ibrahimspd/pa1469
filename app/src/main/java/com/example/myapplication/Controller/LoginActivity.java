@@ -21,6 +21,11 @@ public class LoginActivity extends AppCompatActivity {
 
         Button databaseLoginBtn = findViewById(R.id.loginDatabase);
         showHompageOnClick(databaseLoginBtn);
+
+        Button registerBtn = findViewById(R.id.register);
+        showRegisterPageOnClick(registerBtn);
+
+
     }
 
     private void showHompageOnClick(Button databaseLoginBtn) {
@@ -31,8 +36,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
+    private void showRegisterPageOnClick(Button registerBtn) {
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { openRegisterPageActivity();}
+        });
+    }
+
     private void openHomePageActivity(){
         Intent intent = new Intent(this, GenerateLineupActivity.class);
+        startActivity(intent);
+    }
+
+    private void openRegisterPageActivity(){
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 }
