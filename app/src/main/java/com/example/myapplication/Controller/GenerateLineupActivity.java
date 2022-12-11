@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,18 +21,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Model.AutocompleteAdapter;
 import com.example.myapplication.Model.PlayerItem;
 import com.example.myapplication.Model.Utils;
 import com.example.myapplication.R;
-import com.example.myapplication.databinding.DrawerBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
@@ -55,16 +49,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
     private final static Gson gson = new Gson();
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private DrawerBinding binding;
-
-    public DrawerLayout drawerLayout;
-    public ActionBarDrawerToggle actionBarDrawerToggle;
-
-    AutoCompleteTextView player1;
-
     List<Integer> positionInputFieldsIds = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,14 +223,6 @@ public class GenerateLineupActivity extends AppCompatActivity {
             player = "Bot";
         }
         return "&player" + index.toString() + "=" + player;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void setHints(String formationStr) {
