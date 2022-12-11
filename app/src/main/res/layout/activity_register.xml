@@ -90,7 +90,6 @@
         android:layout_width="209dp"
         android:layout_height="42dp"
         android:layout_marginTop="8dp"
-        android:background="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword" />
@@ -100,12 +99,9 @@
         android:layout_width="209dp"
         android:layout_height="42dp"
         android:layout_marginTop="8dp"
-        android:background="@color/green"
         android:soundEffectsEnabled="false"
         android:text="Position"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countryPicker" />
-
-    />
 </androidx.constraintlayout.widget.ConstraintLayout>
