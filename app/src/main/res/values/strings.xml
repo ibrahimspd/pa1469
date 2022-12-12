@@ -21,6 +21,9 @@
     <string name="normalLoginText">Login</string>
     <string name="todo">TODO</string>
 
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
     <!-- Generate Lineup -->
 
 
@@ -35,7 +38,7 @@
     <string name="kit_style__logo_string">Kit-Style: Logo </string>
     <string name="font__monterrat_string">Font: Monterrat </string>
     <string name="logo_ek1_string">Logo</string>
-    <string name="teamName">Name: Invincible Esports </string>
+    <string name="teamName">Name: Baitmen Esports</string>
     <string name="teamLanguage">Language: English </string>
     <string name="teamManager">Manager: Gustafsson_45 </string>
     <string name="team_string">Team</string>
@@ -51,5 +54,11 @@
     <string name="teamInfo">Team Info</string>
     <string name="players">Players</string>
     <string name="generateLineup">Generate Lineup</string>
+    <string name="menu_slideshow" />
+    <string name="menu_gallery" />
+    <string name="menu_home" />
+    <string name="nav_header_desc" />
+    <string name="nav_header_title">Title</string>
+    <string name="nav_header_subtitle">Sub Title</string>
 
 </resources>

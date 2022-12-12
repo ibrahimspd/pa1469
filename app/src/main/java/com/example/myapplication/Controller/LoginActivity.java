@@ -1,10 +1,8 @@
 package com.example.myapplication.Controller;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.R;
@@ -24,8 +22,6 @@ public class LoginActivity extends AppCompatActivity
 
         Button registerBtn = findViewById(R.id.register);
         showRegisterPageOnClick(registerBtn);
-
-
     }
 
     private void showHompageOnClick(Button databaseLoginBtn) {
@@ -35,13 +31,12 @@ public class LoginActivity extends AppCompatActivity
                 openHomePageActivity();
             }
         });
+        databaseLoginBtn.setOnClickListener(view -> openHomePageActivity());
     }
 
 
     private void showRegisterPageOnClick(Button registerBtn) {
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { openRegisterPageActivity();}
-        });
+        registerBtn.setOnClickListener(view -> openRegisterPageActivity());
     }
 
     private void openHomePageActivity(){
