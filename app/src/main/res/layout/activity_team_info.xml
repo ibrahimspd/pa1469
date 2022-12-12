@@ -232,8 +232,9 @@
             android:id="@+id/secondaryColor"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_marginStart="104dp"
+            android:layout_marginStart="9dp"
             android:layout_marginTop="65dp"
+            android:layout_toEndOf="@+id/secondary_"
             android:background="@color/white"
             android:contentDescription="@string/todo" />
 
@@ -294,7 +295,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/background_ek3">
 
-
         <ImageView
             android:id="@+id/teamLogo"
             android:layout_width="116dp"
@@ -302,7 +302,7 @@
             android:layout_below="@+id/logo_ek1"
             android:layout_marginTop="0dp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/default_logo" />
+            android:src="@drawable/baitmen" />
 
         <TextView
             android:id="@+id/logo_ek1"
@@ -313,7 +313,6 @@
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -322,7 +321,6 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="65dp"
         android:padding="5dp">
-
     </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

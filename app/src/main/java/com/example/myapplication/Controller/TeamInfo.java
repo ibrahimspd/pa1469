@@ -1,13 +1,11 @@
 package com.example.myapplication.Controller;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -37,23 +35,20 @@ public class TeamInfo extends AppCompatActivity {
 
         bottomNavigationView.setSelectedItemId(TEAM_INFO);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case TEAM_INFO:
-                        return true;
-                    case GENERATE_LINEUP:
-                        startActivity(new Intent(getApplicationContext(), GenerateLineupActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case PLAYERS:
-                        startActivity(new Intent(getApplicationContext(), PlayersActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case TEAM_INFO:
+                    return true;
+                case GENERATE_LINEUP:
+                    startActivity(new Intent(getApplicationContext(), GenerateLineupActivity.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                case PLAYERS:
+                    startActivity(new Intent(getApplicationContext(), PlayersActivity.class));
+                    overridePendingTransition(0, 0);
+                    return true;
             }
+            return false;
         });
 
         String json = getJsonFromAssetFile("teamData.json");
@@ -82,36 +77,30 @@ public class TeamInfo extends AppCompatActivity {
         Glide.with(this).asBitmap().load(teamInfo.getKit()).into(kit);
 
         ImageView mainColor = findViewById(R.id.mainColor);
-        mainColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
-                intent.putExtra("colorType", "mainColor");
-                intent.putExtra("color", teamInfo.getMainColor());
-                startActivity(intent);
-            }
+        mainColor.setBackgroundColor(Color.parseColor(teamInfo.getMainColor()));
+        mainColor.setOnClickListener(view -> {
+            Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
+            intent.putExtra("colorType", "mainColor");
+            intent.putExtra("color", teamInfo.getMainColor());
+            startActivity(intent);
         });
 
         ImageView secondaryColor = findViewById(R.id.secondaryColor);
-        secondaryColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
-                intent.putExtra("colorType", "secondaryColor");
-                intent.putExtra("color", teamInfo.getSecondaryColor());
-                startActivity(intent);
-            }
+        secondaryColor.setBackgroundColor(Color.parseColor(teamInfo.getSecondaryColor()));
+        secondaryColor.setOnClickListener(view -> {
+            Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
+            intent.putExtra("colorType", "secondaryColor");
+            intent.putExtra("color", teamInfo.getSecondaryColor());
+            startActivity(intent);
         });
 
         ImageView fontColor = findViewById(R.id.fontColor);
-        fontColor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
-                intent.putExtra("colorType", "fontColor");
-                intent.putExtra("color", teamInfo.getFontColor());
-                startActivity(intent);
-            }
+        fontColor.setBackgroundColor(Color.parseColor(teamInfo.getFontColor()));
+        fontColor.setOnClickListener(view -> {
+            Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
+            intent.putExtra("colorType", "fontColor");
+            intent.putExtra("color", teamInfo.getFontColor());
+            startActivity(intent);
         });
     }
 

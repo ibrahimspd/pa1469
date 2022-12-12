@@ -17,7 +17,6 @@ public class RegisterActivity extends AppCompatActivity {
     EditText confPassText;
     Button register;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,15 +27,16 @@ public class RegisterActivity extends AppCompatActivity {
         confPassText = findViewById(R.id.textConfirmPassword);
         register = findViewById(R.id.registerButton);
 
-        Spinner spinner = findViewById(R.id.positionSpinner);
+        Spinner positionDropdown = findViewById(R.id.positionSpinner);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.positionSpinner, android.R.layout.simple_spinner_item);
+                R.array.positions, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinner.setAdapter(adapter);
-        spinner.setPrompt("Pick Position");
+        positionDropdown.setAdapter(adapter);
+        positionDropdown.setPrompt("Pick Position");
 
+        register.setOnClickListener(view -> finish());
     }
 }
