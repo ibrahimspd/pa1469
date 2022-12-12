@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Starting XI</string>
     <!-- Settings Activity Title -->
     <string name="title_activity_settings">SettingsActivity</string>
 
@@ -17,4 +17,39 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="discord">Discord</string>
+    <string name="normalLoginText">Login</string>
+    <string name="todo">TODO</string>
+
+    <!-- Generate Lineup -->
+
+
+    <string name="background_ek2_string">Background</string>
+    <string name="kit_string">Kit</string>
+    <string name="colors_ek1_string">Colors</string>
+    <string name="main__string">Main: </string>
+    <string name="secondary__string">Secondary: </string>
+    <string name="font__string">Font: </string>
+    <string name="teamLineupConfig">Lineup Config</string>
+    <string name="layout__default_string">Layout: Default</string>
+    <string name="kit_style__logo_string">Kit-Style: Logo </string>
+    <string name="font__monterrat_string">Font: Monterrat </string>
+    <string name="logo_ek1_string">Logo</string>
+    <string name="teamName">Name: Invincible Esports </string>
+    <string name="teamLanguage">Language: English </string>
+    <string name="teamManager">Manager: Gustafsson_45 </string>
+    <string name="team_string">Team</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">discard</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logo">Logo</string>
+    <string name="colorwheel">Color Wheel</string>
+    <string name="gallery">Gallery</string>
+    <string name="ffffff">#ffffff</string>
+    <string name="GenerateLineupTitle">Generate Lineup</string>
+    <string name="teamInfo">Team Info</string>
+    <string name="players">Players</string>
+    <string name="generateLineup">Generate Lineup</string>
+
 </resources>

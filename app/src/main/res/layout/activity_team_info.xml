@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img"
+    android:backgroundTint="#800E0C0C"
+    android:backgroundTintMode="src_over"
+    tools:context=".Controller.TeamInfo">
+
+    <RelativeLayout
+        android:id="@+id/logo_ek2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/box_background"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/teamName"
+            android:layout_width="wrap_content"
+            android:layout_height="32.5dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/teamName"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/language"
+            android:layout_width="167.5dp"
+            android:layout_height="32.5dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="55dp"
+            android:text="@string/teamLanguage"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/manager"
+            android:layout_width="219.5dp"
+            android:layout_height="32.5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="82dp"
+            android:text="@string/teamManager"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/team"
+            android:layout_width="67.5dp"
+            android:layout_height="32.5dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="7dp"
+            android:text="@string/team_string"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/background_ek3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/box_background"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colors_ek2">
+
+        <TextView
+            android:id="@+id/teamKitTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/kit_string"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/teamKit"
+            android:layout_width="93dp"
+            android:layout_height="94dp"
+            android:layout_below="@+id/teamKitTxt"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="18dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/tarwfootball_kits_br_plainstripe_removebg_preview_1"
+            tools:ignore="ImageContrastCheck" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/colors_ek2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/box_background"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/colors">
+
+        <TextView
+            android:id="@+id/lineup_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/teamLineupConfig"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="@string/layout__default_string"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/kit_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="@string/kit_style__logo_string"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="82dp"
+            android:text="@string/font__monterrat_string"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/colors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/box_background"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/colors_ek2"
+        app:layout_constraintHorizontal_bias="0.438"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_ek2">
+
+        <TextView
+            android:id="@+id/colors_ek1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/colors_ek1_string"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/main_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/main__string"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/secondary_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="59dp"
+            android:text="@string/secondary__string"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/font_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="84dp"
+            android:text="@string/font__string"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/mainColor"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginTop="41dp"
+            android:background="@color/white"
+            android:contentDescription="@string/todo" />
+
+        <ImageView
+            android:id="@+id/fontColor"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="90dp"
+            android:background="@color/white"
+            android:contentDescription="@string/todo" />
+
+        <ImageView
+            android:id="@+id/secondaryColor"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="65dp"
+            android:background="@color/white"
+            android:contentDescription="@string/todo" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/background_ek1"
+        android:layout_width="340dp"
+        android:layout_height="183dp"
+        android:layout_below="@+id/background_ek3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="92dp"
+        android:background="@drawable/box_background"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <ImageView
+            android:id="@+id/teamBackground"
+            android:layout_width="271dp"
+            android:layout_height="130dp"
+            android:layout_below="@+id/background_ek2"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="3dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/bild_6"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/background_ek2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="9dp"
+            android:gravity="center"
+            android:text="@string/background_ek2_string"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/logo"
+        android:layout_width="165dp"
+        android:layout_height="146dp"
+        android:background="@drawable/box_background"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/background_ek3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/background_ek3">
+
+
+        <ImageView
+            android:id="@+id/teamLogo"
+            android:layout_width="116dp"
+            android:layout_height="103dp"
+            android:layout_below="@+id/logo_ek1"
+            android:layout_marginTop="0dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/default_logo" />
+
+        <TextView
+            android:id="@+id/logo_ek1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="@string/logo_ek1_string"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="65dp"
+        android:padding="5dp">
+
+    </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottonnav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

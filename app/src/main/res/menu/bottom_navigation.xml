@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Team Info"
+        android:id="@+id/teamInfo"
+        android:icon="@drawable/ic_baseline_library_books_24"/>
+    <item
+        android:title="Generate Lineup"
+        android:id="@+id/generateLineup"
+        android:icon="@drawable/ic_baseline_construction_24"/>
+    <item
+        android:title="Players"
+        android:id="@+id/players"
+        android:icon="@drawable/ic_baseline_people_24"/>
+</menu>
+

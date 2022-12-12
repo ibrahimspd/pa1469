@@ -83,3 +83,7 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+.vscode
+.idea/deploymentTargetDropDown.xml
+.idea/sonarlint/issuestore/index.pb
