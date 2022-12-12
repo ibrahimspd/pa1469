@@ -25,12 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showHompageOnClick(Button databaseLoginBtn) {
-        databaseLoginBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                db.createAccount(null);
-                openHomePageActivity();
-            }
-        });
         databaseLoginBtn.setOnClickListener(view -> openHomePageActivity());
     }
 
