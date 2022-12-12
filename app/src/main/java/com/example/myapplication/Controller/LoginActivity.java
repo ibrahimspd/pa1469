@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.database.FirestoreImpl;
 
 public class LoginActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
