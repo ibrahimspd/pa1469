@@ -7,8 +7,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.myapplication.Model.Authentication;
 import com.example.myapplication.R;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -37,6 +42,20 @@ public class RegisterActivity extends AppCompatActivity {
         positionDropdown.setAdapter(adapter);
         positionDropdown.setPrompt("Pick Position");
 
-        register.setOnClickListener(view -> finish());
+        register.setOnClickListener(view -> {
+            String regex = "^(.+)@(.+)$";
+
+            Pattern pattern = Pattern.compile(regex);
+
+            Matcher matcher = pattern.matcher(emailText.getText().toString());
+            if(passText.getText().toString().equals(confPassText.getText().toString()) && matcher.matches()){
+                Authentication auth = new Authentication();
+                auth.createUser(emailText.getText().toString(), passText.getText().toString());
+                finish();
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Passwords do not match or email is invalid", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

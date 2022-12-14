@@ -1,64 +1,69 @@
 package com.example.myapplication.Controller;
-import static android.content.ContentValues.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.OnTeamListener;
-import com.example.myapplication.entites.Team;
-
-import java.util.ArrayList;
+import com.example.myapplication.database.OnUserListener;
+import com.example.myapplication.entites.Credentials;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private TextView emailTxt;
+    private TextView passwordTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FirestoreImpl firestore = new FirestoreImpl();
-        OnTeamListener teamListener = new OnTeamListener() {
-            @Override
-            public void onTeamFilled(ArrayList<Team> teams) {
-                System.out.println(teams.get(0).getBackground());
-            }
 
+        emailTxt = findViewById(R.id.emailTxt);
+        passwordTxt = findViewById(R.id.passwordTxt);
+
+        Button loginBtn = findViewById(R.id.loginBtn);
+        loginBtn.setOnClickListener(view -> {
+            Credentials InputtedCredentials = new Credentials.CredentialsBuilder()
+                    .email(emailTxt.getText().toString())
+                    .password(passwordTxt.getText().toString())
+                    .build();
+            verifyUser(InputtedCredentials);
+            }
+        );
+    }
+
+    private void verifyUser(Credentials enteredCredentials){
+        FirestoreImpl firestore = new FirestoreImpl(db);
+        OnUserListener userListener = new OnUserListener() {
+            @Override
+            public void onUserFilled(Credentials credentials) {
+                if(credentials.equals(enteredCredentials)){
+                    openHomePageActivity();
+                }else {
+                    emailTxt.setText("");
+                    passwordTxt.setText("");
+                    Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_SHORT).show();
+                }
+            }
             @Override
             public void onError(Exception exception) {
-
+                Log.d("Error", exception.getMessage());
             }
         };
-        firestore.getTeam(teamListener);
-        Button discordLoginBtn = findViewById(R.id.loginDiscord);
-        showHompageOnClick(discordLoginBtn);
-
-        Button databaseLoginBtn = findViewById(R.id.loginDatabase);
-        showHompageOnClick(databaseLoginBtn);
-
-        Button registerBtn = findViewById(R.id.register);
-        showRegisterPageOnClick(registerBtn);
-    }
-
-    private void showHompageOnClick(Button databaseLoginBtn) {
-        databaseLoginBtn.setOnClickListener(view -> openHomePageActivity());
-    }
-
-
-    private void showRegisterPageOnClick(Button registerBtn) {
-        registerBtn.setOnClickListener(view -> openRegisterPageActivity());
+        firestore.checkCredentials(enteredCredentials, userListener);
     }
 
     private void openHomePageActivity(){
         Intent intent = new Intent(this, GenerateLineupActivity.class);
-        startActivity(intent);
-    }
-
-    private void openRegisterPageActivity(){
-        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 }

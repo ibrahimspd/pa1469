@@ -60,5 +60,6 @@
     <string name="nav_header_desc" />
     <string name="nav_header_title">Title</string>
     <string name="nav_header_subtitle">Sub Title</string>
+    <string name="login">Login</string>
 
 </resources>

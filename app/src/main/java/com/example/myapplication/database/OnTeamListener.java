@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface OnTeamListener
 {
-    void onTeamFilled(ArrayList<Team> teams);
+    void onTeamFilled(Team teams);
     void onError(Exception exception);
 }
