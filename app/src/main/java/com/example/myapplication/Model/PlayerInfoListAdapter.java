@@ -13,7 +13,9 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.entites.Player;
 
 import java.util.ArrayList;
 
@@ -37,9 +39,9 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
     @Override
     public void onBindViewHolder(@NonNull PlayerInfoListAdapter.ViewHolder holder, int position) {
         Player player = playerArrayList.get(position);
-        holder.username.setText(player.getUsername());
-        holder.position.setText(player.getPosition());
-        holder.courseIV.setImageResource(player.getCourse_image());
+        holder.username.setText(player.getName());
+        holder.position.setText(player.getPostion());
+        Glide.with(context).load(player.getAvatar()).into(holder.courseIV);
     }
 
     @Override
