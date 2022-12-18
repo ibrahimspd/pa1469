@@ -28,14 +28,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.Model.AutocompleteAdapter;
 import com.example.myapplication.Model.PlayerItem;
@@ -43,7 +37,6 @@ import com.example.myapplication.Model.Utils;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.OnTeamListener;
-import com.example.myapplication.databinding.NavActivityGenerateLineupBinding;
 import com.example.myapplication.entites.Lineup;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
@@ -73,7 +66,6 @@ import okhttp3.Response;
 public class GenerateLineupActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private NavActivityGenerateLineupBinding binding;
 
     private static final int TEAM_INFO = R.id.teamInfo;
     private static final int GENERATE_LINEUP = R.id.generateLineup;
