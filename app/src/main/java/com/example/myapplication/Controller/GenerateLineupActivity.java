@@ -15,7 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +28,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.Model.AutocompleteAdapter;
 import com.example.myapplication.Model.PlayerItem;
@@ -34,11 +43,13 @@ import com.example.myapplication.Model.Utils;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.OnTeamListener;
+import com.example.myapplication.databinding.NavActivityGenerateLineupBinding;
 import com.example.myapplication.entites.Lineup;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,6 +59,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -59,6 +71,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class GenerateLineupActivity extends AppCompatActivity {
+
+    private AppBarConfiguration mAppBarConfiguration;
+    private NavActivityGenerateLineupBinding binding;
 
     private static final int TEAM_INFO = R.id.teamInfo;
     private static final int GENERATE_LINEUP = R.id.generateLineup;
@@ -77,6 +92,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_generate_lineup);
         context = this;
 
+
         positionInputFieldsIds.add(R.id.positionInput);
         positionInputFieldsIds.add(R.id.positionInput2);
         positionInputFieldsIds.add(R.id.positionInput3);
@@ -89,7 +105,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
         positionInputFieldsIds.add(R.id.positionInput10);
         positionInputFieldsIds.add(R.id.positionInput11);
 
-        FirestoreImpl firestore = new FirestoreImpl(db);
+        FirestoreImpl firestore = new FirestoreImpl();
         OnTeamListener teamListener = new OnTeamListener() {
             @Override
             public void onTeamFilled(Team loadedTeam) {
@@ -118,7 +134,6 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
             }
         });
 
@@ -309,10 +324,28 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
     public void setHints(String formationStr) {
         String json = Utils.getJsonFromAssets(this, "formations.json");
-        Map<String, List<String>> formation = gson.fromJson(json,  new TypeToken<Map<String, List<String>>>(){}.getType());;
-        for (int i = 0; i < positionInputFieldsIds.size(); i++) {
-            AutoCompleteTextView autoCompleteTextView = findViewById(positionInputFieldsIds.get(i));
-            autoCompleteTextView.setHint(formation.get(formationStr).get(i));
+        Map<String, List<String>> formation = gson.fromJson(json,  new TypeToken<Map<String, List<String>>>(){}.getType());
+        if(formation != null) {
+            List<String> positions = formation.get(formationStr);
+            for (int i = 0; i < positionInputFieldsIds.size(); i++) {
+                AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(positionInputFieldsIds.get(i));
+                String hint = positions.get(i);
+                autoCompleteTextView.setHint(hint);
+            }
         }
     }
+
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }*/
 }

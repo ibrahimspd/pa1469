@@ -115,11 +115,20 @@
             android:id="@+id/font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/font__monterrat_string"
+            android:text="@string/font__string"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/kit_style" />
+
+        <Spinner
+            android:id="@+id/fontDropDown"
+            android:layout_width="92dp"
+            android:layout_height="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/font"
+            app:layout_constraintStart_toEndOf="@+id/font"
+            app:layout_constraintTop_toTopOf="@+id/font"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -212,7 +221,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/secondary_"
             app:layout_constraintStart_toEndOf="@+id/secondary_"
             app:layout_constraintTop_toTopOf="@+id/secondary_" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -232,11 +240,10 @@
         app:layout_constraintTop_toBottomOf="@+id/background_ek3"
         app:layout_constraintVertical_bias="0.234">
 
-
         <ImageView
             android:id="@+id/teamBackground"
-            android:layout_width="271dp"
-            android:layout_height="130dp"
+            android:layout_width="241dp"
+            android:layout_height="100dp"
             android:layout_below="@+id/background_ek2"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/todo"
@@ -278,8 +285,8 @@
 
         <ImageView
             android:id="@+id/teamLogo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/logo_ek1"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/todo"
@@ -330,8 +337,8 @@
 
         <ImageView
             android:id="@+id/teamKit"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/teamKitTxt"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/todo"
@@ -361,5 +368,16 @@
         app:layout_constraintGuide_begin="205dp"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Save Changes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/background_ek1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

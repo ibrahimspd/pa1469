@@ -20,6 +20,8 @@ public interface Database
 
     void addTeam(Team team);
 
+    void updateTeam(Team team);
+
     Player getPlayer(String name);
 
     void addPlayer(Player player);

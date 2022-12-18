@@ -17,8 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     private TextView emailTxt;
     private TextView passwordTxt;
 
@@ -42,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void verifyUser(Credentials enteredCredentials){
-        FirestoreImpl firestore = new FirestoreImpl(db);
+        FirestoreImpl firestore = new FirestoreImpl();
         OnUserListener userListener = new OnUserListener() {
             @Override
             public void onUserFilled(Credentials credentials) {

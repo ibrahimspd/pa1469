@@ -19,7 +19,7 @@ public class TeamModel {
     }
 
     public Team getTeam() {
-        return new FirestoreImpl(db).getTeam("test");
+        return new FirestoreImpl().getTeam("test");
     }
 
     public void addTeam(String teamName, String manager){
@@ -38,7 +38,7 @@ public class TeamModel {
                 .setFont("rajdhani-bold")
                 .setManager(manager)
                 .build();
-        FirestoreImpl db = new FirestoreImpl(this.db);
+        FirestoreImpl db = new FirestoreImpl();
         db.addTeam(team);
     }
 }

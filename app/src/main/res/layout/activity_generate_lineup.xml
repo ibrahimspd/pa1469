@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/lineupImageView"
-        android:layout_width="294dp"
-        android:layout_height="255dp"
+        android:layout_width="282dp"
+        android:layout_height="216dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray"
         android:contentDescription="@string/todo"
@@ -281,7 +281,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation"></com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/bottom_navigation">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -291,15 +292,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_begin="195dp"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <!--<AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView"
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="336dp"
-        app:layout_constraintBottom_toTopOf="@+id/shareLineup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.231"
-        app:layout_constraintStart_toStartOf="parent" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
