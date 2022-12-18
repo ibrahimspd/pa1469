@@ -25,8 +25,6 @@
     <string name="nav_close">Close</string>
 
     <!-- Generate Lineup -->
-
-
     <string name="background_ek2_string">Background</string>
     <string name="kit_string">Kit</string>
     <string name="colors_ek1_string">Colors</string>
@@ -65,5 +63,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
