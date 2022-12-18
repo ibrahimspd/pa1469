@@ -19,6 +19,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Controller.MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.MyApplication.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Controller.RegisterActivity"
             android:exported="false">
             <meta-data
@@ -42,14 +51,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controller.TeamInfo"
-            android:exported="false"
-            android:label="@string/teamInfo">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Controller.StartActivity"
             android:exported="true">
             <intent-filter>
@@ -58,22 +59,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Controller.GenerateLineupActivity"
-            android:exported="false"
-            android:label="@string/generateLineup">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Controller.PlayersActivity"
-            android:exported="false"
-            android:label="@string/players">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

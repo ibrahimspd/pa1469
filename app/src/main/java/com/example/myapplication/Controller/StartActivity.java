@@ -33,7 +33,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void openLoginActivity(){
-        Intent intent = new Intent(this, GenerateLineupActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

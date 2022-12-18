@@ -7,11 +7,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,16 +23,18 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.OnTeamListener;
+import com.example.myapplication.databinding.FragmentTeamInfoBinding;
 import com.example.myapplication.entites.Team;
+import com.example.myapplication.Model.TeamInfoModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -41,15 +44,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class TeamInfo extends AppCompatActivity {
-
-    private static final int TEAM_INFO = R.id.teamInfo;
-    private static final int GENERATE_LINEUP = R.id.generateLineup;
-    private static final int PLAYERS = R.id.players;
+public class TeamInfoFragment extends Fragment {
 
     private Context context;
-
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private TextView teamName;
     private TextView manager;
@@ -70,8 +67,6 @@ public class TeamInfo extends AppCompatActivity {
 
     private final FirestoreImpl firestore = new FirestoreImpl();
 
-    private boolean teamInfoHasChanged = false;
-
     private ActivityResultLauncher<Intent> colorPickerLauncher;
     private ActivityResultLauncher<Intent> kitGalleryLauncher;
     private ActivityResultLauncher<Intent> logoGalleryLauncher;
@@ -79,13 +74,17 @@ public class TeamInfo extends AppCompatActivity {
 
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    private FragmentTeamInfoBinding binding;
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team_info);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        TeamInfoModel homeViewModel =
+                new ViewModelProvider(this).get(TeamInfoModel.class);
 
-        context = this;
+        binding = FragmentTeamInfoBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        context = getContext();
 
         OnTeamListener teamListener = new OnTeamListener() {
             @Override
@@ -100,16 +99,16 @@ public class TeamInfo extends AppCompatActivity {
             }
         };
 
-        teamName = findViewById(R.id.teamName);
-        manager = findViewById(R.id.manager);
-        language = findViewById(R.id.language);
-        teamLogo = findViewById(R.id.teamLogo);
-        teamBackground = findViewById(R.id.teamBackground);
-        teamKit = findViewById(R.id.teamKit);
-        mainColor = findViewById(R.id.mainColor);
-        secondaryColor = findViewById(R.id.secondaryColor);
-        fontColor = findViewById(R.id.fontColor);
-        saveButton = findViewById(R.id.saveButton);
+        teamName = binding.teamName;
+        manager = binding.manager;
+        language = binding.language;
+        teamLogo = binding.teamLogo;
+        teamBackground = binding.teamBackground;
+        teamKit = binding.teamKit;
+        mainColor = binding.mainColor;
+        secondaryColor = binding.secondaryColor;
+        fontColor = binding.fontColor;
+        saveButton = binding.saveButton;
 
         saveButton.setOnClickListener(v -> {
             firestore.updateTeam(updatedTeam);
@@ -117,36 +116,18 @@ public class TeamInfo extends AppCompatActivity {
 
         firestore.getTeam(teamListener);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottonnav);
 
-        bottomNavigationView.setSelectedItemId(TEAM_INFO);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case TEAM_INFO:
-                    return true;
-                case GENERATE_LINEUP:
-                    startActivity(new Intent(getApplicationContext(), GenerateLineupActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                case PLAYERS:
-                    startActivity(new Intent(getApplicationContext(), PlayersActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-            }
-            return false;
-        });
+        fontPicker = binding.fontDropDown;
 
-        fontPicker = findViewById(R.id.fontDropDown);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                 R.array.fonts, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         fontPicker.setAdapter(adapter);
 
         backgroundGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK) {
+            if (result.getResultCode() == getActivity().RESULT_OK) {
                 Intent data = result.getData();
                 if (data != null) {
                     StorageReference storageRef = storage.getReference();
@@ -161,7 +142,7 @@ public class TeamInfo extends AppCompatActivity {
                     Uri uri = data.getData();
                     InputStream imageStream = null;
                     try {
-                        imageStream = getContentResolver().openInputStream(uri);
+                        imageStream = getActivity().getContentResolver().openInputStream(uri);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -185,7 +166,7 @@ public class TeamInfo extends AppCompatActivity {
         });
 
         kitGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK) {
+            if (result.getResultCode() == getActivity().RESULT_OK) {
                 Intent data = result.getData();
                 if (data != null) {
                     StorageReference storageRef = storage.getReference();
@@ -199,7 +180,7 @@ public class TeamInfo extends AppCompatActivity {
                     Uri uri = data.getData();
                     InputStream imageStream = null;
                     try {
-                        imageStream = getContentResolver().openInputStream(uri);
+                        imageStream = getActivity().getContentResolver().openInputStream(uri);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -223,7 +204,7 @@ public class TeamInfo extends AppCompatActivity {
         });
 
         logoGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK) {
+            if (result.getResultCode() == getActivity().RESULT_OK) {
                 Intent data = result.getData();
                 if (data != null) {
                     StorageReference storageRef = storage.getReference();
@@ -237,7 +218,7 @@ public class TeamInfo extends AppCompatActivity {
                     Uri uri = data.getData();
                     InputStream imageStream = null;
                     try {
-                        imageStream = getContentResolver().openInputStream(uri);
+                        imageStream = getActivity().getContentResolver().openInputStream(uri);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -264,7 +245,6 @@ public class TeamInfo extends AppCompatActivity {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             photoPickerIntent.putExtra("type", "background");
-            photoPickerIntent.addCategory("background");
             backgroundGalleryLauncher.launch(photoPickerIntent);
         });
 
@@ -283,26 +263,26 @@ public class TeamInfo extends AppCompatActivity {
         });
 
         colorPickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    Intent data = result.getData();
-                    String colorType = data.getStringExtra("colorType");
-                    String hexColor = data.getStringExtra("hexColor");
-                    int color = data.getIntExtra("color", 0);
-                    if(colorType.equals("mainColor")){
-                        mainColor.setBackgroundColor(color);
-                        updatedTeam.setMainColor(hexColor);
-                    } else if(colorType.equals("secondaryColor")){
-                        secondaryColor.setBackgroundColor(color);
-                        updatedTeam.setSecondaryColor(hexColor);
-                    } else if(colorType.equals("fontColor")){
-                        fontColor.setBackgroundColor(color);
-                        updatedTeam.setFontColor(hexColor);
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK) {
+                        Intent data = result.getData();
+                        String colorType = data.getStringExtra("colorType");
+                        String hexColor = data.getStringExtra("hexColor");
+                        int color = data.getIntExtra("color", 0);
+                        if(colorType.equals("mainColor")){
+                            mainColor.setBackgroundColor(color);
+                            updatedTeam.setMainColor(hexColor);
+                        } else if(colorType.equals("secondaryColor")){
+                            secondaryColor.setBackgroundColor(color);
+                            updatedTeam.setSecondaryColor(hexColor);
+                        } else if(colorType.equals("fontColor")){
+                            fontColor.setBackgroundColor(color);
+                            updatedTeam.setFontColor(hexColor);
+                        }
+                        Log.d(TAG, "onActivityResult: " + colorType + " " + color);
                     }
-                    Log.d(TAG, "onActivityResult: " + colorType + " " + color);
-                }
-            });
+                });
 
         fontPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -318,6 +298,7 @@ public class TeamInfo extends AppCompatActivity {
         });
 
 
+        return root;
     }
 
     public void displayTeamInfo() {
@@ -366,7 +347,7 @@ public class TeamInfo extends AppCompatActivity {
             Glide.with(context).load(teamBackgroundUrl).into(teamBackground);
         mainColor.setBackgroundColor(Color.parseColor(team.getMainColor()));
         mainColor.setOnClickListener(view -> {
-            Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
+            Intent intent = new Intent(context, ColorPicker.class);
             intent.putExtra("colorType", "mainColor");
             intent.putExtra("color", team.getMainColor());
             colorPickerLauncher.launch(intent);
@@ -374,19 +355,32 @@ public class TeamInfo extends AppCompatActivity {
 
         secondaryColor.setBackgroundColor(Color.parseColor(team.getSecondaryColor()));
         secondaryColor.setOnClickListener(view -> {
-            Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
+            Intent intent = new Intent(context, ColorPicker.class);
             intent.putExtra("colorType", "secondaryColor");
             intent.putExtra("color", team.getSecondaryColor());
             colorPickerLauncher.launch(intent);
         });
 
         fontColor.setBackgroundColor(Color.parseColor(team.getFontColor()));
+
         fontColor.setOnClickListener(view -> {
-            Intent intent = new Intent(TeamInfo.this, ColorPicker.class);
+            Intent intent = new Intent(context, ColorPicker.class);
             intent.putExtra("colorType", "fontColor");
             intent.putExtra("color", team.getFontColor());
             colorPickerLauncher.launch(intent);
         });
+        binding.coreInfoBox.setVisibility(View.VISIBLE);
+        binding.colorBox.setVisibility(View.VISIBLE);
+        binding.lineupConfigBox.setVisibility(View.VISIBLE);
+        binding.logoBox.setVisibility(View.VISIBLE);
+        binding.kitBox.setVisibility(View.VISIBLE);
+        binding.backgroundBox.setVisibility(View.VISIBLE);
+        binding.saveButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
-

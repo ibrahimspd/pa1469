@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/teamInfoFragment"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Log out (Not added)" />
+        <item
+            android:id="@+id/generateLineupFragment"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Profile (Not added)" />
+        <item
+            android:id="@+id/playersFragment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Admin View (Not added)" />
+    </group>
+</menu>

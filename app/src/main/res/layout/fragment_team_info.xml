@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_img"
-    android:backgroundTint="#800E0C0C"
+    android:backgroundTint="?colorOnSecondary"
     android:backgroundTintMode="src_over"
-    tools:context=".Controller.TeamInfo">
+    tools:context=".Controller.TeamInfoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/logo_ek2"
+        android:id="@+id/coreInfoBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/box_background"
         android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/teamName"
-            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/team" />
@@ -38,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/teamLanguage"
-            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/manager" />
@@ -48,7 +47,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/teamManager"
-            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/teamName" />
@@ -59,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="@string/team_string"
-            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,21 +66,21 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/colors_ek2"
+        android:id="@+id/lineupConfigBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/box_background"
         android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="@+id/colors">
+        app:layout_constraintTop_toTopOf="@+id/colorBox">
 
         <TextView
             android:id="@+id/lineup_config"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/teamLineupConfig"
-            android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,32 +88,45 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/layout"
+            android:id="@+id/layoutTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/layout__default_string"
-            android:textColor="@color/white"
+            android:text="Layout:"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lineup_config" />
+
+        <Spinner
+            android:id="@+id/layoutDropDown"
+            android:layout_width="92dp"
+            android:layout_height="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/layoutTxt"
+            app:layout_constraintStart_toEndOf="@+id/layoutTxt"
+            app:layout_constraintTop_toTopOf="@+id/layoutTxt" />
 
         <TextView
             android:id="@+id/kit_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/kit_style__logo_string"
-            android:textColor="@color/white"
+            android:text="Kit Style:"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutTxt" />
+
+        <Spinner
+            android:id="@+id/kitStyleDropDown"
+            android:layout_width="92dp"
+            android:layout_height="18dp"
+            app:layout_constraintBottom_toBottomOf="@+id/kit_style"
+            app:layout_constraintStart_toEndOf="@+id/kit_style"
+            app:layout_constraintTop_toTopOf="@+id/kit_style"/>
 
         <TextView
             android:id="@+id/font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/font__string"
-            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/kit_style" />
@@ -127,30 +137,29 @@
             android:layout_height="18dp"
             app:layout_constraintBottom_toBottomOf="@+id/font"
             app:layout_constraintStart_toEndOf="@+id/font"
-            app:layout_constraintTop_toTopOf="@+id/font"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/font" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/colors"
+        android:id="@+id/colorBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/box_background"
         android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_ek2">
+        app:layout_constraintTop_toBottomOf="@+id/coreInfoBox">
 
         <TextView
-            android:id="@+id/colors_ek1"
+            android:id="@+id/colorBoxTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/colors_ek1_string"
-            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -158,95 +167,90 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/main_"
+            android:id="@+id/mainColorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="@string/main__string"
-            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/colors_ek1" />
+            app:layout_constraintTop_toBottomOf="@+id/colorBoxTitle" />
 
         <TextView
-            android:id="@+id/secondary_"
+            android:id="@+id/secondaryColorTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/secondary__string"
-            android:textColor="@color/white"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_" />
+            app:layout_constraintTop_toBottomOf="@+id/mainColorText" />
 
         <TextView
-            android:id="@+id/font_"
+            android:id="@+id/fontColorTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/font__string"
-            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/secondary_" />
+            app:layout_constraintTop_toBottomOf="@+id/secondaryColorTxt" />
 
         <ImageView
             android:id="@+id/mainColor"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginStart="8dp"
-            android:background="@color/white"
             android:contentDescription="@string/todo"
-            app:layout_constraintBottom_toBottomOf="@+id/main_"
-            app:layout_constraintStart_toEndOf="@+id/main_"
-            app:layout_constraintTop_toTopOf="@+id/main_" />
+            app:layout_constraintBottom_toBottomOf="@+id/mainColorText"
+            app:layout_constraintStart_toEndOf="@+id/mainColorText"
+            app:layout_constraintTop_toTopOf="@+id/mainColorText" />
 
         <ImageView
             android:id="@+id/fontColor"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginStart="8dp"
-            android:background="@color/white"
             android:contentDescription="@string/todo"
-            app:layout_constraintBottom_toBottomOf="@+id/font_"
-            app:layout_constraintStart_toEndOf="@+id/font_"
-            app:layout_constraintTop_toTopOf="@+id/font_" />
+            app:layout_constraintBottom_toBottomOf="@+id/fontColorTxt"
+            app:layout_constraintStart_toEndOf="@+id/fontColorTxt"
+            app:layout_constraintTop_toTopOf="@+id/fontColorTxt" />
 
         <ImageView
             android:id="@+id/secondaryColor"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/secondary_"
-            android:background="@color/white"
+            android:layout_toEndOf="@+id/secondaryColorTxt"
             android:contentDescription="@string/todo"
-            app:layout_constraintBottom_toBottomOf="@+id/secondary_"
-            app:layout_constraintStart_toEndOf="@+id/secondary_"
-            app:layout_constraintTop_toTopOf="@+id/secondary_" />
+            app:layout_constraintBottom_toBottomOf="@+id/secondaryColorTxt"
+            app:layout_constraintStart_toEndOf="@+id/secondaryColorTxt"
+            app:layout_constraintTop_toTopOf="@+id/secondaryColorTxt" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/background_ek1"
+        android:id="@+id/backgroundBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/background_ek3"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="92dp"
         android:background="@drawable/box_background"
         android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/background_ek3"
+        app:layout_constraintTop_toBottomOf="@+id/kitBox"
         app:layout_constraintVertical_bias="0.234">
 
         <ImageView
             android:id="@+id/teamBackground"
-            android:layout_width="241dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/background_ek2"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/todo"
+            android:maxWidth="100dp"
+            android:maxHeight="200dp"
             android:src="@drawable/bild_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.507"
@@ -261,7 +265,6 @@
             android:layout_gravity="center_horizontal|center"
             android:gravity="center"
             android:text="@string/background_ek2_string"
-            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/teamBackground"
@@ -274,14 +277,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/logo"
+        android:id="@+id/logoBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/box_background"
         android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/background_ek3">
+        app:layout_constraintTop_toTopOf="@+id/kitBox">
 
         <ImageView
             android:id="@+id/teamLogo"
@@ -302,7 +306,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logo_ek1_string"
-            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -312,23 +315,23 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/background_ek3"
+        android:id="@+id/kitBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/box_background"
         android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.594"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/colors_ek2">
+        app:layout_constraintTop_toBottomOf="@+id/lineupConfigBox">
 
         <TextView
-            android:id="@+id/teamKitTxt"
+            android:id="@+id/kitBoxTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/kit_string"
-            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -339,25 +342,15 @@
             android:id="@+id/teamKit"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_below="@+id/teamKitTxt"
+            android:layout_below="@+id/kitBoxTitle"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/todo"
             android:src="@drawable/tarwfootball_kits_br_plainstripe_removebg_preview_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teamKitTxt"
+            app:layout_constraintTop_toBottomOf="@+id/kitBoxTitle"
             tools:ignore="ImageContrastCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottonnav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -375,9 +368,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Save Changes"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/background_ek1" />
+        app:layout_constraintTop_toBottomOf="@+id/backgroundBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
