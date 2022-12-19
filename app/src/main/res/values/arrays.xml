@@ -60,4 +60,26 @@
         <item>532</item>
         <item>4411</item>
     </string-array>
+
+    <string-array name="fonts">
+        <item>Rajdhani</item>
+        <item>Monteserrat</item>
+        <item>Roboto</item>
+        <item>Dragon</item>
+        <item>Asphaltic</item>
+        <item>Script</item>
+        <item>London</item>
+        <item>White-nt</item>
+        <item>Azonix</item>
+        <item>Glitch</item>
+        <item>Jefferson</item>
+        <item>Adel</item>
+        <item>Rockwell</item>
+        <item>Digital</item>
+        <item>Varsity</item>
+        <item>Mister October</item>
+        <item>Edosz</item>
+        <item>Poetsen</item>
+        <item>Signature</item>
+    </string-array>
 </resources>

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.example.myapplication.NavigationDrawer;
 import com.example.myapplication.R;
 
 public class StartActivity extends AppCompatActivity {
@@ -34,7 +33,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void openLoginActivity(){
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

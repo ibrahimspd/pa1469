@@ -17,10 +17,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirestoreImpl implements Database {
-    private FirebaseFirestore db;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public FirestoreImpl(FirebaseFirestore db) {
-        this.db = db;
+    public FirestoreImpl() {
     }
 
     @Override
@@ -81,6 +80,12 @@ public class FirestoreImpl implements Database {
 
     @Override
     public void addTeam(Team team) {
+        CollectionReference teams = db.collection("teams");
+        teams.document(team.getName()).set(team);
+    }
+
+    @Override
+    public void updateTeam(Team team) {
         CollectionReference teams = db.collection("teams");
         teams.document(team.getName()).set(team);
     }

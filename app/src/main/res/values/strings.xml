@@ -25,8 +25,6 @@
     <string name="nav_close">Close</string>
 
     <!-- Generate Lineup -->
-
-
     <string name="background_ek2_string">Background</string>
     <string name="kit_string">Kit</string>
     <string name="colors_ek1_string">Colors</string>
@@ -57,7 +55,7 @@
     <string name="menu_slideshow" />
     <string name="menu_gallery" />
     <string name="menu_home" />
-    <string name="nav_header_desc" />
+    <string name="nav_header_desc"> Test</string>
     <string name="nav_header_title">Title</string>
     <string name="nav_header_subtitle">Sub Title</string>
     <string name="login">Login</string>
@@ -65,5 +63,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="show_profile" />
 
 </resources>
