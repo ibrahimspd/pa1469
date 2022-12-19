@@ -16,8 +16,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -26,7 +27,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.Model.AutocompleteAdapter;
 import com.example.myapplication.Model.PlayerItem;
@@ -34,10 +37,14 @@ import com.example.myapplication.Model.Utils;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.OnTeamListener;
+import com.example.myapplication.databinding.FragmentGenerateLineupBinding;
 import com.example.myapplication.entites.Lineup;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.myapplication.Model.GenerateLineupModel;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,48 +55,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class GenerateLineupActivity extends AppCompatActivity {
+public class GenerateLineupFragment extends Fragment {
 
-    private static final int TEAM_INFO = R.id.teamInfo;
-    private static final int GENERATE_LINEUP = R.id.generateLineup;
-    private static final int PLAYERS = R.id.players;
+    private FragmentGenerateLineupBinding binding;
 
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Team team;
     private final static Gson gson = new Gson();
     private Context context;
 
-    List<Integer> positionInputFieldsIds = new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_generate_lineup);
-        context = this;
+    List<AutoCompleteTextView> positionInputFieldsIds = new ArrayList<>();
 
-        positionInputFieldsIds.add(R.id.positionInput);
-        positionInputFieldsIds.add(R.id.positionInput2);
-        positionInputFieldsIds.add(R.id.positionInput3);
-        positionInputFieldsIds.add(R.id.positionInput4);
-        positionInputFieldsIds.add(R.id.positionInput5);
-        positionInputFieldsIds.add(R.id.positionInput6);
-        positionInputFieldsIds.add(R.id.positionInput7);
-        positionInputFieldsIds.add(R.id.positionInput8);
-        positionInputFieldsIds.add(R.id.positionInput9);
-        positionInputFieldsIds.add(R.id.positionInput10);
-        positionInputFieldsIds.add(R.id.positionInput11);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        GenerateLineupModel generateLineupModel =
+                new ViewModelProvider(this).get(GenerateLineupModel.class);
 
-        FirestoreImpl firestore = new FirestoreImpl(db);
+        binding = FragmentGenerateLineupBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        context = root.getContext();
+
+        positionInputFieldsIds.clear();
+        positionInputFieldsIds.add(binding.positionInput);
+        positionInputFieldsIds.add(binding.positionInput2);
+        positionInputFieldsIds.add(binding.positionInput3);
+        positionInputFieldsIds.add(binding.positionInput4);
+        positionInputFieldsIds.add(binding.positionInput5);
+        positionInputFieldsIds.add(binding.positionInput6);
+        positionInputFieldsIds.add(binding.positionInput7);
+        positionInputFieldsIds.add(binding.positionInput8);
+        positionInputFieldsIds.add(binding.positionInput9);
+        positionInputFieldsIds.add(binding.positionInput10);
+        positionInputFieldsIds.add(binding.positionInput11);
+
+        FirestoreImpl firestore = new FirestoreImpl();
         OnTeamListener teamListener = new OnTeamListener() {
             @Override
             public void onTeamFilled(Team loadedTeam) {
@@ -104,11 +109,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
         loadPlayerDropdown();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottonnav);
-        bottomNavigationView.setSelectedItemId(GENERATE_LINEUP);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this::goToActivity);
-
-        Spinner formationPicker = findViewById(R.id.formationSpinner);
+        Spinner formationPicker = binding.formationSpinner;
 
         formationPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -118,18 +119,17 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
             }
         });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(binding.getRoot().getContext(),
                 R.array.formations, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         formationPicker.setAdapter(adapter);
 
-        Button generateLineupButton = findViewById(GENERATE_LINEUP);
+        Button generateLineupButton = binding.generateLineup;
         generateLineupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,10 +137,10 @@ public class GenerateLineupActivity extends AppCompatActivity {
             }
         });
 
-        Button downloadLineupButton = findViewById(R.id.goBackButton);
+        Button downloadLineupButton = binding.goBackButton;
         downloadLineupButton.setOnClickListener(view -> {
             Bitmap bitmap = null;
-            ImageView imageView = findViewById(R.id.lineupImageView);
+            ImageView imageView = binding.lineupImageView;
             imageView.setDrawingCacheEnabled(true);
             bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
             try {
@@ -150,13 +150,13 @@ public class GenerateLineupActivity extends AppCompatActivity {
             }
         });
 
-        Button shareLineupButton = findViewById(R.id.shareLineup);
+        Button shareLineupButton = binding.shareLineup;
         shareLineupButton.setOnClickListener(view -> {
-            ImageView imageView = findViewById(R.id.lineupImageView);
+            ImageView imageView = binding.lineupImageView;
             Drawable mDrawable = imageView.getDrawable();
             Bitmap mBitmap = ((BitmapDrawable) mDrawable).getBitmap();
 
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), mBitmap, "Image Description", null);
+            String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mBitmap, "Image Description", null);
             Uri uri = Uri.parse(path);
 
             Intent intent = new Intent(Intent.ACTION_SEND);
@@ -164,6 +164,13 @@ public class GenerateLineupActivity extends AppCompatActivity {
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             startActivity(Intent.createChooser(intent, "Share Image"));
         });
+        return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void createLineup() {
@@ -174,19 +181,11 @@ public class GenerateLineupActivity extends AppCompatActivity {
                 MediaType mediaType = MediaType.parse("application/json");
 
                 List<Player> players = new ArrayList<>();
-                players.add(addPlayerFromInputFieldById(R.id.positionInput,1));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput2,2));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput3,3));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput4, 4));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput5,5));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput6,6));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput7,7));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput8,8));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput9,9));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput10,10));
-                players.add(addPlayerFromInputFieldById(R.id.positionInput11,11));
+                for (AutoCompleteTextView positionInputField : positionInputFieldsIds) {
+                    players.add(addPlayerFromInputFieldById(positionInputField));
+                }
 
-                ImageView imageView = findViewById(R.id.lineupImageView);
+                ImageView imageView = binding.lineupImageView;
                 Lineup lineup = new Lineup(players, team, "352");
                 Gson gson = new Gson();
                 String json = gson.toJson(lineup);
@@ -201,7 +200,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
                     InputStream inputStream = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                    runOnUiThread(new Runnable(){
+                    getActivity().runOnUiThread(new Runnable(){
                         @Override
                         public void run() {
 
@@ -228,31 +227,14 @@ public class GenerateLineupActivity extends AppCompatActivity {
         playerItems.add(new PlayerItem("Messi", "https://cdn.futbin.com/content/fifa23/img/players/158023.png?v=23", "RW"));
         playerItems.add(new PlayerItem("Kane", "https://cdn.futbin.com/content/fifa23/img/players/202126.png?v=23", "ST"));
         playerItems.add(new PlayerItem("Neymar", "https://cdn.futbin.com/content/fifa23/img/players/190871.png?v=23", "LW"));
-        addAutocomplete(playerItems, context);
+        addAutocomplete(playerItems, binding.getRoot().getContext());
         setHints("352");
-    }
-
-    private boolean goToActivity(MenuItem item) {
-        switch (item.getItemId()) {
-            case TEAM_INFO:
-                startActivity(new Intent(getApplicationContext(), TeamInfo.class));
-                overridePendingTransition(0, 0);
-                return true;
-            case GENERATE_LINEUP:
-                return true;
-            case PLAYERS:
-                startActivity(new Intent(getApplicationContext(), PlayersActivity.class));
-                overridePendingTransition(0, 0);
-                return true;
-            default:
-                return false;
-        }
     }
 
     private void addAutocomplete(List<PlayerItem> playerItems, Context context) {
         for (int i = 0; i < positionInputFieldsIds.size(); i++) {
             AutocompleteAdapter adapter = new AutocompleteAdapter(context, playerItems);
-            AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(positionInputFieldsIds.get(i));
+            AutoCompleteTextView autoCompleteTextView = positionInputFieldsIds.get(i);
             autoCompleteTextView.setAdapter(adapter);
             autoCompleteTextView.setOnClickListener(v -> autoCompleteTextView.showDropDown());
         }
@@ -262,7 +244,7 @@ public class GenerateLineupActivity extends AppCompatActivity {
         OutputStream fos;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContentResolver resolver = this.getContentResolver();
+            ContentResolver resolver = getActivity().getContentResolver();
             ContentValues contentValues = new ContentValues();
             contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "Lineup");
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png");
@@ -285,15 +267,14 @@ public class GenerateLineupActivity extends AppCompatActivity {
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 
-        Toast toast = Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(binding.getRoot().getContext(), "Image saved", Toast.LENGTH_SHORT);
         toast.show();
 
         fos.flush();
         fos.close();
     }
 
-    public Player addPlayerFromInputFieldById(int id, Integer index){
-        AutoCompleteTextView editText = findViewById(id);
+    public Player addPlayerFromInputFieldById(AutoCompleteTextView editText){
         String playerName = editText.getText().toString();
         if (playerName.equals("")){
             playerName = "Bot";
@@ -308,11 +289,18 @@ public class GenerateLineupActivity extends AppCompatActivity {
     }
 
     public void setHints(String formationStr) {
-        String json = Utils.getJsonFromAssets(this, "formations.json");
-        Map<String, List<String>> formation = gson.fromJson(json,  new TypeToken<Map<String, List<String>>>(){}.getType());;
-        for (int i = 0; i < positionInputFieldsIds.size(); i++) {
-            AutoCompleteTextView autoCompleteTextView = findViewById(positionInputFieldsIds.get(i));
-            autoCompleteTextView.setHint(formation.get(formationStr).get(i));
+        String json = Utils.getJsonFromAssets(binding.getRoot().getContext(), "formations.json");
+        Map<String, List<String>> formation = gson.fromJson(json,  new TypeToken<Map<String, List<String>>>(){}.getType());
+        if(formation != null) {
+            List<String> positions = formation.get(formationStr);
+            System.out.println(positions);
+            for (int i = 0; i < positionInputFieldsIds.size(); i++) {
+                System.out.println("Test");
+                System.out.println(i);
+                AutoCompleteTextView autoCompleteTextView = positionInputFieldsIds.get(i);
+                String hint = positions.get(i);
+                autoCompleteTextView.setHint(hint);
+            }
         }
     }
 }

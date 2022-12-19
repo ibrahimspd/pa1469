@@ -8,7 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class Authentication {
 
     private Credentials credentials;
-    private FirestoreImpl db = new FirestoreImpl(FirebaseFirestore.getInstance());
+    private FirestoreImpl db = new FirestoreImpl();
 
     public boolean authenticateUser(Credentials credentials, OnUserListener listener){
         return credentials != null;
