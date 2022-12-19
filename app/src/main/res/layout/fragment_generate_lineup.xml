@@ -7,7 +7,7 @@
     android:background="@drawable/background_img"
     android:backgroundTint="#dd0E0C0C"
     android:backgroundTintMode="src_over"
-    tools:context=".Controller.GenerateLineupActivity">
+    tools:context=".Controller.MainActivity">
 
         <ImageView
             android:id="@+id/lineupImageView"

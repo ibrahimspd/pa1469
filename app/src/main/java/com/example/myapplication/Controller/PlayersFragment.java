@@ -63,4 +63,3 @@ public class PlayersFragment extends Fragment {
         binding = null;
     }
 }
-

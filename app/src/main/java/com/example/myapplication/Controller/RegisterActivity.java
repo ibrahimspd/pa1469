@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.Model.Authentication;
 import com.example.myapplication.R;
+import com.example.myapplication.database.listeners.user.OnAddUserListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,10 +48,27 @@ public class RegisterActivity extends AppCompatActivity {
 
             Pattern pattern = Pattern.compile(regex);
 
+            OnAddUserListener listener = new OnAddUserListener() {
+                @Override
+                public void onUserAdded(Boolean added) {
+                    if (Boolean.TRUE.equals(added)) {
+                        Toast.makeText(RegisterActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Account Creation Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onError(Exception exception) {
+                    Toast.makeText(RegisterActivity.this, "Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            };
+
             Matcher matcher = pattern.matcher(emailText.getText().toString());
             if(passText.getText().toString().equals(confPassText.getText().toString()) && matcher.matches()){
                 Authentication auth = new Authentication();
-                auth.createUser(emailText.getText().toString(), passText.getText().toString());
+                auth.createUser(listener, emailText.getText().toString(), passText.getText().toString());
                 finish();
             }
             else{

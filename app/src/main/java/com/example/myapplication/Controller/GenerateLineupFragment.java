@@ -36,13 +36,12 @@ import com.example.myapplication.Model.PlayerItem;
 import com.example.myapplication.Model.Utils;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.OnTeamListener;
+import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.databinding.FragmentGenerateLineupBinding;
 import com.example.myapplication.entites.Lineup;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.example.myapplication.Model.GenerateLineupModel;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -95,7 +94,7 @@ public class GenerateLineupFragment extends Fragment {
         positionInputFieldsIds.add(binding.positionInput11);
 
         FirestoreImpl firestore = new FirestoreImpl();
-        OnTeamListener teamListener = new OnTeamListener() {
+        OnGetTeamListener teamListener = new OnGetTeamListener() {
             @Override
             public void onTeamFilled(Team loadedTeam) {
                 team = loadedTeam;
@@ -105,7 +104,7 @@ public class GenerateLineupFragment extends Fragment {
                 Log.d(TAG, "onError: " + exception.getMessage());
             }
         };
-        firestore.getTeam(teamListener);
+        firestore.getTeam(teamListener, "test");
 
         loadPlayerDropdown();
 

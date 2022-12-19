@@ -7,7 +7,7 @@
     android:background="@drawable/background_img"
     android:backgroundTint="#dd0E0C0C"
     android:backgroundTintMode="src_over"
-    tools:context=".Controller.PlayersActivity">
+    tools:context=".Controller.Pla">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottonnav"

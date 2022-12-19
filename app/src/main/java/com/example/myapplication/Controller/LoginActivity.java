@@ -11,9 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.OnUserListener;
+import com.example.myapplication.database.listeners.user.OnGetUserListener;
 import com.example.myapplication.entites.Credentials;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void verifyUser(Credentials enteredCredentials){
         FirestoreImpl firestore = new FirestoreImpl();
-        OnUserListener userListener = new OnUserListener() {
+        OnGetUserListener userListener = new OnGetUserListener() {
             @Override
             public void onUserFilled(Credentials credentials) {
                 if(credentials.equals(enteredCredentials)){
