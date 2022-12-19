@@ -96,6 +96,7 @@ lint/tmp/
 .idea/sonarlint/issuestore/b/7/b799dec870d8e5a9a3364634a1fecc5c0a87fe68
 .idea/sonarlint/issuestore/1/c/1c53c7de5e0eba053bf05619520934f21c94adeb
 .idea/sonarlint/issuestore/a/9/a9341193dce312026bf96fd3dc141a0011c68d32
+*.deb
 .idea/sonarlint/issuestore/1/9/1921d0cb5a1dd5a78c1bebd732325ce9ce7ab77d
 .idea/sonarlint/issuestore/3/b/3b0c0ba3f97ef85193abe30d0a1d0db06805750c
 .idea/sonarlint/issuestore/b/6/b62c573a0f5146311184aef08c62a9328c159c13
