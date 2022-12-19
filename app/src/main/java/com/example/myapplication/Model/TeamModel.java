@@ -2,24 +2,36 @@ package com.example.myapplication.Model;
 
 import static android.content.ContentValues.TAG;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.example.myapplication.database.FirestoreImpl;
+import com.example.myapplication.database.listeners.team.OnAddTeamListener;
+import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.entites.Team;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class TeamModel {
-    private Team team;
-    private FirebaseFirestore db;
 
-    public TeamModel(FirebaseFirestore db, String teamName) {
+    private final FirestoreImpl db = new FirestoreImpl();
+    private Team team;
+
+    public TeamModel(String teamName) {
         Log.d(TAG, "TeamModel: " + teamName);
-        this.db = db;
     }
 
-    public Team getTeam() {
-        return new FirestoreImpl().getTeam("test");
+    public void getTeam(String username) {
+        OnGetTeamListener listener = new OnGetTeamListener() {
+            @Override
+            public void onTeamFilled(Team fetchedTeam) {
+                Log.d(TAG, "onTeamFilled: " + fetchedTeam.getName());
+                team = fetchedTeam;
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Log.d(TAG, "onError: " + exception.getMessage());
+            }
+        };
+        db.getTeam(listener,username);
     }
 
     public void addTeam(String teamName, String manager){
@@ -38,7 +50,21 @@ public class TeamModel {
                 .setFont("rajdhani-bold")
                 .setManager(manager)
                 .build();
-        FirestoreImpl db = new FirestoreImpl();
-        db.addTeam(team);
+        OnAddTeamListener listener = new OnAddTeamListener() {
+            @Override
+            public void onTeamFilled(Boolean added) {
+                if (added) {
+                    Log.d(TAG, "onTeamFilled: " + team.getName());
+                }
+                else
+                    Log.d(TAG, "onTeamFilled: " + "Team not added");
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Log.d(TAG, "onError: " + exception.getMessage());
+            }
+        };
+        db.addTeam(listener, team);
     }
 }

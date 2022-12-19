@@ -2,6 +2,7 @@ package com.example.myapplication.Controller;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,13 +30,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.OnTeamListener;
+import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.databinding.FragmentTeamInfoBinding;
 import com.example.myapplication.entites.Team;
 import com.example.myapplication.Model.TeamInfoModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -86,12 +86,13 @@ public class TeamInfoFragment extends Fragment {
 
         context = getContext();
 
-        OnTeamListener teamListener = new OnTeamListener() {
+        OnGetTeamListener teamListener = new OnGetTeamListener() {
             @Override
             public void onTeamFilled(Team fetchedTeam) {
                 team = fetchedTeam;
                 updatedTeam = fetchedTeam;
-                displayTeamInfo();
+                if(team != null)
+                    displayTeamInfo();
             }
             @Override
             public void onError(Exception exception) {
@@ -114,9 +115,7 @@ public class TeamInfoFragment extends Fragment {
             firestore.updateTeam(updatedTeam);
         });
 
-        firestore.getTeam(teamListener);
-
-
+        firestore.getTeam(teamListener, "test");
 
         fontPicker = binding.fontDropDown;
 
@@ -127,7 +126,8 @@ public class TeamInfoFragment extends Fragment {
         fontPicker.setAdapter(adapter);
 
         backgroundGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == getActivity().RESULT_OK) {
+            getActivity();
+            if (result.getResultCode() == Activity.RESULT_OK) {
                 Intent data = result.getData();
                 if (data != null) {
                     StorageReference storageRef = storage.getReference();

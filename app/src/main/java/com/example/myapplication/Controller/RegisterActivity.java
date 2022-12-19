@@ -3,6 +3,7 @@ package com.example.myapplication.Controller;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.database.FirestoreImpl;
+import com.example.myapplication.database.listeners.player.OnAddPlayerListener;
 import com.example.myapplication.entites.Player;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.myapplication.Model.Authentication;
 import com.example.myapplication.R;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.hbb20.CountryPickerView;
 
 import java.util.regex.Matcher;
@@ -55,6 +55,22 @@ public class RegisterActivity extends AppCompatActivity {
 
             Pattern pattern = Pattern.compile(regex);
 
+            OnAddPlayerListener listener = new OnAddPlayerListener() {
+                @Override
+                public void onPlayerAdded(Boolean added) {
+                    if (Boolean.TRUE.equals(added)) {
+                        Toast.makeText(RegisterActivity.this, "Account Created", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Account Creation Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onError(Exception exception) {
+                    Toast.makeText(RegisterActivity.this, "Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            };
 
             Matcher matcher = pattern.matcher(emailText.getText().toString());
             String countryName = cpp.getTvCountryInfo().getText().toString();
@@ -79,9 +95,9 @@ public class RegisterActivity extends AppCompatActivity {
 
            
                 FirestoreImpl firestore = new FirestoreImpl();
-                firestore.addPlayer(player);
+                firestore.addPlayer(listener, player);
                 Authentication auth = new Authentication();
-                auth.createUser(emailText.getText().toString(), passText.getText().toString());
+                //auth.createUser(listener, emailText.getText().toString(), passText.getText().toString());
                 finish();
             
             }else{
