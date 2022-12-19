@@ -96,3 +96,4 @@ lint/tmp/
 .idea/sonarlint/issuestore/b/7/b799dec870d8e5a9a3364634a1fecc5c0a87fe68
 .idea/sonarlint/issuestore/1/c/1c53c7de5e0eba053bf05619520934f21c94adeb
 .idea/sonarlint/issuestore/a/9/a9341193dce312026bf96fd3dc141a0011c68d32
+*.deb
