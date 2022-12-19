@@ -9,7 +9,7 @@ public class Authentication {
     private Credentials credentials;
     private FirestoreImpl db = new FirestoreImpl();
 
-    public boolean authenticateUser(Credentials credentials, OnUserListener listener){
+    public boolean authenticateUser(Credentials credentials, OnAddUserListener listener){
         return credentials != null;
     }
 
