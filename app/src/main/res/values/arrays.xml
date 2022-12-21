@@ -10,6 +10,35 @@
         <item>reply_all</item>
     </string-array>
 
+    <string-array name="users">
+        <item>User1</item>
+        <item>User2</item>
+        <item>User3</item>
+        <item>User4</item>
+    </string-array>
+
+    <string-array name="positions">
+        <item>GK</item>
+        <item>LWB</item>
+        <item>LB</item>
+        <item>CB</item>
+        <item>RWB</item>
+        <item>RB</item>
+        <item>CDM</item>
+        <item>CM</item>
+        <item>LM</item>
+        <item>RM</item>
+        <item>CAM</item>
+        <item>LAM</item>
+        <item>RAM</item>
+        <item>LW</item>
+        <item>RW</item>
+        <item>LF</item>
+        <item>CF</item>
+        <item>RF</item>
+        <item>FWD</item>
+    </string-array>
+
     <string-array name="formations">
         <item>352</item>
         <item>3142</item>
@@ -32,25 +61,25 @@
         <item>4411</item>
     </string-array>
 
-    <string-array name="positionSpinner">
-        <item>352</item>
-        <item>3142</item>
-        <item>343</item>
-        <item>3421</item>
-        <item>41212(2)</item>
-        <item>41212</item>
-        <item>433</item>
-        <item>433(2)</item>
-        <item>433(3)</item>
-        <item>433(4)</item>
-        <item>433(5)</item>
-        <item>451</item>
-        <item>4231</item>
-        <item>442</item>
-        <item>4321</item>
-        <item>4222</item>
-        <item>5212</item>
-        <item>532</item>
-        <item>4411</item>
+    <string-array name="fonts">
+        <item>Rajdhani</item>
+        <item>Monteserrat</item>
+        <item>Roboto</item>
+        <item>Dragon</item>
+        <item>Asphaltic</item>
+        <item>Script</item>
+        <item>London</item>
+        <item>White-nt</item>
+        <item>Azonix</item>
+        <item>Glitch</item>
+        <item>Jefferson</item>
+        <item>Adel</item>
+        <item>Rockwell</item>
+        <item>Digital</item>
+        <item>Varsity</item>
+        <item>Mister October</item>
+        <item>Edosz</item>
+        <item>Poetsen</item>
+        <item>Signature</item>
     </string-array>
 </resources>

@@ -1,15 +1,15 @@
 {
   "teamId": 1,
-  "name": "Testing Main",
+  "name": "Baitmen",
   "language": "en",
-  "kit": "https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/4d71d645-abaf-49f0-af82-71dc49285800/public",
+  "kit": "https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/3ec3016c-fe2e-45c2-3694-83e9ab090800/public",
   "gkkit": "https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/4d71d645-abaf-49f0-af82-71dc49285800/public",
-  "mainColor": "#FFFF00",
-  "secondaryColor": "#000000",
-  "teamLogo": "https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/4d71d645-abaf-49f0-af82-71dc49285800/public",
+  "mainColor": "#CE2F1D",
+  "secondaryColor": "#636474",
+  "teamLogo": "https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/3ec3016c-fe2e-45c2-3694-83e9ab090800/public",
   "background": "https://media.discordapp.net/attachments/996135352240717838/996156253472567336/output.png?width=1015&height=571",
   "lineupStyle": "TEST",
-  "fontColor": "white",
-  "font": "glitch",
-  "manager": "Gustafsson_45"
+  "fontColor": "#ffffff",
+  "font": "rajdhani-bold",
+  "manager": "Rydelll"
 }

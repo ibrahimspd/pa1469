@@ -21,9 +21,10 @@
     <string name="normalLoginText">Login</string>
     <string name="todo">TODO</string>
 
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
     <!-- Generate Lineup -->
-
-
     <string name="background_ek2_string">Background</string>
     <string name="kit_string">Kit</string>
     <string name="colors_ek1_string">Colors</string>
@@ -35,7 +36,7 @@
     <string name="kit_style__logo_string">Kit-Style: Logo </string>
     <string name="font__monterrat_string">Font: Monterrat </string>
     <string name="logo_ek1_string">Logo</string>
-    <string name="teamName">Name: Invincible Esports </string>
+    <string name="teamName">Name: Baitmen Esports</string>
     <string name="teamLanguage">Language: English </string>
     <string name="teamManager">Manager: Gustafsson_45 </string>
     <string name="team_string">Team</string>
@@ -51,5 +52,20 @@
     <string name="teamInfo">Team Info</string>
     <string name="players">Players</string>
     <string name="generateLineup">Generate Lineup</string>
+    <string name="menu_slideshow" />
+    <string name="menu_gallery" />
+    <string name="menu_home" />
+    <string name="nav_header_desc"> Test</string>
+    <string name="nav_header_title">Title</string>
+    <string name="nav_header_subtitle">Sub Title</string>
+    <string name="login">Login</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="show_profile" />
 
 </resources>

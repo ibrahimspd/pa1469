@@ -1,14 +1,17 @@
 package com.example.myapplication.Controller;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -66,6 +69,12 @@ public class ColorPicker extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                ColorEnvelope envelope = colorPickerView.getColorEnvelope();
+                returnIntent.putExtra("color",envelope.getColor());
+                returnIntent.putExtra("hexColor","#" + envelope.getHexCode().substring(2));
+                returnIntent.putExtra("colorType", getIntent().getStringExtra("colorType"));
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
         });
@@ -74,6 +83,8 @@ public class ColorPicker extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED,returnIntent);
                 finish();
             }
         });

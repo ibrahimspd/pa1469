@@ -9,10 +9,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.myapplication.Model.Authentication;
 import com.example.myapplication.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hbb20.CountryPickerView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -22,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity {
     EditText confPassText;
     CountryPickerView cpp;
     Button register;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +41,21 @@ public class RegisterActivity extends AppCompatActivity {
         Spinner positionDropdown = findViewById(R.id.positionSpinner);
         register = findViewById(R.id.registerButton);
 
-<<<<<<< Updated upstream
-        Spinner spinner = findViewById(R.id.positionSpinner);
-=======
-
->>>>>>> Stashed changes
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.positionSpinner, android.R.layout.simple_spinner_item);
+                R.array.positions, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinner.setAdapter(adapter);
-        spinner.setPrompt("Pick Position");
+        positionDropdown.setAdapter(adapter);
+        positionDropdown.setPrompt("Pick Position");
 
-<<<<<<< Updated upstream
-=======
+        register.setOnClickListener(view -> {
+            String regex = "^(.+)@(.+)$";
+
+            Pattern pattern = Pattern.compile(regex);
+
+
             Matcher matcher = pattern.matcher(emailText.getText().toString());
             String countryName = cpp.getTvCountryInfo().getText().toString();
             String prefPos = positionDropdown.getSelectedItem().toString();
@@ -68,12 +71,6 @@ public class RegisterActivity extends AppCompatActivity {
             if(passText.getText().toString().equals(confPassText.getText().toString())
                     && matcher.matches()){
 
-                System.out.println("L" + countryName + "L");
-                System.out.println("L" + countryName + "L");
-                System.out.println(countryName);
-                System.out.println(countryName);
-                System.out.println(Boolean.toString(countryName != "Country") );
-                System.out.println(Boolean.toString(countryName != "Country") );
                 Player player = new Player.PlayerBuilder()
                         .setPostion(prefPos)
                         .setNationality(countryName)
@@ -91,12 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Passwords do not match or email is invalid", Toast.LENGTH_SHORT).show();
             }
             }
-
-
-
-
-
         });
->>>>>>> Stashed changes
+
     }
 }

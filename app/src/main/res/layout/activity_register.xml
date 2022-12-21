@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/startingxifront"
     tools:context=".Controller.RegisterActivity">
+
+
     <EditText
         android:id="@+id/textUsername"
         android:layout_width="wrap_content"
@@ -21,36 +24,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/todo"
-        android:rotationY="0"
-        android:scaleX="1.17"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/startingxifront" />
-
     <EditText
         android:id="@+id/textEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-        android:backgroundTint="@android:color/white"
-        android:ems="10"
-        android:text="Email"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="245dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-=======
         android:layout_marginTop="264dp"
         android:background="@color/white"
         android:backgroundTint="@android:color/white"
@@ -62,64 +39,48 @@
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
->>>>>>> Stashed changes
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.413"
-
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/textPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
         android:backgroundTint="@android:color/white"
         android:ems="10"
-        android:text="Password"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="314dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:nextFocusDown="@id/textConfirmPassword"
+        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< Updated upstream
-        app:layout_constraintVertical_bias="0.139"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail"
-        />
-=======
-        app:layout_constraintTop_toBottomOf="@+id/textUsername" />
->>>>>>> Stashed changes
+        app:layout_constraintTop_toBottomOf="@+id/textUsername" /> />
 
     <EditText
         android:id="@+id/textConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
         android:backgroundTint="@android:color/white"
         android:ems="10"
-<<<<<<< Updated upstream
-        android:text="Confirm Password"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="388dp"
-=======
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:nextFocusDown="@+id/countryPicker"
         android:padding="4dp"
->>>>>>> Stashed changes
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.139"
-        app:layout_constraintTop_toBottomOf="@+id/textPassword"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textPassword" />
 
     <Button
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="8dp"
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,44 +88,22 @@
 
     <com.hbb20.CountryPickerView
         android:id="@+id/countryPicker"
-<<<<<<< Updated upstream
-        android:layout_width="209dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-=======
         android:layout_width="101dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="7dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
         android:background="@color/white"
         android:nextFocusDown="@+id/positionSpinner"
         app:layout_constraintEnd_toEndOf="@+id/textConfirmPassword"
->>>>>>> Stashed changes
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword" />
 
     <Spinner
         android:id="@+id/positionSpinner"
-<<<<<<< Updated upstream
-        android:layout_width="209dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/green"
-        android:soundEffectsEnabled="false"
-        android:text="Position"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countryPicker" />
-
-    />
-=======
-        android:layout_width="101dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="7dp"
+        android:layout_width="102dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
         android:background="@color/white"
         android:soundEffectsEnabled="false"
         app:layout_constraintStart_toStartOf="@+id/textConfirmPassword"
         app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword" />
->>>>>>> Stashed changes
 </androidx.constraintlayout.widget.ConstraintLayout>
