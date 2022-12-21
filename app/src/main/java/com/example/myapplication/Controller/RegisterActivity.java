@@ -77,8 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
                         .setName(username)
                         .build();
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                FirestoreImpl firestore = new FirestoreImpl(db);
+           
+                FirestoreImpl firestore = new FirestoreImpl();
                 firestore.addPlayer(player);
                 Authentication auth = new Authentication();
                 auth.createUser(emailText.getText().toString(), passText.getText().toString());
