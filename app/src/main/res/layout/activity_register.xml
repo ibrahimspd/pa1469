@@ -5,105 +5,131 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/startingxifront"
-    tools:context=".Controller.RegisterActivity">
-
+    tools:context=".controller.RegisterActivity">
 
     <EditText
         android:id="@+id/textUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
-        android:background="@color/white"
-        android:backgroundTint="@android:color/white"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/input_fields"
         android:ems="10"
         android:hint="Username"
         android:minHeight="48dp"
         android:nextFocusDown="@+id/textPassword"
-        android:padding="4dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/textEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="264dp"
-        android:background="@color/white"
-        android:backgroundTint="@android:color/white"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/input_fields"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:nextFocusDown="@+id/textUsername"
-        android:padding="4dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/input_fields"
+        android:ems="10"
+        android:hint="Number"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:nextFocusDown="@+id/textUsername"
+        android:numeric="integer"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/positionSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/countryPicker"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="@+id/positionSpinner" />
 
     <EditText
         android:id="@+id/textPassword"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/white"
-        android:backgroundTint="@android:color/white"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/input_fields"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:nextFocusDown="@id/textConfirmPassword"
-        android:padding="4dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textConfirmPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUsername" /> />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/textConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/white"
-        android:backgroundTint="@android:color/white"
+        android:layout_marginBottom="8dp"
+        android:autofillHints="confirm password"
+        android:background="@drawable/input_fields"
         android:ems="10"
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:nextFocusDown="@+id/countryPicker"
-        android:padding="4dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/countryPicker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPassword" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="112dp"
         android:text="Register"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/positionSpinner" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.hbb20.CountryPickerView
         android:id="@+id/countryPicker"
-        android:layout_width="101dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/white"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/input_fields"
         android:nextFocusDown="@+id/positionSpinner"
+        app:layout_constraintBottom_toTopOf="@+id/number"
         app:layout_constraintEnd_toEndOf="@+id/textConfirmPassword"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword" />
+        app:layout_constraintStart_toStartOf="@+id/textConfirmPassword" />
 
     <Spinner
         android:id="@+id/positionSpinner"
-        android:layout_width="102dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/white"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/input_fields"
         android:soundEffectsEnabled="false"
-        app:layout_constraintStart_toStartOf="@+id/textConfirmPassword"
-        app:layout_constraintTop_toBottomOf="@+id/textConfirmPassword" />
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintStart_toStartOf="@+id/textConfirmPassword" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

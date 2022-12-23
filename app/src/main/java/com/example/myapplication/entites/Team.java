@@ -1,7 +1,7 @@
 package com.example.myapplication.entites;
 
 public class Team {
-    private Integer teamId;
+    private String teamId;
     private String name;
     private String language;
     private String kit;
@@ -13,9 +13,8 @@ public class Team {
     private String lineupStyle;
     private String fontColor;
     private String font;
-    private String manager;
+    private String managerId;
 
-    // Constructor
     public Team() {}
 
     private Team(TeamBuilder builder) {
@@ -31,14 +30,14 @@ public class Team {
         this.lineupStyle = builder.lineupStyle;
         this.fontColor = builder.fontColor;
         this.font = builder.font;
-        this.manager = builder.manager;
+        this.managerId = builder.managerId;
     }
 
-    public int getTeamId() {
+    public String getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
 
@@ -130,12 +129,12 @@ public class Team {
         this.font = font;
     }
 
-    public String getManager() {
-        return manager;
+    public String getManagerId() {
+        return managerId;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
     }
 
     @Override
@@ -144,7 +143,7 @@ public class Team {
     }
 
     public static class TeamBuilder {
-        private int teamId;
+        private String teamId;
         private String name;
         private String language;
         private String kit;
@@ -156,9 +155,9 @@ public class Team {
         private String lineupStyle;
         private String fontColor;
         private String font;
-        private String manager;
+        private String managerId;
 
-        public TeamBuilder setTeamId(int teamId) {
+        public TeamBuilder setTeamId(String teamId) {
             this.teamId = teamId;
             return this;
         }
@@ -218,8 +217,8 @@ public class Team {
             return this;
         }
 
-        public TeamBuilder setManager(String manager) {
-            this.manager = manager;
+        public TeamBuilder setManagerId(String managerId) {
+            this.managerId = managerId;
             return this;
         }
 

@@ -1,10 +1,16 @@
-package com.example.myapplication.Controller;
+package com.example.myapplication.controller;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.database.FirestoreImpl;
+import com.example.myapplication.database.listeners.player.OnGetPlayerListener;
+import com.example.myapplication.database.listeners.team.OnGetTeamListener;
+import com.example.myapplication.entites.Player;
+import com.example.myapplication.entites.Team;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
+    private Player player;
+    private Team team;
+
+    private FirestoreImpl firestore = new FirestoreImpl();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +43,43 @@ public class MainActivity extends AppCompatActivity {
 
         binding.appBarMain.toolbar.setTitle("Home");
 
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
+
+        OnGetTeamListener onGetTeamListener = new OnGetTeamListener() {
+            @Override
+            public void onTeamFilled(Team team) {
+                MainActivity.this.team = team;
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Toast.makeText(MainActivity.this, "Error getting team", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        OnGetPlayerListener onGetPlayerListener = new OnGetPlayerListener() {
+            @Override
+            public void onPlayerFilled(Player player) {
+
+                MainActivity.this.player = player;
+                firestore.getTeamByPlayerId(onGetTeamListener, player.getId());
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Toast.makeText(MainActivity.this, "Error getting player", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        firestore.getPlayerByUuid(onGetPlayerListener, id);
+
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
 
-        Context context = getApplicationContext();
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottonnav);
 
@@ -69,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.generateLineup);
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.teamInfoFragment, R.id.generateLineupFragment, R.id.playersFragment)
                 .setOpenableLayout(drawer)
@@ -84,5 +125,21 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

@@ -40,7 +40,7 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
     public void onBindViewHolder(@NonNull PlayerInfoListAdapter.ViewHolder holder, int position) {
         Player player = playerArrayList.get(position);
         holder.username.setText(player.getName());
-        holder.position.setText(player.getPostion());
+        holder.position.setText(player.getPosition());
         Glide.with(context).load(player.getAvatar()).into(holder.courseIV);
     }
 

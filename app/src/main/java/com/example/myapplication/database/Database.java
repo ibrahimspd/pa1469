@@ -17,17 +17,21 @@ public interface Database
 
     boolean createAccount(OnAddUserListener listener, Credentials credentials);
 
-    void getUser(OnGetUserListener listener, String username);
+    void getUserByUsername(OnGetUserListener listener, String username);
 
     void addTeam(OnAddTeamListener listener, Team team);
 
     void getTeam(OnGetTeamListener listener, String teamName);
 
+    void getTeamByPlayerId(OnGetTeamListener listener, String playerId);
+
     void updateTeam(Team team);
 
     void addPlayer(OnAddPlayerListener listener, Player player);
 
-    void getPlayer(OnGetPlayerListener listener, String teamName);
+    void getPlayerByUsername(OnGetPlayerListener listener, String teamName);
+
+    void getPlayerByUuid(OnGetPlayerListener listener, String uuid);
 
     boolean deleteAccount(Credentials credentials);
 }

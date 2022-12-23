@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Controller.MainActivity"
+            android:name=".controller.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.MyApplication.NoActionBar">
@@ -28,7 +28,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Controller.RegisterActivity"
+            android:name=".controller.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controller.StartActivity"
+            android:name=".controller.StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +64,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Controller.ColorPicker"
+            android:name=".controller.ColorPicker"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Dialog.Alert">
             <meta-data
@@ -72,7 +72,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Controller.LoginActivity"
+            android:name=".controller.LoginActivity"
             android:exported="false"
             android:label="@string/login">
             <meta-data

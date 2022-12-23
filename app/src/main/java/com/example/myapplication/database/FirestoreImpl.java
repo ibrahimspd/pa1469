@@ -21,6 +21,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
 public class FirestoreImpl implements Database {
@@ -67,7 +69,7 @@ public class FirestoreImpl implements Database {
     }
 
     @Override
-    public void getUser(OnGetUserListener listener, String username) {
+    public void getUserByUsername(OnGetUserListener listener, String username) {
         DocumentReference documentReference = db.collection("users").document(username);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -104,6 +106,17 @@ public class FirestoreImpl implements Database {
                 } else {
                     Log.d(TAG, "failed ", task.getException());
                 }
+            }
+        });
+    }
+
+    @Override
+    public void getTeamByPlayerId(OnGetTeamListener listener, String playerId) {
+        Query query = db.collection("teams").whereEqualTo("managerId", playerId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                listener.onTeamFilled(task.getResult().toObjects(Team.class).get(0));
             }
         });
     }
@@ -147,7 +160,7 @@ public class FirestoreImpl implements Database {
     }
 
     @Override
-    public void getPlayer(OnGetPlayerListener listener, String username) {
+    public void getPlayerByUsername(OnGetPlayerListener listener, String username) {
         DocumentReference documentReference = db.collection("players").document(username);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -162,6 +175,25 @@ public class FirestoreImpl implements Database {
                     }
                 } else {
                     Log.d(TAG, "failed ", task.getException());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getPlayerByUuid(OnGetPlayerListener listener, String uuid) {
+        Query documentReference = db.collection("players").whereEqualTo("uuid", uuid);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot != null) {
+                        Player player = documentSnapshot.getDocuments().get(0).toObject(Player.class);
+                        listener.onPlayerFilled(player);
+                    } else {
+                        Log.d(TAG, "Failed to get player by uuid: " + uuid);
+                    }
                 }
             }
         });

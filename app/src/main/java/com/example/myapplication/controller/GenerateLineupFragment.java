@@ -1,7 +1,6 @@
-package com.example.myapplication.Controller;
+package com.example.myapplication.controller;
 
-import static android.content.ContentValues.TAG;
-
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,7 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +33,6 @@ import com.example.myapplication.Model.AutocompleteAdapter;
 import com.example.myapplication.Model.PlayerItem;
 import com.example.myapplication.Model.Utils;
 import com.example.myapplication.R;
-import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.databinding.FragmentGenerateLineupBinding;
 import com.example.myapplication.entites.Lineup;
 import com.example.myapplication.entites.Player;
@@ -53,6 +49,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -65,12 +62,14 @@ public class GenerateLineupFragment extends Fragment {
     private FragmentGenerateLineupBinding binding;
 
     private Team team;
-    private final static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
     private Context context;
 
+    private MainActivity mainActivity;
 
     List<AutoCompleteTextView> positionInputFieldsIds = new ArrayList<>();
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         GenerateLineupModel generateLineupModel =
@@ -79,6 +78,8 @@ public class GenerateLineupFragment extends Fragment {
         binding = FragmentGenerateLineupBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = root.getContext();
+
+        mainActivity = (MainActivity) getActivity();
 
         positionInputFieldsIds.clear();
         positionInputFieldsIds.add(binding.positionInput);
@@ -93,18 +94,14 @@ public class GenerateLineupFragment extends Fragment {
         positionInputFieldsIds.add(binding.positionInput10);
         positionInputFieldsIds.add(binding.positionInput11);
 
-        FirestoreImpl firestore = new FirestoreImpl();
-        OnGetTeamListener teamListener = new OnGetTeamListener() {
-            @Override
-            public void onTeamFilled(Team loadedTeam) {
-                team = loadedTeam;
-            }
-            @Override
-            public void onError(Exception exception) {
-                Log.d(TAG, "onError: " + exception.getMessage());
-            }
-        };
-        firestore.getTeam(teamListener, "test");
+        team = mainActivity.getTeam();
+
+        File imgFile = new File(context.getFilesDir(),  "lineup.png");
+        if (imgFile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            binding.lineupImageView.setImageBitmap(myBitmap);
+        }else
+            createLineup();
 
         loadPlayerDropdown();
 
@@ -118,6 +115,7 @@ public class GenerateLineupFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
+                // TODO document why this method is empty
             }
         });
 
@@ -129,11 +127,9 @@ public class GenerateLineupFragment extends Fragment {
         formationPicker.setAdapter(adapter);
 
         Button generateLineupButton = binding.generateLineup;
-        generateLineupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createLineup();
-            }
+        generateLineupButton.setOnClickListener(view -> {
+            team = mainActivity.getTeam();
+            createLineup();
         });
 
         Button downloadLineupButton = binding.goBackButton;
@@ -163,6 +159,7 @@ public class GenerateLineupFragment extends Fragment {
             intent.putExtra(Intent.EXTRA_STREAM, uri);
             startActivity(Intent.createChooser(intent, "Share Image"));
         });
+        team = mainActivity.getTeam();
         return root;
     }
 
@@ -173,42 +170,45 @@ public class GenerateLineupFragment extends Fragment {
     }
 
     private void createLineup() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                OkHttpClient client = new OkHttpClient().newBuilder().build();
-                MediaType mediaType = MediaType.parse("application/json");
+        if(team == null)
+            return;
+        new Thread(() -> {
+            OkHttpClient client = new OkHttpClient().newBuilder().build();
+            MediaType mediaType = MediaType.parse("application/json");
 
-                List<Player> players = new ArrayList<>();
-                for (AutoCompleteTextView positionInputField : positionInputFieldsIds) {
-                    players.add(addPlayerFromInputFieldById(positionInputField));
+            List<Player> players = new ArrayList<>();
+            for (AutoCompleteTextView positionInputField : positionInputFieldsIds) {
+                players.add(addPlayerFromInputFieldById(positionInputField));
+            }
+
+            ImageView imageView = binding.lineupImageView;
+            Lineup lineup = new Lineup(players, team, "352");
+            String json = gson.toJson(lineup);
+            RequestBody body = RequestBody.create(mediaType,json);
+            Request request = new Request.Builder()
+                    .url("http://78.141.233.225:4545/lineup")
+                    .method("POST", body)
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                // save image in app data
+                // getFilesDir() returns the path to the app data folder
+                File file = new File(context.getFilesDir(), "lineup.png");
+                FileOutputStream fos = new FileOutputStream(file);
+                // store to getFilesDir() folder
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.flush();
+                fos.close();
+
+                Activity activity = getActivity();
+                if(activity != null) {
+                    activity.runOnUiThread(() -> imageView.setImageBitmap(bitmap));
                 }
-
-                ImageView imageView = binding.lineupImageView;
-                Lineup lineup = new Lineup(players, team, "352");
-                Gson gson = new Gson();
-                String json = gson.toJson(lineup);
-                RequestBody body = RequestBody.create(mediaType,json.toString());
-                Request request = new Request.Builder()
-                        .url("http://78.141.233.225:4545/lineup")
-                        .method("POST", body)
-                        .addHeader("Content-Type", "application/json")
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    InputStream inputStream = response.body().byteStream();
-                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-                    getActivity().runOnUiThread(new Runnable(){
-                        @Override
-                        public void run() {
-
-                            imageView.setImageDrawable(drawable);
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }).start();
     }
@@ -278,11 +278,11 @@ public class GenerateLineupFragment extends Fragment {
         if (playerName.equals("")){
             playerName = "Bot";
         }
-        return new Player.PlayerBuilder().setName(playerName).setPostion(editText.getHint().toString())
+        return new Player.PlayerBuilder().setName(playerName).setPosition(editText.getHint().toString())
                 .setAvatar("https://media.discordapp.net/attachments/987416205507833867/1001913008915742781/uknoiwkn_player.png")
                 .setNumber(1)
                 .setNationality("SE")
-                .setIsManagger(false)
+                .setIsManager(false)
                 .setTeam(1)
                 .build();
     }
@@ -292,11 +292,9 @@ public class GenerateLineupFragment extends Fragment {
         Map<String, List<String>> formation = gson.fromJson(json,  new TypeToken<Map<String, List<String>>>(){}.getType());
         if(formation != null) {
             List<String> positions = formation.get(formationStr);
-            System.out.println(positions);
             for (int i = 0; i < positionInputFieldsIds.size(); i++) {
-                System.out.println("Test");
-                System.out.println(i);
                 AutoCompleteTextView autoCompleteTextView = positionInputFieldsIds.get(i);
+                assert positions != null;
                 String hint = positions.get(i);
                 autoCompleteTextView.setHint(hint);
             }

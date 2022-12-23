@@ -1,4 +1,4 @@
-package com.example.myapplication.Controller;
+package com.example.myapplication.controller;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -6,17 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -66,68 +65,51 @@ public class ColorPicker extends AppCompatActivity {
         });
 
         ImageButton confirmButton = findViewById(R.id.confirmButton);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnIntent = new Intent();
-                ColorEnvelope envelope = colorPickerView.getColorEnvelope();
-                returnIntent.putExtra("color",envelope.getColor());
-                returnIntent.putExtra("hexColor","#" + envelope.getHexCode().substring(2));
-                returnIntent.putExtra("colorType", getIntent().getStringExtra("colorType"));
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
-            }
+        confirmButton.setOnClickListener(v -> {
+            Intent returnIntent = new Intent();
+            ColorEnvelope envelope = colorPickerView.getColorEnvelope();
+            returnIntent.putExtra("color",envelope.getColor());
+            returnIntent.putExtra("hexColor","#" + envelope.getHexCode().substring(2));
+            returnIntent.putExtra("colorType", getIntent().getStringExtra("colorType"));
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
         });
 
         ImageButton cancelButton = findViewById(R.id.cancelButton);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_CANCELED,returnIntent);
-                finish();
-            }
+        cancelButton.setOnClickListener(v -> {
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_CANCELED,returnIntent);
+            finish();
         });
 
         RadioButton logoRadioButton = findViewById(R.id.logoRadioButton);
         RadioButton colorWheelRadioButton = findViewById(R.id.colorWheelRadioButton);
         RadioButton galleryRadioButton = findViewById(R.id.galleryRadioButton);
 
-        galleryRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, 1000);
-            }
+        galleryRadioButton.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, 1000);
         });
 
-        colorWheelRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                colorPickerView.setHsvPaletteDrawable();
-            }
-        });
+        colorWheelRadioButton.setOnClickListener(v -> colorPickerView.setHsvPaletteDrawable());
 
-        logoRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Glide.with(context)
-                            .load("https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/4d71d645-abaf-49f0-af82-71dc49285800/public")
-                            .into(new CustomTarget<Drawable>() {
-                                @Override
-                                public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                                    colorPickerView.setPaletteDrawable(resource);
-                                }
+        logoRadioButton.setOnClickListener(v -> {
+            try {
+                Glide.with(context)
+                        .load("https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/4d71d645-abaf-49f0-af82-71dc49285800/public")
+                        .into(new CustomTarget<Drawable>() {
+                            @Override
+                            public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
+                                colorPickerView.setPaletteDrawable(resource);
+                            }
 
-                                @Override
-                                public void onLoadCleared(@Nullable Drawable placeholder) {
-                                }
-                            });
-                } catch ( Exception e) {
-                    e.printStackTrace();
-                }
+                            @Override
+                            public void onLoadCleared(@Nullable Drawable placeholder) {
+                            }
+                        });
+            } catch ( Exception e) {
+                e.printStackTrace();
             }
         });
 

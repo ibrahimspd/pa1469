@@ -1,4 +1,4 @@
-package com.example.myapplication.Controller;
+package com.example.myapplication.controller;
 
 import static android.content.ContentValues.TAG;
 
@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -30,8 +31,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.listeners.team.OnGetTeamListener;
+import com.example.myapplication.database.listeners.team.OnAddTeamListener;
 import com.example.myapplication.databinding.FragmentTeamInfoBinding;
+import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.example.myapplication.Model.TeamInfoModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Date;
 
 public class TeamInfoFragment extends Fragment {
 
@@ -55,20 +58,20 @@ public class TeamInfoFragment extends Fragment {
     private Spinner fontPicker;
     private ImageView teamBackground;
     private ImageView teamKit;
+    private ImageView teamGkKit;
     private ImageView mainColor;
     private ImageView secondaryColor;
     private ImageView fontColor;
 
-    private Button saveButton;
-
     private Team team;
-
+    private Player player;
     private Team updatedTeam;
 
     private final FirestoreImpl firestore = new FirestoreImpl();
 
     private ActivityResultLauncher<Intent> colorPickerLauncher;
     private ActivityResultLauncher<Intent> kitGalleryLauncher;
+    private ActivityResultLauncher<Intent> gkKitGalleryLauncher;
     private ActivityResultLauncher<Intent> logoGalleryLauncher;
     private ActivityResultLauncher<Intent> backgroundGalleryLauncher;
 
@@ -81,43 +84,72 @@ public class TeamInfoFragment extends Fragment {
         TeamInfoModel homeViewModel =
                 new ViewModelProvider(this).get(TeamInfoModel.class);
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        team = mainActivity.getTeam();
+        player = mainActivity.getPlayer();
+
         binding = FragmentTeamInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         context = getContext();
-
-        OnGetTeamListener teamListener = new OnGetTeamListener() {
-            @Override
-            public void onTeamFilled(Team fetchedTeam) {
-                team = fetchedTeam;
-                updatedTeam = fetchedTeam;
-                if(team != null)
-                    displayTeamInfo();
-            }
-            @Override
-            public void onError(Exception exception) {
-                Log.d(TAG, "onError: " + exception.getMessage());
-            }
-        };
 
         teamName = binding.teamName;
         manager = binding.manager;
         language = binding.language;
         teamLogo = binding.teamLogo;
         teamBackground = binding.teamBackground;
+        teamGkKit = binding.teamgKkit;
         teamKit = binding.teamKit;
         mainColor = binding.mainColor;
         secondaryColor = binding.secondaryColor;
         fontColor = binding.fontColor;
-        saveButton = binding.saveButton;
-
-        saveButton.setOnClickListener(v -> {
-            firestore.updateTeam(updatedTeam);
-        });
-
-        firestore.getTeam(teamListener, "test");
+        Button saveButton = binding.saveButton;
+        Button createTeamButton = binding.createTeamButton;
 
         fontPicker = binding.fontDropDown;
+
+        if(team != null)
+            displayTeamInfo();
+        else
+            createTeamButton.setVisibility(View.VISIBLE);
+
+        createTeamButton.setOnClickListener(view -> {
+            team = new Team.TeamBuilder()
+                    .setTeamId(new Date().getTime() + "")
+                    .setName("New Team")
+                    .setLanguage("en")
+                    .setKit("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
+                    .setGkKit("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
+                    .setMainColor("#648c2e")
+                    .setSecondaryColor("#000000")
+                    .setTeamLogo("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
+                    .setBackground("https://media.discordapp.net/attachments/996135352240717838/996156253472567336/output.png")
+                    .setLineupStyle("4-4-2")
+                    .setFontColor("#ffffff")
+                    .setFont("rajdhani-bold")
+                    .setManagerId(player.getId())
+                    .build();
+            OnAddTeamListener listener = new OnAddTeamListener() {
+                @Override
+                public void onTeamFilled(Boolean added) {
+                    if (added) {
+                        Log.d(TAG, "onTeamFilled: " + team.getName());
+                        displayTeamInfo();
+                    }
+                    else
+                        Log.d(TAG, "onTeamFilled: " + "Team not added");
+                }
+
+                @Override
+                public void onError(Exception exception) {
+                    Log.d(TAG, "onError: " + exception.getMessage());
+                }
+            };
+            firestore.addTeam(listener, team);
+        });
+
+        saveButton.setOnClickListener(v -> firestore.updateTeam(updatedTeam));
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                 R.array.fonts, android.R.layout.simple_spinner_item);
@@ -152,15 +184,11 @@ public class TeamInfoFragment extends Fragment {
                     byte[] data2 = baos.toByteArray();
 
                     UploadTask uploadTask = mountainsRef.putBytes(data2);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        }
-                    });
+                    uploadTask
+                            .addOnFailureListener(exception -> 
+                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
+                            .addOnSuccessListener(taskSnapshot -> 
+                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -190,15 +218,45 @@ public class TeamInfoFragment extends Fragment {
                     byte[] data2 = baos.toByteArray();
 
                     UploadTask uploadTask = mountainsRef.putBytes(data2);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        }
-                    });
+                    uploadTask
+                            .addOnFailureListener(exception ->
+                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
+                            .addOnSuccessListener(taskSnapshot ->
+                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
+
+        gkKitGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == getActivity().RESULT_OK) {
+                Intent data = result.getData();
+                if (data != null) {
+                    StorageReference storageRef = storage.getReference();
+                    StorageReference mountainsRef = storageRef.child(team.getName() + "_gkKit");
+                    updatedTeam.setGkKit(team.getName() + "_gkKit");
+
+                    Glide.with(context).load(data.getData()).into(teamGkKit);
+                    teamGkKit.setDrawingCacheEnabled(true);
+                    teamGkKit.buildDrawingCache();
+
+                    Uri uri = data.getData();
+                    InputStream imageStream = null;
+                    try {
+                        imageStream = getActivity().getContentResolver().openInputStream(uri);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data2 = baos.toByteArray();
+
+                    UploadTask uploadTask = mountainsRef.putBytes(data2);
+                    uploadTask
+                            .addOnFailureListener(exception ->
+                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
+                            .addOnSuccessListener(taskSnapshot ->
+                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -228,15 +286,11 @@ public class TeamInfoFragment extends Fragment {
                     byte[] data2 = baos.toByteArray();
 
                     UploadTask uploadTask = mountainsRef.putBytes(data2);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        }
-                    });
+                    uploadTask
+                            .addOnFailureListener(exception ->
+                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
+                            .addOnSuccessListener(taskSnapshot ->
+                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -255,6 +309,12 @@ public class TeamInfoFragment extends Fragment {
             kitGalleryLauncher.launch(photoPickerIntent);
         });
 
+        teamGkKit.setOnClickListener(v -> {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            photoPickerIntent.putExtra("type", "kit");
+            gkKitGalleryLauncher.launch(photoPickerIntent);
+        });
         teamLogo.setOnClickListener(v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
@@ -296,13 +356,11 @@ public class TeamInfoFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-
-
         return root;
     }
 
     public void displayTeamInfo() {
-        manager.setText("Manager: " + team.getManager());
+        manager.setText("Manager: " + team.getManagerId());
         teamName.setText("Name: " + team.getName());
         language.setText("Language: " + team.getLanguage());
         fontPicker.setPrompt(team.getFont());
@@ -310,12 +368,8 @@ public class TeamInfoFragment extends Fragment {
         if (!teamLogoUrl.contains(".")){
             StorageReference storageRef = storage.getReference();
             StorageReference logoRef = storageRef.child(teamLogoUrl);
-            logoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(context).load(uri).into(teamLogo);
-                }
-            });
+            logoRef.getDownloadUrl().addOnSuccessListener(
+                    uri -> Glide.with(context).load(uri).into(teamLogo));
         }
         else
             Glide.with(context).load(teamLogoUrl).into(teamLogo);
@@ -323,25 +377,27 @@ public class TeamInfoFragment extends Fragment {
         if (!teamKitUrl.contains(".")){
             StorageReference storageRef = storage.getReference();
             StorageReference kitRef = storageRef.child(teamKitUrl);
-            kitRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(context).load(uri).into(teamKit);
-                }
-            });
+            kitRef.getDownloadUrl().addOnSuccessListener(
+                    uri -> Glide.with(context).load(uri).into(teamKit));
         }
         else
             Glide.with(context).load(teamKitUrl).into(teamKit);
+        String teamGkKitUrl = team.getGkKit() != null ?  team.getGkKit() : team.getKit();
+        if (!teamGkKitUrl.contains(".")){
+            StorageReference storageRef = storage.getReference();
+            StorageReference kitRef = storageRef.child(teamGkKitUrl);
+            kitRef.getDownloadUrl().addOnSuccessListener(
+                    uri -> Glide.with(context).load(uri).into(teamGkKit));
+        }
+        else
+            Glide.with(context).load(teamGkKitUrl).into(teamKit);
+
         String teamBackgroundUrl = team.getBackground();
         if (!teamBackgroundUrl.contains(".")){
             StorageReference storageRef = storage.getReference();
             StorageReference backgroundRef = storageRef.child(teamBackgroundUrl);
-            backgroundRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(context).load(uri).into(teamBackground);
-                }
-            });
+            backgroundRef.getDownloadUrl().addOnSuccessListener(
+                    uri -> Glide.with(context).load(uri).into(teamBackground));
         }
         else
             Glide.with(context).load(teamBackgroundUrl).into(teamBackground);
@@ -362,7 +418,6 @@ public class TeamInfoFragment extends Fragment {
         });
 
         fontColor.setBackgroundColor(Color.parseColor(team.getFontColor()));
-
         fontColor.setOnClickListener(view -> {
             Intent intent = new Intent(context, ColorPicker.class);
             intent.putExtra("colorType", "fontColor");
@@ -374,6 +429,7 @@ public class TeamInfoFragment extends Fragment {
         binding.lineupConfigBox.setVisibility(View.VISIBLE);
         binding.logoBox.setVisibility(View.VISIBLE);
         binding.kitBox.setVisibility(View.VISIBLE);
+        binding.gkKitBox.setVisibility(View.VISIBLE);
         binding.backgroundBox.setVisibility(View.VISIBLE);
         binding.saveButton.setVisibility(View.VISIBLE);
     }

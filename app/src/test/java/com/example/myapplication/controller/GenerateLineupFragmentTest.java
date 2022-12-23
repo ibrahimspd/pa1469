@@ -1,8 +1,6 @@
-package com.example.myapplication.Controller;
+package com.example.myapplication.controller;
 
 import junit.framework.TestCase;
-
-import org.junit.Assert;
 
 public class GenerateLineupFragmentTest extends TestCase {
 

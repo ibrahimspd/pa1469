@@ -9,6 +9,8 @@ import com.example.myapplication.database.listeners.team.OnAddTeamListener;
 import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.entites.Team;
 
+import java.util.Date;
+
 public class TeamModel {
 
     private final FirestoreImpl db = new FirestoreImpl();
@@ -34,9 +36,9 @@ public class TeamModel {
         db.getTeam(listener,username);
     }
 
-    public void addTeam(String teamName, String manager){
+    public void addTeam(String teamName, String playerId) {
         Team team = new Team.TeamBuilder()
-                .setTeamId(1)
+                .setTeamId(new Date().getTime() + "")
                 .setName(teamName)
                 .setLanguage("en")
                 .setKit("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
@@ -48,7 +50,7 @@ public class TeamModel {
                 .setLineupStyle("4-4-2")
                 .setFontColor("#ffffff")
                 .setFont("rajdhani-bold")
-                .setManager(manager)
+                .setManagerId(playerId)
                 .build();
         OnAddTeamListener listener = new OnAddTeamListener() {
             @Override
