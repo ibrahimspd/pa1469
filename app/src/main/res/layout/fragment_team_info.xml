@@ -51,7 +51,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/coreInfoBox"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -74,7 +74,6 @@
                     android:paddingBottom="5dp"
                     android:text="@string/teamName"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/team" />
 
@@ -86,7 +85,6 @@
                     android:paddingBottom="5dp"
                     android:text="@string/teamLanguage"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/manager" />
 
@@ -98,7 +96,6 @@
                     android:paddingBottom="5dp"
                     android:text="@string/teamManager"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/teamName" />
 
@@ -110,7 +107,6 @@
                     android:text="@string/team_string"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,9 +114,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/lineupConfigBox"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
                 android:visibility="invisible"
@@ -135,7 +133,6 @@
                     android:text="@string/teamLineupConfig"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -202,9 +199,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/colorBox"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
                 android:visibility="invisible"
@@ -220,7 +219,6 @@
                     android:text="@string/colors_ek1_string"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -292,14 +290,16 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/logoBox"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/gkKitBox"
-                app:layout_constraintEnd_toStartOf="@+id/guideline8"
-                app:layout_constraintStart_toStartOf="@+id/guideline8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/gkKitBox">
 
                 <ImageView
@@ -312,9 +312,10 @@
                     android:src="@drawable/baitmen"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.533"
+                    app:layout_constraintHorizontal_bias="0.051"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/logo_ek1" />
+                    app:layout_constraintTop_toBottomOf="@+id/logo_ek1"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/logo_ek1"
@@ -323,8 +324,8 @@
                     android:text="@string/logo_ek1_string"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/teamLogo"
+                    app:layout_constraintStart_toStartOf="@+id/teamLogo"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -347,8 +348,8 @@
                     android:text="@string/kit_string"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/teamKit"
+                    app:layout_constraintStart_toStartOf="@+id/teamKit"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -384,8 +385,8 @@
                     android:text="GK Kit"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/teamgKkit"
+                    app:layout_constraintStart_toStartOf="@+id/teamgKkit"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -434,10 +435,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/backgroundBox"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
                 android:visibility="invisible"

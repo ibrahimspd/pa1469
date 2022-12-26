@@ -14,6 +14,7 @@
         <item name="android:toolbarStyle">?attr/colorSecondaryVariant</item>
 
         <!-- Customize your theme here. -->
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
     <style name="Theme.MyApplication.NoActionBar">
