@@ -6,6 +6,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.myapplication.database.listeners.player.OnAddPlayerListener;
+import com.example.myapplication.database.listeners.player.OnGetPlayerListener;
+import com.example.myapplication.database.listeners.team.OnAddTeamListener;
+import com.example.myapplication.database.listeners.team.OnGetTeamListener;
+import com.example.myapplication.database.listeners.user.OnAddUserListener;
+import com.example.myapplication.database.listeners.user.OnGetUserListener;
 import com.example.myapplication.entites.Credentials;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
@@ -15,28 +21,31 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 public class FirestoreImpl implements Database {
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public FirestoreImpl() {
     }
 
     @Override
-    public void checkCredentials(Credentials credentials, OnUserListener listener) {
+    public void checkCredentials(Credentials credentials, OnGetUserListener listener) {
         DocumentReference documentReference = db.collection("users").document(credentials.getEmail());
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()){
+                    if (documentSnapshot.exists()) {
                         Credentials user = documentSnapshot.toObject(Credentials.class);
                         listener.onUserFilled(user);
-                    }else{
+                    } else {
                         Log.d(TAG, "onComplete: no shit");
                     }
-                }else{
+                } else {
                     Log.d(TAG, "failed ", task.getException());
                 }
             }
@@ -44,29 +53,36 @@ public class FirestoreImpl implements Database {
     }
 
     @Override
-    public boolean createAccount(Credentials credentials) {
+    public boolean createAccount(OnAddUserListener listener, Credentials credentials) {
         CollectionReference users = db.collection("users");
-        users.document(credentials.getEmail()).set(credentials);
+        users.document(credentials.getEmail()).set(credentials).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    listener.onUserAdded(true);
+                } else {
+                    Log.d(TAG, "onComplete: failed");
+                }
+            }
+        });
         return true;
     }
 
-
-
     @Override
-    public void getTeam(OnTeamListener listener) {
-        DocumentReference documentReference = db.collection("teams").document("test");
+    public void getUserByUsername(OnGetUserListener listener, String username) {
+        DocumentReference documentReference = db.collection("users").document(username);
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot.exists()){
-                        Team teams = documentSnapshot.toObject(Team.class);
-                        listener.onTeamFilled(teams);
-                    }else{
+                    if (documentSnapshot.exists()) {
+                        Credentials user = documentSnapshot.toObject(Credentials.class);
+                        listener.onUserFilled(user);
+                    } else {
                         Log.d(TAG, "onComplete: no shit");
                     }
-                }else{
+                } else {
                     Log.d(TAG, "failed ", task.getException());
                 }
             }
@@ -74,12 +90,39 @@ public class FirestoreImpl implements Database {
     }
 
     @Override
-    public Team getTeam(String teamName) {
-        return null;
+    public void getTeam(OnGetTeamListener listener, String teamName) {
+        DocumentReference documentReference = db.collection("teams").document(teamName);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        Team teams = documentSnapshot.toObject(Team.class);
+                        listener.onTeamFilled(teams);
+                    } else {
+                        Log.d(TAG, "onComplete: no shit");
+                    }
+                } else {
+                    Log.d(TAG, "failed ", task.getException());
+                }
+            }
+        });
     }
 
     @Override
-    public void addTeam(Team team) {
+    public void getTeamByPlayerId(OnGetTeamListener listener, String playerId) {
+        Query query = db.collection("teams").whereEqualTo("managerId", playerId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                listener.onTeamFilled(task.getResult().toObjects(Team.class).get(0));
+            }
+        });
+    }
+
+    @Override
+    public void addTeam(OnAddTeamListener listener, Team team) {
         CollectionReference teams = db.collection("teams");
         teams.document(team.getName()).set(team);
     }
@@ -87,26 +130,77 @@ public class FirestoreImpl implements Database {
     @Override
     public void updateTeam(Team team) {
         CollectionReference teams = db.collection("teams");
-        teams.document(team.getName()).set(team);
+        teams.document(team.getName()).set(team).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "onComplete: success");
+                } else {
+                    Log.d(TAG, "onComplete: failed");
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void addPlayer(OnAddPlayerListener listener, Player player) {
+        CollectionReference players = db.collection("players");
+        players.document(player.getName()).set(player).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    listener.onPlayerAdded(true);
+                } else {
+                    Log.d(TAG, "onComplete: failed");
+                }
+            }
+        });
+
     }
 
     @Override
-    public Player getPlayer(String name) {
-        return null;
+    public void getPlayerByUsername(OnGetPlayerListener listener, String username) {
+        DocumentReference documentReference = db.collection("players").document(username);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        Player player = documentSnapshot.toObject(Player.class);
+                        listener.onPlayerFilled(player);
+                    } else {
+                        Log.d(TAG, "onComplete: no shit");
+                    }
+                } else {
+                    Log.d(TAG, "failed ", task.getException());
+                }
+            }
+        });
     }
 
     @Override
-    public void addPlayer(Player player) {
-
+    public void getPlayerByUuid(OnGetPlayerListener listener, String uuid) {
+        Query documentReference = db.collection("players").whereEqualTo("uuid", uuid);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot != null) {
+                        Player player = documentSnapshot.getDocuments().get(0).toObject(Player.class);
+                        listener.onPlayerFilled(player);
+                    } else {
+                        Log.d(TAG, "Failed to get player by uuid: " + uuid);
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public boolean deleteAccount(Credentials credentials) {
         return false;
-    }
-
-    @Override
-    public Team getTeam(int teamId) {
-        return null;
     }
 }

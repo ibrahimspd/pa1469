@@ -7,235 +7,283 @@
     android:background="@drawable/background_img"
     android:backgroundTint="#dd0E0C0C"
     android:backgroundTintMode="src_over"
-    tools:context=".Controller.GenerateLineupActivity">
+    tools:context=".controller.MainActivity">
 
-        <ImageView
-            android:id="@+id/lineupImageView"
-            android:layout_width="282dp"
-            android:layout_height="216dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/darker_gray"
-            android:contentDescription="@string/todo"
-            android:scaleType="fitXY"
-            android:src="@drawable/example_lineup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/lineupImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_fields"
+        android:contentDescription="@string/todo"
+        android:elevation="10dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/lineupConstraintLayout"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lineupConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/shareLineup"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Spinner
             android:id="@+id/formationSpinner"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="46dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:soundEffectsEnabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput10" />
+            app:layout_constraintTop_toTopOf="@+id/positionInput11" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 1"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/positionInput3"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lineupImageView" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput2"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 2"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/positionInput4"
+            app:layout_constraintBottom_toBottomOf="@+id/positionInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/lineupImageView" />
+            app:layout_constraintTop_toTopOf="@+id/positionInput" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput3"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 3"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/positionInput5"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput4"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 4"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/positionInput3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput2" />
+            app:layout_constraintTop_toTopOf="@+id/positionInput3" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput5"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 5"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/positionInput7"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput3" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput6"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 6"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/positionInput5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput4" />
+            app:layout_constraintTop_toTopOf="@+id/positionInput5" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput7"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 7"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/positionInput9"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput5" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput8"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 8"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/positionInput7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput6" />
+            app:layout_constraintTop_toTopOf="@+id/positionInput7" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput9"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="8dp"
             android:autofillHints=""
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 9"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/positionInput11"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput7" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput10"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
-            android:background="@android:color/darker_gray"
+            android:background="?colorSecondaryVariant"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 10"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/positionInput9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput8" />
+            app:layout_constraintTop_toTopOf="@+id/positionInput9" />
 
         <AutoCompleteTextView
             android:id="@+id/positionInput11"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/input_fields"
+            android:elevation="10dp"
             android:ems="10"
             android:hint="Player 11"
             android:inputType="textPersonName"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/positionInput9" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_begin="206dp"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/shareLineup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Share"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/generateLineup"
@@ -250,19 +298,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/shareLineup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Share"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/positionInput11"
-        app:layout_constraintVertical_bias="0.327" />
-
-    <Button
         android:id="@+id/goBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -273,13 +308,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/shareLineup"
         app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_begin="195dp"
-            app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

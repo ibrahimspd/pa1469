@@ -1,4 +1,4 @@
-package com.example.myapplication.Controller;
+package com.example.myapplication.controller;
 
 import junit.framework.TestCase;
 

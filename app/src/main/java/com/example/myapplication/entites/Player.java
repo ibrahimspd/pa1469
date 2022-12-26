@@ -2,26 +2,34 @@ package com.example.myapplication.entites;
 
 public class Player
 {
-    private final String name;
-    private String postion;
+    private String name;
+    private String position;
     private String avatar;
     private String nationality;
     private int number;
     private int team;
-    private boolean isManagger;
+    private boolean isManager;
+    private String uuid;
+    private String id;
+    private String teamId;
+
+    public Player(){}
 
     public Player(PlayerBuilder builder) {
         this.name = builder.name;
-        this.postion = builder.postion;
+        this.position = builder.position;
         this.avatar = builder.avatar;
         this.nationality = builder. nationality;
         this.number = builder.number;
         this.team = builder.team;
-        this.isManagger = builder.isManagger;
+        this.isManager = builder.isManager;
+        this.uuid = builder.uuid;
+        this.id = builder.id;
+        this.teamId = builder.teamId;
     }
 
-    public void  setPostion(String postion){
-        this.postion = postion;
+    public void  setPosition(String position){
+        this.position = position;
     }
 
     public void setNationality(String nationality){
@@ -36,8 +44,8 @@ public class Player
         this.team = team;
     }
 
-    public void setIsManagger(boolean isManagger){
-        this.isManagger = isManagger;
+    public void setIsManager(boolean isManager){
+        this.isManager = isManager;
     }
 
     public String getAvatar(){
@@ -50,31 +58,65 @@ public class Player
         return name;
     }
 
-    public String getPostion() {
-        return postion;
+    public String getPosition() {
+        return position;
     }
 
     public int getNumber() {
         return number;
     }
 
-    // create builder class
+    public int getTeam() {
+        return team;
+    }
+
+    public boolean getIsManager() {
+        return isManager;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
     public static class PlayerBuilder{
         private String name;
-        private String postion;
+        private String position;
         private String avatar;
         private String nationality;
         private int number;
         private int team;
-        private boolean isManagger;
+        private boolean isManager;
+        private String uuid;
+        private String id;
+        private String teamId;
 
         public PlayerBuilder setName(String name){
             this.name = name;
             return this;
         }
 
-        public PlayerBuilder setPostion(String postion){
-            this.postion = postion;
+        public PlayerBuilder setPosition(String position){
+            this.position = position;
             return this;
         }
 
@@ -98,16 +140,28 @@ public class Player
             return this;
         }
 
-        public PlayerBuilder setIsManagger(boolean isManagger){
-            this.isManagger = isManagger;
+        public PlayerBuilder setIsManager(boolean isManager){
+            this.isManager = isManager;
+            return this;
+        }
+
+        public PlayerBuilder setUuid(String uuid){
+            this.uuid = uuid;
+            return this;
+        }
+
+        public PlayerBuilder setId(String id){
+            this.id = id;
+            return this;
+        }
+
+        public PlayerBuilder setTeamId(String teamId){
+            this.teamId = teamId;
             return this;
         }
 
         public Player build(){
             return new Player(this);
         }
-
     }
-
-
 }

@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/teamInfoFragment"
-        android:name="com.example.myapplication.Controller.TeamInfoFragment"
+        android:name="com.example.myapplication.controller.TeamInfoFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_team_info" />
 
     <fragment
         android:id="@+id/generateLineupFragment"
-        android:name="com.example.myapplication.Controller.GenerateLineupFragment"
+        android:name="com.example.myapplication.controller.GenerateLineupFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_generate_lineup" />
 
     <fragment
         android:id="@+id/playersFragment"
-        android:name="com.example.myapplication.Controller.PlayersFragment"
+        android:name="com.example.myapplication.controller.PlayersFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_players" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.myapplication.Controller;
+package com.example.myapplication.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,7 +33,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void openLoginActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 

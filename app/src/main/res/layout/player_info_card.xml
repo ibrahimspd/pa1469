@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/player_info_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?colorSecondaryVariant"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
     app:cardMaxElevation="10dp"
@@ -14,6 +15,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:minHeight="50dp"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.Guideline
@@ -44,28 +46,14 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_end="16dp" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toTopOf="@+id/guideline3"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@android:drawable/ic_menu_info_details"/>
-
         <TextView
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:layout_marginStart="8dp"
             android:text="Guss"
-            android:textColor="#00255E"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
         <TextView
             android:id="@+id/textView3"
@@ -73,20 +61,18 @@
             android:layout_height="22dp"
             android:layout_marginStart="8dp"
             android:text="CB"
-
-            android:textColor="#00255E"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintBottom_toBottomOf="@+id/textView14"
             app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
         <ImageView
             android:id="@+id/show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:padding="4dp"
+            android:paddingBottom="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView14"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintHorizontal_bias="1.0"
@@ -94,144 +80,54 @@
             app:layout_constraintTop_toTopOf="@+id/textView14"
             app:srcCompat="@drawable/ic_baseline_expand_more_24"/>
 
-        <View
-            android:id="@+id/view3"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="#CECECE"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
         <TextView
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="It's no magic bullet, but the benefits of water are many."
+            android:text="Nationality:"
             android:textColor="#838383"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textView16"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toTopOf="@+id/textView16"
-            app:srcCompat="@android:drawable/presence_invisible"
-            app:tint="@color/teal_200" />
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="Maintain the Balance of Body Fluids."
+            android:layout_marginTop="16dp"
+            android:text="Gamertag:"
             android:textColor="#838383"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textView17"
             app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toTopOf="@+id/textView17"
-            app:srcCompat="@android:drawable/presence_invisible"
-            app:tint="@color/teal_200" />
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <TextView
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="Energize Muscles"
-            android:textColor="#838383"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView10"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textView18"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toTopOf="@+id/textView18"
-            app:srcCompat="@android:drawable/presence_invisible"
-            app:tint="@color/teal_200" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="Keep Skin Looking Good"
-            android:textColor="#838383"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView11"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="If you think you need to be drinking more, here are some tips to increase your fluid intake and reap the benefits of water:"
-            android:textColor="#838383"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-        <View
-            android:id="@+id/view4"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="#CECECE"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/textView19" />
-
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toTopOf="@+id/textView20"
-            app:srcCompat="@android:drawable/presence_invisible"
-            app:tint="@color/teal_200" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="Have a beverage with every snack or meal, Eat more fruits and vegetables, and Keep a bottle of water with you.
-"
+            android:text="Number:"
             android:textColor="#838383"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="80dp"
+            android:layout_height="81dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toEndOf="@+id/imageView12"
-            app:layout_constraintTop_toBottomOf="@+id/view4" />
+            app:layout_constraintTop_toBottomOf="@+id/show"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <androidx.constraintlayout.widget.Group
             android:id="@+id/card_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="textView15,view3,imageView9,textView16,imageView10,textView17,imageView11,textView18,textView19,view4,imageView12,textView20" />
+            app:constraint_referenced_ids="textView15,textView16,textView17, imageView2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

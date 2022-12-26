@@ -1,21 +1,20 @@
 package com.example.myapplication.Model;
 
 import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.OnUserListener;
+import com.example.myapplication.database.listeners.user.OnAddUserListener;
 import com.example.myapplication.entites.Credentials;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Authentication {
 
     private Credentials credentials;
     private FirestoreImpl db = new FirestoreImpl();
 
-    public boolean authenticateUser(Credentials credentials, OnUserListener listener){
+    public boolean authenticateUser(Credentials credentials, OnAddUserListener listener){
         return credentials != null;
     }
 
-    public boolean createUser(String username, String password){
-        return db.createAccount(new Credentials.CredentialsBuilder()
+    public boolean createUser(OnAddUserListener listener,  String username, String password){
+        return db.createAccount(listener ,new Credentials.CredentialsBuilder()
                 .email(username)
                 .password(password)
                 .build());

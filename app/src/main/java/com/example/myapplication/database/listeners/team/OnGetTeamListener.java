@@ -1,11 +1,8 @@
-package com.example.myapplication.database;
+package com.example.myapplication.database.listeners.team;
 
 import com.example.myapplication.entites.Team;
 
-import java.util.ArrayList;
-
-public interface OnTeamListener
-{
+public interface OnGetTeamListener {
     void onTeamFilled(Team teams);
     void onError(Exception exception);
 }
