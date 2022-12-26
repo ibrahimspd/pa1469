@@ -47,7 +47,7 @@
                 <data
                     android:host="oauth"
                     android:path="/discord"
-                    android:scheme="droidchef" />
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
