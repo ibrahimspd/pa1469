@@ -3,13 +3,16 @@ package com.example.myapplication.controller;
 import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -115,6 +119,32 @@ public class TeamInfoFragment extends Fragment {
             createTeamButton.setVisibility(View.VISIBLE);
 
         createTeamButton.setOnClickListener(view -> {
+            String teamName;
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Title");
+
+// Set up the input
+            final EditText input = new EditText(getContext());
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+// Set up the buttons
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String m_Text = input.getText().toString();
+                    System.out.println(m_Text);
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.show();
             team = new Team.TeamBuilder()
                     .setTeamId(new Date().getTime() + "")
                     .setName("New Team")

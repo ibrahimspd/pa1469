@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.example.myapplication.database.listeners.player.OnAddPlayerListener;
 import com.example.myapplication.database.listeners.player.OnGetPlayerListener;
 import com.example.myapplication.database.listeners.team.OnAddTeamListener;
+import com.example.myapplication.database.listeners.player.OnGetMultiplePlayers;
 import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.database.listeners.user.OnAddUserListener;
 import com.example.myapplication.database.listeners.user.OnGetUserListener;
@@ -23,7 +24,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 
 public class FirestoreImpl implements Database {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -116,7 +116,13 @@ public class FirestoreImpl implements Database {
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                listener.onTeamFilled(task.getResult().toObjects(Team.class).get(0));
+                if(task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if(!querySnapshot.isEmpty()) {
+                        Team team = querySnapshot.getDocuments().get(0).toObject(Team.class);
+                        listener.onTeamFilled(team);
+                    }
+                }
             }
         });
     }
@@ -195,6 +201,17 @@ public class FirestoreImpl implements Database {
                         Log.d(TAG, "Failed to get player by uuid: " + uuid);
                     }
                 }
+            }
+        });
+    }
+
+    @Override
+    public void getPlayersToInvite(OnGetMultiplePlayers listener, String searchString) {
+        Query query = db.collection("players").whereEqualTo("name", searchString);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                listener.onTeamFilled(task.getResult().toObjects(Player.class));
             }
         });
     }
