@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Model.PlayerInfoListAdapter;
+import com.example.myapplication.model.PlayerInfoListAdapter;
 import com.example.myapplication.databinding.FragmentPlayersBinding;
 import com.example.myapplication.entites.Player;
-import com.example.myapplication.Model.PlayersModel;
+import com.example.myapplication.model.PlayersModel;
 
 import java.util.ArrayList;
 

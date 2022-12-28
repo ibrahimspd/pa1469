@@ -120,6 +120,7 @@ public class ColorPicker extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             try {
+                assert data != null;
                 final Uri imageUri = data.getData();
                 if (imageUri != null) {
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
@@ -133,22 +134,12 @@ public class ColorPicker extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private void setLayoutColor(ColorEnvelope envelope) {
         TextView textView = findViewById(R.id.textView);
-        textView.setText("#" + envelope.getHexCode());
+        String hexColor = "#" + envelope.getHexCode().substring(2);
+        textView.setText(hexColor);
 
         AlphaTileView alphaTileView = findViewById(R.id.alphaTileView);
         alphaTileView.setPaintColor(envelope.getColor());
-    }
-
-    public static Bitmap drawableFromUrl(String url) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection)new URL(url) .openConnection();
-        connection.setRequestProperty("User-agent","Mozilla/4.0");
-
-        connection.connect();
-        InputStream input = connection.getInputStream();
-
-        return BitmapFactory.decodeStream(input);
     }
 }

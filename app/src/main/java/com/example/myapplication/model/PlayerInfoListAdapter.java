@@ -1,4 +1,4 @@
-package com.example.myapplication.Model;
+package com.example.myapplication.model;
 
 import android.content.Context;
 import android.transition.AutoTransition;
