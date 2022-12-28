@@ -52,7 +52,6 @@ public class GenerateLineupModel extends ViewModel {
 
     private final Context context;
 
-
     public GenerateLineupModel(Context context) {
         this.context = context;
     }

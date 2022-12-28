@@ -2,15 +2,10 @@ package com.example.myapplication.controller;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -24,15 +19,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.listeners.team.OnAddTeamListener;
@@ -42,11 +36,7 @@ import com.example.myapplication.entites.Team;
 import com.example.myapplication.model.TeamInfoModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Date;
 
 public class TeamInfoFragment extends Fragment {
@@ -79,23 +69,28 @@ public class TeamInfoFragment extends Fragment {
 
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
+    private MainActivity activity;
+
+    private TeamInfoModel teamInfoModel;
+
     private FragmentTeamInfoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        TeamInfoModel homeViewModel =
-                new ViewModelProvider(this).get(TeamInfoModel.class);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
+        activity = (MainActivity) getActivity();
 
-        team = mainActivity.getTeam();
+        assert activity != null;
+        team = activity.getTeam();
         updatedTeam = team;
-        player = mainActivity.getPlayer();
+        player = activity.getPlayer();
 
         binding = FragmentTeamInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         context = getContext();
+
+        teamInfoModel = new TeamInfoModel(context, activity);
 
         teamName = binding.teamName;
         manager = binding.manager;
@@ -167,161 +162,40 @@ public class TeamInfoFragment extends Fragment {
         fontPicker.setAdapter(adapter);
 
         backgroundGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            getActivity();
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                Intent data = result.getData();
-                if (data != null) {
-                    StorageReference storageRef = storage.getReference();
-                    StorageReference mountainsRef = storageRef.child(team.getName() + "_background");
+            String imageName = team.getName() + "_background";
+            updatedTeam.setKit(imageName);
 
-                    updatedTeam.setBackground(team.getName() + "_background");
-
-                    Glide.with(context).load(data.getData()).into(teamBackground);
-                    teamBackground.setDrawingCacheEnabled(true);
-                    teamBackground.buildDrawingCache();
-
-                    Uri uri = data.getData();
-                    InputStream imageStream = null;
-                    try {
-                        imageStream = getActivity().getContentResolver().openInputStream(uri);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    byte[] data2 = baos.toByteArray();
-
-                    UploadTask uploadTask = mountainsRef.putBytes(data2);
-                    uploadTask
-                            .addOnFailureListener(exception -> 
-                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
-                            .addOnSuccessListener(taskSnapshot -> 
-                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
-                }
-            }
+            teamInfoModel.handleResult(result, imageName, teamKit);
         });
 
         kitGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == getActivity().RESULT_OK) {
-                Intent data = result.getData();
-                if (data != null) {
-                    StorageReference storageRef = storage.getReference();
-                    StorageReference mountainsRef = storageRef.child(team.getName() + "_kit");
-                    updatedTeam.setKit(team.getName() + "_kit");
+            String imageName = team.getName() + "_kit";
+            updatedTeam.setKit(imageName);
 
-                    Glide.with(context).load(data.getData()).into(teamKit);
-                    teamKit.setDrawingCacheEnabled(true);
-                    teamKit.buildDrawingCache();
-
-                    Uri uri = data.getData();
-                    InputStream imageStream = null;
-                    try {
-                        imageStream = getActivity().getContentResolver().openInputStream(uri);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    byte[] data2 = baos.toByteArray();
-
-                    UploadTask uploadTask = mountainsRef.putBytes(data2);
-                    uploadTask
-                            .addOnFailureListener(exception ->
-                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
-                            .addOnSuccessListener(taskSnapshot ->
-                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
-                }
-            }
+            teamInfoModel.handleResult(result, imageName, teamKit);
         });
 
         gkKitGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == getActivity().RESULT_OK) {
-                Intent data = result.getData();
-                if (data != null) {
-                    StorageReference storageRef = storage.getReference();
-                    StorageReference mountainsRef = storageRef.child(team.getName() + "_gkKit");
-                    updatedTeam.setGkKit(team.getName() + "_gkKit");
+            String imageName = team.getName() + "_gkKit";
+            updatedTeam.setGkKit(imageName);
 
-                    Glide.with(context).load(data.getData()).into(teamGkKit);
-                    teamGkKit.setDrawingCacheEnabled(true);
-                    teamGkKit.buildDrawingCache();
-
-                    Uri uri = data.getData();
-                    InputStream imageStream = null;
-                    try {
-                        imageStream = getActivity().getContentResolver().openInputStream(uri);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    byte[] data2 = baos.toByteArray();
-
-                    UploadTask uploadTask = mountainsRef.putBytes(data2);
-                    uploadTask
-                            .addOnFailureListener(exception ->
-                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
-                            .addOnSuccessListener(taskSnapshot ->
-                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
-                }
-            }
+            teamInfoModel.handleResult(result, imageName, teamGkKit);
         });
 
         logoGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == getActivity().RESULT_OK) {
-                Intent data = result.getData();
-                if (data != null) {
-                    StorageReference storageRef = storage.getReference();
-                    StorageReference mountainsRef = storageRef.child(team.getName() + "_logo");
-                    updatedTeam.setTeamLogo(team.getName() + "_logo");
+            String imageName = team.getName() + "_logo";
+            updatedTeam.setTeamLogo(imageName);
 
-                    Glide.with(context).load(data.getData()).into(teamLogo);
-                    teamLogo.setDrawingCacheEnabled(true);
-                    teamLogo.buildDrawingCache();
-
-                    Uri uri = data.getData();
-                    InputStream imageStream = null;
-                    try {
-                        imageStream = getActivity().getContentResolver().openInputStream(uri);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    byte[] data2 = baos.toByteArray();
-
-                    UploadTask uploadTask = mountainsRef.putBytes(data2);
-                    uploadTask
-                            .addOnFailureListener(exception ->
-                                    Toast.makeText(mainActivity, "Image could not save", Toast.LENGTH_SHORT).show())
-                            .addOnSuccessListener(taskSnapshot ->
-                                    Toast.makeText(mainActivity, "Image saved", Toast.LENGTH_SHORT).show());
-                }
-            }
+            teamInfoModel.handleResult(result, imageName, teamLogo);
         });
 
-        teamBackground.setOnClickListener(v -> {
-            Intent photoPickerIntent = getPhotoPickerIntent("background");
-            backgroundGalleryLauncher.launch(photoPickerIntent);
-        });
+        teamBackground.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("background"), backgroundGalleryLauncher));
 
-        teamKit.setOnClickListener(v -> {
-            Intent photoPickerIntent = getPhotoPickerIntent("kit");
-            kitGalleryLauncher.launch(photoPickerIntent);
-        });
+        teamKit.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("kit"), kitGalleryLauncher));
 
-        teamGkKit.setOnClickListener(v -> {
-            Intent photoPickerIntent = getPhotoPickerIntent("gkKit");
-            gkKitGalleryLauncher.launch(photoPickerIntent);
-        });
-        teamLogo.setOnClickListener(v -> {
-            Intent photoPickerIntent = getPhotoPickerIntent("logo");
-            logoGalleryLauncher.launch(photoPickerIntent);
-        });
+        teamGkKit.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("gkKit"), gkKitGalleryLauncher));
+
+        teamLogo.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("logo"), logoGalleryLauncher));
 
         colorPickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -373,60 +247,55 @@ public class TeamInfoFragment extends Fragment {
         teamName.setText("Name: " + team.getName());
         language.setText("Language: " + team.getLanguage());
         fontPicker.setPrompt(team.getFont());
-        String teamLogoUrl = team.getTeamLogo();
-        if (!teamLogoUrl.contains(".")){
-            StorageReference storageRef = storage.getReference();
-            StorageReference logoRef = storageRef.child(teamLogoUrl);
-            logoRef.getDownloadUrl().addOnSuccessListener(
-                    uri -> Glide.with(context).load(uri).into(teamLogo));
-        }
-        else
-            Glide.with(context).load(teamLogoUrl).into(teamLogo);
-        String teamKitUrl = team.getKit();
-        if (!teamKitUrl.contains(".")){
-            StorageReference storageRef = storage.getReference();
-            StorageReference kitRef = storageRef.child(teamKitUrl);
-            kitRef.getDownloadUrl().addOnSuccessListener(
-                    uri -> Glide.with(context).load(uri).into(teamKit));
-        }
-        else
-            Glide.with(context).load(teamKitUrl).into(teamKit);
-        String teamGkKitUrl = team.getGkKit() != null ?  team.getGkKit() : team.getKit();
-        if (!teamGkKitUrl.contains(".")){
-            StorageReference storageRef = storage.getReference();
-            StorageReference kitRef = storageRef.child(teamGkKitUrl);
-            kitRef.getDownloadUrl().addOnSuccessListener(
-                    uri -> Glide.with(context).load(uri).into(teamGkKit));
-        }
-        else
-            Glide.with(context).load(teamGkKitUrl).into(teamKit);
 
-        String teamBackgroundUrl = team.getBackground();
-        if (!teamBackgroundUrl.contains(".")){
-            StorageReference storageRef = storage.getReference();
-            StorageReference backgroundRef = storageRef.child(teamBackgroundUrl);
-            backgroundRef.getDownloadUrl().addOnSuccessListener(
-                    uri -> Glide.with(context).load(uri).into(teamBackground));
-        }
-        else
-            Glide.with(context).load(teamBackgroundUrl).into(teamBackground);
+        teamInfoModel.loadImage(team.getTeamLogo(), teamLogo);
+        teamInfoModel.loadImage(team.getKit(), teamKit);
+        teamInfoModel.loadImage(team.getGkKit() != null ? team.getGkKit() : team.getKit(), teamGkKit);
+
+        loadImage(team.getBackground(), teamBackground, teamBackground);
         mainColor.setBackgroundColor(Color.parseColor(team.getMainColor()));
         mainColor.setOnClickListener(view -> {
-            Intent intent = getColorPickerIntent("mainColor", team.getMainColor());
-            colorPickerLauncher.launch(intent);
+            launcColorPicker(getColorPickerIntent("mainColor", team.getMainColor()), colorPickerLauncher);
         });
 
         secondaryColor.setBackgroundColor(Color.parseColor(team.getSecondaryColor()));
         secondaryColor.setOnClickListener(view -> {
-            Intent intent = getColorPickerIntent("secondaryColor", team.getSecondaryColor());
-            colorPickerLauncher.launch(intent);
+            launcColorPicker(getColorPickerIntent("secondaryColor", team.getSecondaryColor()), colorPickerLauncher);
         });
 
         fontColor.setBackgroundColor(Color.parseColor(team.getFontColor()));
         fontColor.setOnClickListener(view -> {
-            Intent intent = getColorPickerIntent("fontColor", team.getFontColor());
-            colorPickerLauncher.launch(intent);
+            launcColorPicker(getColorPickerIntent("fontColor", team.getFontColor()), colorPickerLauncher);
         });
+        makeBoxesVisible();
+    }
+
+    private void loadImage(String team, ImageView teamGkKit, ImageView teamKit) {
+        String teamGkKitUrl = team;
+        if (!teamGkKitUrl.contains(".")){
+            loadImageFromFiresbase(teamGkKitUrl, teamGkKit);
+        }
+        else
+            loadImageFromUrl(Glide.with(context).load(teamGkKitUrl), teamKit);
+    }
+
+    private void loadImageFromUrl(RequestBuilder<Drawable> context, ImageView teamKit) {
+        context.into(teamKit);
+    }
+
+    private void loadImageFromFiresbase(String teamKitUrl, ImageView teamKit) {
+        StorageReference storageRef = storage.getReference();
+        StorageReference kitRef = storageRef.child(teamKitUrl);
+        kitRef.getDownloadUrl().addOnSuccessListener(
+                uri -> Glide.with(context).load(uri).into(teamKit));
+    }
+
+    private void launcColorPicker(Intent team, ActivityResultLauncher<Intent> colorPickerLauncher) {
+        Intent intent = team;
+        colorPickerLauncher.launch(intent);
+    }
+
+    private void makeBoxesVisible() {
         binding.coreInfoBox.setVisibility(View.VISIBLE);
         binding.colorBox.setVisibility(View.VISIBLE);
         binding.lineupConfigBox.setVisibility(View.VISIBLE);
