@@ -135,7 +135,11 @@ public class GenerateLineupModel extends ViewModel {
     }
 
     @NonNull
-    private Request createLineupRequest(Team team, String formation, List<Player> players) {
+    public Request createLineupRequest(Team team, String formation, List<Player> players) {
+        if (players.size() < 11)
+        {
+            return null;
+        }
         Lineup lineup = new Lineup(players, team, formation);
         String json = gson.toJson(lineup);
         MediaType mediaType = MediaType.parse("application/json");
