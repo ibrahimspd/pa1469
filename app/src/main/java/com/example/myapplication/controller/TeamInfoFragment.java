@@ -2,10 +2,10 @@ package com.example.myapplication.controller;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -19,14 +19,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.listeners.team.OnAddTeamListener;
@@ -34,8 +33,6 @@ import com.example.myapplication.databinding.FragmentTeamInfoBinding;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.example.myapplication.model.TeamInfoModel;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 
@@ -51,9 +48,9 @@ public class TeamInfoFragment extends Fragment {
     private ImageView teamBackground;
     private ImageView teamKit;
     private ImageView teamGkKit;
-    private ImageView mainColor;
-    private ImageView secondaryColor;
-    private ImageView fontColor;
+    private ImageView mainColorImgView;
+    private ImageView secondaryColorImgView;
+    private ImageView fontColorImgView;
 
     private Team team;
     private Player player;
@@ -66,8 +63,6 @@ public class TeamInfoFragment extends Fragment {
     private ActivityResultLauncher<Intent> gkKitGalleryLauncher;
     private ActivityResultLauncher<Intent> logoGalleryLauncher;
     private ActivityResultLauncher<Intent> backgroundGalleryLauncher;
-
-    private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     private MainActivity activity;
 
@@ -99,29 +94,31 @@ public class TeamInfoFragment extends Fragment {
         teamBackground = binding.teamBackground;
         teamGkKit = binding.teamgKkit;
         teamKit = binding.teamKit;
-        mainColor = binding.mainColor;
-        secondaryColor = binding.secondaryColor;
-        fontColor = binding.fontColor;
+        mainColorImgView = binding.mainColor;
+        secondaryColorImgView = binding.secondaryColor;
+        fontColorImgView = binding.fontColor;
 
         Button saveButton = binding.saveButton;
         Button createTeamButton = binding.createTeamButton;
 
         fontPicker = binding.fontDropDown;
 
-        if(team != null)
+        if(team != null) {
             displayTeamInfo();
+            makeBoxesVisible();
+        }
         else
-            createTeamButton.setVisibility(View.VISIBLE);
+            binding.createTeamBox.setVisibility(View.VISIBLE);
 
         createTeamButton.setOnClickListener(view -> {
-            String teamName;
+            String teamName = binding.createTeamInput.getText().toString();
 
             EditText input = new EditText(context);
             input.setInputType(InputType.TYPE_CLASS_TEXT);
 
             team = new Team.TeamBuilder()
                     .setTeamId(new Date().getTime() + "")
-                    .setName("New Team")
+                    .setName(teamName)
                     .setLanguage("en")
                     .setKit("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
                     .setGkKit("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
@@ -137,9 +134,12 @@ public class TeamInfoFragment extends Fragment {
             OnAddTeamListener listener = new OnAddTeamListener() {
                 @Override
                 public void onTeamFilled(Boolean added) {
-                    if (added) {
+                    if (Boolean.TRUE.equals(added)) {
+                        binding.createTeamBox.setVisibility(View.GONE);
+                        Toast.makeText(context, "Team created successfully", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onTeamFilled: " + team.getName());
                         displayTeamInfo();
+                        makeBoxesVisible();
                     }
                     else
                         Log.d(TAG, "onTeamFilled: " + "Team not added");
@@ -189,31 +189,51 @@ public class TeamInfoFragment extends Fragment {
             teamInfoModel.handleResult(result, imageName, teamLogo);
         });
 
-        teamBackground.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("background"), backgroundGalleryLauncher));
+        teamBackground.setOnClickListener(v ->{
+            Intent intent = getPhotoPickerIntent("background");
+            backgroundGalleryLauncher.launch(intent);
+        });
 
-        teamKit.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("kit"), kitGalleryLauncher));
+        teamKit.setOnClickListener(v ->{
+            Intent intent = getPhotoPickerIntent("kit");
+            kitGalleryLauncher.launch(intent);
+        });
 
-        teamGkKit.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("gkKit"), gkKitGalleryLauncher));
+        teamGkKit.setOnClickListener(v -> {
+            Intent intent = getPhotoPickerIntent("gkKit");
+            gkKitGalleryLauncher.launch(intent);
+        });
 
-        teamLogo.setOnClickListener(v -> launcColorPicker(getPhotoPickerIntent("logo"), logoGalleryLauncher));
+        teamLogo.setOnClickListener(v -> {
+            Intent intent = getPhotoPickerIntent("logo");
+            logoGalleryLauncher.launch(intent);
+        });
 
         colorPickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == getActivity().RESULT_OK) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
+                        assert data != null;
                         String colorType = data.getStringExtra("colorType");
                         String hexColor = data.getStringExtra("hexColor");
                         int color = data.getIntExtra("color", 0);
-                        if(colorType.equals("mainColor")){
-                            mainColor.setBackgroundColor(color);
-                            updatedTeam.setMainColor(hexColor);
-                        } else if(colorType.equals("secondaryColor")){
-                            secondaryColor.setBackgroundColor(color);
-                            updatedTeam.setSecondaryColor(hexColor);
-                        } else if(colorType.equals("fontColor")){
-                            fontColor.setBackgroundColor(color);
-                            updatedTeam.setFontColor(hexColor);
+                        switch (colorType) {
+                            case "mainColor":
+                                mainColorImgView.setBackgroundColor(color);
+                                updatedTeam.setMainColor(hexColor);
+                                break;
+                            case "secondaryColor":
+                                secondaryColorImgView.setBackgroundColor(color);
+                                updatedTeam.setSecondaryColor(hexColor);
+                                break;
+                            case "fontColor":
+                                fontColorImgView.setBackgroundColor(color);
+                                updatedTeam.setFontColor(hexColor);
+                                break;
+                            default:
+                                Log.d(TAG, "onActivityResult: " + "Color type not found");
+                                break;
                         }
                         Log.d(TAG, "onActivityResult: " + colorType + " " + color);
                     }
@@ -229,6 +249,7 @@ public class TeamInfoFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
+                // TODO document why this method is empty
             }
         });
         return root;
@@ -248,51 +269,35 @@ public class TeamInfoFragment extends Fragment {
         language.setText("Language: " + team.getLanguage());
         fontPicker.setPrompt(team.getFont());
 
-        teamInfoModel.loadImage(team.getTeamLogo(), teamLogo);
-        teamInfoModel.loadImage(team.getKit(), teamKit);
-        teamInfoModel.loadImage(team.getGkKit() != null ? team.getGkKit() : team.getKit(), teamGkKit);
+        String fontColor = team.getFontColor();
+        String mainColor = team.getMainColor();
+        String secondaryColor = team.getSecondaryColor();
 
-        loadImage(team.getBackground(), teamBackground, teamBackground);
-        mainColor.setBackgroundColor(Color.parseColor(team.getMainColor()));
-        mainColor.setOnClickListener(view -> {
-            launcColorPicker(getColorPickerIntent("mainColor", team.getMainColor()), colorPickerLauncher);
-        });
 
-        secondaryColor.setBackgroundColor(Color.parseColor(team.getSecondaryColor()));
-        secondaryColor.setOnClickListener(view -> {
-            launcColorPicker(getColorPickerIntent("secondaryColor", team.getSecondaryColor()), colorPickerLauncher);
-        });
-
-        fontColor.setBackgroundColor(Color.parseColor(team.getFontColor()));
-        fontColor.setOnClickListener(view -> {
-            launcColorPicker(getColorPickerIntent("fontColor", team.getFontColor()), colorPickerLauncher);
-        });
-        makeBoxesVisible();
-    }
-
-    private void loadImage(String team, ImageView teamGkKit, ImageView teamKit) {
-        String teamGkKitUrl = team;
-        if (!teamGkKitUrl.contains(".")){
-            loadImageFromFiresbase(teamGkKitUrl, teamGkKit);
+        if(!teamInfoModel.loadImage(team.getTeamLogo(), teamLogo)
+                || !teamInfoModel.loadImage(team.getKit(), teamKit)
+                || !teamInfoModel.loadImage(team.getGkKit() != null ? team.getGkKit() : team.getKit(), teamGkKit)
+                || !teamInfoModel.loadImage(team.getBackground(), teamBackground)) {
+            displayErrorToast(getString(R.string.loadingImageToImageViewError));
         }
-        else
-            loadImageFromUrl(Glide.with(context).load(teamGkKitUrl), teamKit);
-    }
 
-    private void loadImageFromUrl(RequestBuilder<Drawable> context, ImageView teamKit) {
-        context.into(teamKit);
-    }
+        mainColorImgView.setBackgroundColor(Color.parseColor(mainColor));
+        mainColorImgView.setOnClickListener(view -> {
+            Intent intent = teamInfoModel.getColorPickerIntent("mainColor", mainColor);
+            colorPickerLauncher.launch(intent);
+        });
 
-    private void loadImageFromFiresbase(String teamKitUrl, ImageView teamKit) {
-        StorageReference storageRef = storage.getReference();
-        StorageReference kitRef = storageRef.child(teamKitUrl);
-        kitRef.getDownloadUrl().addOnSuccessListener(
-                uri -> Glide.with(context).load(uri).into(teamKit));
-    }
+        secondaryColorImgView.setBackgroundColor(Color.parseColor(secondaryColor));
+        secondaryColorImgView.setOnClickListener(view -> {
+            Intent intent = teamInfoModel.getColorPickerIntent("secondaryColor", secondaryColor);
+            colorPickerLauncher.launch(intent);
+        });
 
-    private void launcColorPicker(Intent team, ActivityResultLauncher<Intent> colorPickerLauncher) {
-        Intent intent = team;
-        colorPickerLauncher.launch(intent);
+        fontColorImgView.setBackgroundColor(Color.parseColor(fontColor));
+        fontColorImgView.setOnClickListener(view -> {
+            Intent intent = teamInfoModel.getColorPickerIntent("fontColor", fontColor);
+            colorPickerLauncher.launch(intent);
+        });
     }
 
     private void makeBoxesVisible() {
@@ -306,17 +311,14 @@ public class TeamInfoFragment extends Fragment {
         binding.saveButton.setVisibility(View.VISIBLE);
     }
 
-    @NonNull
-    private Intent getColorPickerIntent(String color, String type) {
-        Intent intent = new Intent(context, ColorPicker.class);
-        intent.putExtra("colorType", color);
-        intent.putExtra("color", type);
-        return intent;
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void displayErrorToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "displayErrorToast: " + message);
     }
 }

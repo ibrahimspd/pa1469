@@ -11,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModel;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
+import com.example.myapplication.controller.ColorPicker;
 import com.example.myapplication.controller.MainActivity;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -38,36 +40,43 @@ public class TeamInfoModel extends ViewModel {
         this.activity = activity;
     }
 
-    public void handleResult(ActivityResult result, String imageName, ImageView imageView) {
+    public boolean handleResult(ActivityResult result, String imageName, ImageView imageView) {
         if (result.getResultCode() == Activity.RESULT_OK) {
             Intent imageData = result.getData();
             if (imageData != null) {
 
                 loadImageFromUrl(Glide.with(context).load(imageData.getData()), imageView);
 
-                StoreImageToFirabaseStorage(imageData, imageName);
+                return storeImageToFirebaseStorage(imageData, imageName);
             }
         }
+        return false;
     }
 
-    private void loadImageFromUrl(RequestBuilder<Drawable> context, ImageView teamKit) {
-        context.into(teamKit);
+    private boolean loadImageFromUrl(RequestBuilder<Drawable> image, ImageView imageView) {
+        try {
+            image.into(imageView);
+        } catch (Exception e) {
+            Toast.makeText(this.context, "Error loading image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
-    public void loadImage(String team, ImageView teamGkKit) {
-        String teamGkKitUrl = team;
-        if (!teamGkKitUrl.contains(".")){
-            loadImageFromFiresbase(teamGkKitUrl, teamGkKit);
+    public boolean loadImage(String imageString, ImageView imageView) {
+        if (!imageString.contains(".")){
+            loadImageFromFiresbase(imageString, imageView);
         }
         else
-            loadImageFromUrl(Glide.with(context).load(teamGkKitUrl), teamGkKit);
+            return loadImageFromUrl(Glide.with(context).load(imageString), imageView);
+        return true;
     }
 
-    private void loadImageFromFiresbase(String teamKitUrl, ImageView teamKit) {
+    private void loadImageFromFiresbase(String imageString, ImageView imageView) {
         StorageReference storageRef = storage.getReference();
-        StorageReference kitRef = storageRef.child(teamKitUrl);
-        kitRef.getDownloadUrl().addOnSuccessListener(
-                uri -> Glide.with(context).load(uri).into(teamKit));
+        StorageReference imageRef = storageRef.child(imageString);
+        imageRef.getDownloadUrl().addOnSuccessListener(
+                uri -> Glide.with(context).load(uri).into(imageView));
     }
 
     @Nullable
@@ -81,22 +90,39 @@ public class TeamInfoModel extends ViewModel {
         return imageStream;
     }
 
-    private void StoreImageToFirabaseStorage(Intent data, String imageName) {
-        Uri uri = data.getData();
-        InputStream imageStream = getInputStream(uri);
-        Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data2 = baos.toByteArray();
+    private boolean storeImageToFirebaseStorage(Intent data, String imageName) {
+        if(data == null || imageName == null)
+            return false;
 
-        StorageReference storageRef = storage.getReference();
-        StorageReference imageRef = storageRef.child(imageName);
-        UploadTask uploadTask = imageRef.putBytes(data2);
-        uploadTask
-                .addOnFailureListener(exception ->
-                        Toast.makeText(context, "Image could not save", Toast.LENGTH_SHORT).show())
-                .addOnSuccessListener(taskSnapshot ->
-                        Toast.makeText(context, "Image saved", Toast.LENGTH_SHORT).show());
+        try {
+            Uri uri = data.getData();
+            InputStream imageStream = getInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data2 = baos.toByteArray();
+
+            StorageReference storageRef = storage.getReference();
+            StorageReference imageRef = storageRef.child(imageName);
+            UploadTask uploadTask = imageRef.putBytes(data2);
+            uploadTask
+                    .addOnFailureListener(exception ->
+                            Toast.makeText(context, "Image could not save", Toast.LENGTH_SHORT).show())
+                    .addOnSuccessListener(taskSnapshot ->
+                            Toast.makeText(context, "Image saved", Toast.LENGTH_SHORT).show());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
+    @NonNull
+    public Intent getColorPickerIntent(String color, String type) {
+        Intent intent = new Intent(context, ColorPicker.class);
+        intent.putExtra("colorType", color);
+        intent.putExtra("color", type);
+        return intent;
+    }
 }
