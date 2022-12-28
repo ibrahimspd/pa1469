@@ -4,6 +4,8 @@ public class PlayerItem {
     private String username;
     private String imageUrl;
     private String position;
+    private String nationality;
+    private String number;
 
     public PlayerItem(String username, String imageUrl, String position) {
         this.username = username;

@@ -89,6 +89,7 @@ public class TeamInfoFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
 
         team = mainActivity.getTeam();
+        updatedTeam = team;
         player = mainActivity.getPlayer();
 
         binding = FragmentTeamInfoBinding.inflate(inflater, container, false);
@@ -106,6 +107,7 @@ public class TeamInfoFragment extends Fragment {
         mainColor = binding.mainColor;
         secondaryColor = binding.secondaryColor;
         fontColor = binding.fontColor;
+
         Button saveButton = binding.saveButton;
         Button createTeamButton = binding.createTeamButton;
 
@@ -118,31 +120,10 @@ public class TeamInfoFragment extends Fragment {
 
         createTeamButton.setOnClickListener(view -> {
             String teamName;
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Title");
 
-// Set up the input
-            final EditText input = new EditText(getContext());
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+            EditText input = new EditText(context);
             input.setInputType(InputType.TYPE_CLASS_TEXT);
-            builder.setView(input);
 
-// Set up the buttons
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String m_Text = input.getText().toString();
-                    System.out.println(m_Text);
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            builder.show();
             team = new Team.TeamBuilder()
                     .setTeamId(new Date().getTime() + "")
                     .setName("New Team")
