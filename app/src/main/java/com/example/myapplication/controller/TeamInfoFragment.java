@@ -39,9 +39,7 @@ import com.example.myapplication.database.listeners.team.OnAddTeamListener;
 import com.example.myapplication.databinding.FragmentTeamInfoBinding;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
-import com.example.myapplication.Model.TeamInfoModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.myapplication.model.TeamInfoModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -326,29 +324,21 @@ public class TeamInfoFragment extends Fragment {
         });
 
         teamBackground.setOnClickListener(v -> {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            photoPickerIntent.putExtra("type", "background");
+            Intent photoPickerIntent = getPhotoPickerIntent("background");
             backgroundGalleryLauncher.launch(photoPickerIntent);
         });
 
         teamKit.setOnClickListener(v -> {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            photoPickerIntent.putExtra("type", "kit");
+            Intent photoPickerIntent = getPhotoPickerIntent("kit");
             kitGalleryLauncher.launch(photoPickerIntent);
         });
 
         teamGkKit.setOnClickListener(v -> {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            photoPickerIntent.putExtra("type", "kit");
+            Intent photoPickerIntent = getPhotoPickerIntent("gkKit");
             gkKitGalleryLauncher.launch(photoPickerIntent);
         });
         teamLogo.setOnClickListener(v -> {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            photoPickerIntent.putExtra("type", "logo");
+            Intent photoPickerIntent = getPhotoPickerIntent("logo");
             logoGalleryLauncher.launch(photoPickerIntent);
         });
 
@@ -387,6 +377,14 @@ public class TeamInfoFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @NonNull
+    private Intent getPhotoPickerIntent(String kit) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        photoPickerIntent.putExtra("type", kit);
+        return photoPickerIntent;
     }
 
     public void displayTeamInfo() {
@@ -433,25 +431,19 @@ public class TeamInfoFragment extends Fragment {
             Glide.with(context).load(teamBackgroundUrl).into(teamBackground);
         mainColor.setBackgroundColor(Color.parseColor(team.getMainColor()));
         mainColor.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ColorPicker.class);
-            intent.putExtra("colorType", "mainColor");
-            intent.putExtra("color", team.getMainColor());
+            Intent intent = getColorPickerIntent("mainColor", team.getMainColor());
             colorPickerLauncher.launch(intent);
         });
 
         secondaryColor.setBackgroundColor(Color.parseColor(team.getSecondaryColor()));
         secondaryColor.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ColorPicker.class);
-            intent.putExtra("colorType", "secondaryColor");
-            intent.putExtra("color", team.getSecondaryColor());
+            Intent intent = getColorPickerIntent("secondaryColor", team.getSecondaryColor());
             colorPickerLauncher.launch(intent);
         });
 
         fontColor.setBackgroundColor(Color.parseColor(team.getFontColor()));
         fontColor.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ColorPicker.class);
-            intent.putExtra("colorType", "fontColor");
-            intent.putExtra("color", team.getFontColor());
+            Intent intent = getColorPickerIntent("fontColor", team.getFontColor());
             colorPickerLauncher.launch(intent);
         });
         binding.coreInfoBox.setVisibility(View.VISIBLE);
@@ -462,6 +454,14 @@ public class TeamInfoFragment extends Fragment {
         binding.gkKitBox.setVisibility(View.VISIBLE);
         binding.backgroundBox.setVisibility(View.VISIBLE);
         binding.saveButton.setVisibility(View.VISIBLE);
+    }
+
+    @NonNull
+    private Intent getColorPickerIntent(String color, String type) {
+        Intent intent = new Intent(context, ColorPicker.class);
+        intent.putExtra("colorType", color);
+        intent.putExtra("color", type);
+        return intent;
     }
 
     @Override

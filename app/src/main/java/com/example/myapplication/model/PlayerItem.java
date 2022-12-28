@@ -1,4 +1,4 @@
-package com.example.myapplication.Model;
+package com.example.myapplication.model;
 
 public class PlayerItem {
     private String username;

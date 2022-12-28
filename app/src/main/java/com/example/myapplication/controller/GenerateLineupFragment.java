@@ -16,12 +16,11 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentGenerateLineupBinding;
 import com.example.myapplication.entites.Team;
-import com.example.myapplication.Model.GenerateLineupModel;
+import com.example.myapplication.model.GenerateLineupModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,8 +39,7 @@ public class GenerateLineupFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GenerateLineupModel generateLineupModel =
-                new ViewModelProvider(this).get(GenerateLineupModel.class);
+        GenerateLineupModel generateLineupModel = new GenerateLineupModel(context);
 
         binding = FragmentGenerateLineupBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -73,7 +71,7 @@ public class GenerateLineupFragment extends Fragment {
             binding.lineupImageView.setImageBitmap(myBitmap);
         }else {
             try {
-                generateLineupModel.createLineup(team, getFormation(), context, binding.lineupImageView);
+                generateLineupModel.createLineup(team, getFormation(), binding.lineupImageView);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -106,7 +104,7 @@ public class GenerateLineupFragment extends Fragment {
             Team team =  mainActivity.getTeam();
             String formation = getFormation();
             try {
-                generateLineupModel.createLineup(team, formation, context, binding.lineupImageView);
+                generateLineupModel.createLineup(team, formation, binding.lineupImageView);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -117,7 +115,7 @@ public class GenerateLineupFragment extends Fragment {
             ImageView imageView = binding.lineupImageView;
             imageView.setDrawingCacheEnabled(true);
             try {
-                generateLineupModel.saveImage(imageView, context);
+                generateLineupModel.saveImage(imageView);
             } catch (IOException e) {
                 e.printStackTrace();
             }

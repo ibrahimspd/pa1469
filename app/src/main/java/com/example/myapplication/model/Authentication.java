@@ -1,4 +1,4 @@
-package com.example.myapplication.Model;
+package com.example.myapplication.model;
 
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.listeners.user.OnAddUserListener;

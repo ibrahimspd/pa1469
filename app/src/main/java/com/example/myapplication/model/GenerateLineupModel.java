@@ -1,4 +1,4 @@
-package com.example.myapplication.Model;
+package com.example.myapplication.model;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -17,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.entites.Lineup;
@@ -43,15 +44,20 @@ import okhttp3.Response;
 
 public class GenerateLineupModel extends ViewModel {
 
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     List<AutoCompleteTextView> inputFields = new ArrayList<>();
+
     private Activity activity;
 
+    private final Context context;
 
-    public GenerateLineupModel() {}
 
-    public void saveImage(ImageView imageView, Context context) throws IOException {
+    public GenerateLineupModel(Context context) {
+        this.context = context;
+    }
+
+    public void saveImage(ImageView imageView) throws IOException {
         Bitmap bitmap = Bitmap.createBitmap(imageView.getDrawingCache());
         OutputStream fos;
 
@@ -84,37 +90,20 @@ public class GenerateLineupModel extends ViewModel {
         fos.close();
     }
 
-    public void createLineup(Team team, String formation, Context context, ImageView imageView) throws IOException {
+    public void createLineup(Team team, String formation, ImageView imageView) throws IOException {
         if(team == null)
             return;
         new Thread(() -> {
-            OkHttpClient client = new OkHttpClient().newBuilder().build();
-            MediaType mediaType = MediaType.parse("application/json");
 
-            List<Player> players = new ArrayList<>();
-            for (AutoCompleteTextView positionInputField : inputFields) {
-                players.add(addPlayerFromInputField(positionInputField));
-            }
+            List<Player> players = getPlayerFromInputFields();
 
-            Lineup lineup = new Lineup(players, team, formation);
-            String json = gson.toJson(lineup);
-            RequestBody body = RequestBody.create(mediaType,json);
-            Request request = new Request.Builder()
-                    .url("http://78.141.233.225:4545/lineup")
-                    .method("POST", body)
-                    .addHeader("Content-Type", "application/json")
-                    .build();
+            Request request = createLineupRequest(team, formation, players);
             try {
-                Response response = client.newCall(request).execute();
-                InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                Response response = getResponse(request);
 
-                File file = new File(context.getFilesDir(), "lineup.png");
-                FileOutputStream fos = new FileOutputStream(file);
+                Bitmap bitmap = getBitmapFromResponse(response);
 
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                fos.flush();
-                fos.close();
+                storeBitMapInAppdata(bitmap);
 
                 if(activity != null) {
                     activity.runOnUiThread(() -> imageView.setImageBitmap(bitmap));
@@ -123,6 +112,48 @@ public class GenerateLineupModel extends ViewModel {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    private Bitmap getBitmapFromResponse(Response response) {
+        InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
+        return BitmapFactory.decodeStream(inputStream);
+    }
+
+    private void storeBitMapInAppdata(Bitmap bitmap) throws IOException {
+        File file = new File(context.getFilesDir(), "lineup.png");
+        FileOutputStream fos = new FileOutputStream(file);
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        fos.flush();
+        fos.close();
+    }
+
+    @NonNull
+    private Response getResponse(Request request) throws IOException {
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        return client.newCall(request).execute();
+    }
+
+    @NonNull
+    private Request createLineupRequest(Team team, String formation, List<Player> players) {
+        Lineup lineup = new Lineup(players, team, formation);
+        String json = gson.toJson(lineup);
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType,json);
+        return new Request.Builder()
+                .url("http://78.141.233.225:4545/lineup")
+                .method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+    }
+
+    @NonNull
+    private List<Player> getPlayerFromInputFields() {
+        List<Player> players = new ArrayList<>();
+        for (AutoCompleteTextView positionInputField : inputFields) {
+            players.add(addPlayerFromInputField(positionInputField));
+        }
+        return players;
     }
 
     public Player addPlayerFromInputField(AutoCompleteTextView editText){
@@ -151,7 +182,6 @@ public class GenerateLineupModel extends ViewModel {
         }
     }
 
-
     public void setActivity(Activity activity){
         this.activity = activity;
     }
@@ -161,10 +191,10 @@ public class GenerateLineupModel extends ViewModel {
     }
 
     public void shareImage(ImageView imageView) {
-        Drawable mDrawable = imageView.getDrawable();
-        Bitmap mBitmap = ((BitmapDrawable) mDrawable).getBitmap();
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-        String path = MediaStore.Images.Media.insertImage(activity.getContentResolver(), mBitmap, "Image Description", null);
+        String path = MediaStore.Images.Media.insertImage(activity.getContentResolver(), bitmap, "Lineup", null);
         Uri uri = Uri.parse(path);
 
         Intent intent = new Intent(Intent.ACTION_SEND);
