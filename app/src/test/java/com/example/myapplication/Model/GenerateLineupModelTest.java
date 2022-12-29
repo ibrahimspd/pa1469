@@ -27,7 +27,7 @@ import java.util.List;
 @RunWith(JUnit4.class)
 public class GenerateLineupModelTest {
 
-    GenerateLineupModel generateLineupModel = new GenerateLineupModel(null);
+    GenerateLineupModel generateLineupModel = new GenerateLineupModel(null, null);
     Team testTeam = new Team.TeamBuilder()
             .setTeamId(new Date().getTime() + "")
             .setName("New Team")
