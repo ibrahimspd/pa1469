@@ -14,16 +14,22 @@ import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.database.listeners.user.OnAddUserListener;
 import com.example.myapplication.database.listeners.user.OnGetUserListener;
 import com.example.myapplication.entites.Credentials;
+import com.example.myapplication.entites.FcmToken;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FirestoreImpl implements Database {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -230,5 +236,46 @@ public class FirestoreImpl implements Database {
     @Override
     public boolean deleteAccount(Credentials credentials) {
         return false;
+    }
+
+    @Override
+    public void addUserFcm() {
+        OnGetPlayerListener listener = new OnGetPlayerListener() {
+            @Override
+            public void onPlayerFilled(Player player) {
+
+                FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+
+                            CollectionReference collectionReference = db.collection("fcm");
+                            Log.d(TAG, "onComplete: getting collection FCM");
+                            FcmToken fcmToken = new FcmToken(task.getResult());
+                            collectionReference.document(player.getUuid()).set(fcmToken).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Log.d(TAG, "fcm inneronComplete: shitty database");
+                                    }
+                                }
+                            });
+                            Log.d(TAG, "onComplete: ADDING USER FCM" );
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        };
+
+        String uuid = FirebaseAuth.getInstance().getUid();
+        if (uuid != null){
+            getPlayerByUuid(listener, uuid);
+        }
+
     }
 }

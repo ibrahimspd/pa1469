@@ -16,5 +16,8 @@
             android:id="@+id/playersFragment"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Admin View (Not added)" />
+        <item android:id="@+id/invitationsFragment"
+            android:icon="@drawable/ic_baseline_inbox_24"
+            android:title="Invitiations (Not added)"/>
     </group>
 </menu>
