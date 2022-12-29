@@ -18,6 +18,7 @@ import com.example.myapplication.entites.Player;
 import com.example.myapplication.model.PlayersModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayersFragment extends Fragment {
 
@@ -35,20 +36,10 @@ public class PlayersFragment extends Fragment {
 
         Context context = getContext();
 
-        ArrayList<Player> playerArrayList = new ArrayList<>();
-        playerArrayList.add(new Player.PlayerBuilder().setName("Neuer").setPosition("GK").setAvatar("https://cdn.futbin.com/content/fifa23/img/players/167495.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Walker").setPosition("RB").setAvatar("https://cdn.futbin.com/content/fifa23/img/players/188377.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Varane").setPosition("CB").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/201535.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Van Dijk").setPosition( "CB").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/203376.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Hernandez").setPosition( "LB").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/232656.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Kimmich").setPosition("CM").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/212622.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Pogba").setPosition("CM").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/195864.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("De Jong").setPosition("CM").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/228702.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Messi").setPosition( "RW").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/158023.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Kane").setPosition("ST").setAvatar("https://cdn.futbin.com/content/fifa23/img/players/202126.png?v=23").build());
-        playerArrayList.add(new Player.PlayerBuilder().setName("Neymar").setPosition("LW").setAvatar( "https://cdn.futbin.com/content/fifa23/img/players/190871.png?v=23").build());
+        MainActivity mainActivity = (MainActivity) getActivity();
+        List<Player> players = mainActivity.getPlayers();
 
-        PlayerInfoListAdapter courseAdapter = new PlayerInfoListAdapter(context, playerArrayList);
+        PlayerInfoListAdapter courseAdapter = new PlayerInfoListAdapter(context, players);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
