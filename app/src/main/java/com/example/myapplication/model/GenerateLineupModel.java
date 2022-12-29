@@ -1,6 +1,5 @@
 package com.example.myapplication.model;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,6 +19,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.example.myapplication.controller.MainActivity;
+import com.example.myapplication.database.FirestoreImpl;
+import com.example.myapplication.database.listeners.player.OnAddPlayerListener;
 import com.example.myapplication.entites.Lineup;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
@@ -48,13 +50,13 @@ public class GenerateLineupModel extends ViewModel {
 
     List<AutoCompleteTextView> inputFields = new ArrayList<>();
 
-    private Activity activity;
+    private MainActivity activity;
 
     private final Context context;
 
-
-    public GenerateLineupModel(Context context) {
+    public GenerateLineupModel(Context context, MainActivity activity) {
         this.context = context;
+        this.activity = activity;
     }
 
     public void saveImage(ImageView imageView) throws IOException {
@@ -182,7 +184,7 @@ public class GenerateLineupModel extends ViewModel {
         }
     }
 
-    public void setActivity(Activity activity){
+    public void setActivity(MainActivity activity){
         this.activity = activity;
     }
 
@@ -205,18 +207,17 @@ public class GenerateLineupModel extends ViewModel {
 
     public void loadPlayerDropdown(Context context) {
         List<PlayerItem> playerItems = new ArrayList<>();
-        playerItems.add(new PlayerItem("Neuer","https://cdn.futbin.com/content/fifa23/img/players/167495.png?v=23", "GK"));
-        playerItems.add(new PlayerItem("Walker", "https://cdn.futbin.com/content/fifa23/img/players/188377.png?v=23", "RB"));
-        playerItems.add(new PlayerItem("Varane", "https://cdn.futbin.com/content/fifa23/img/players/201535.png?v=23", "CB"));
-        playerItems.add(new PlayerItem("Van Dijk", "https://cdn.futbin.com/content/fifa23/img/players/203376.png?v=23", "CB"));
-        playerItems.add(new PlayerItem("Hernandez", "https://cdn.futbin.com/content/fifa23/img/players/232656.png?v=23", "LB"));
-        playerItems.add(new PlayerItem("Kimmich", "https://cdn.futbin.com/content/fifa23/img/players/212622.png?v=23", "CM"));
-        playerItems.add(new PlayerItem("Pogba", "https://cdn.futbin.com/content/fifa23/img/players/195864.png?v=23", "CM"));
-        playerItems.add(new PlayerItem("De Jong", "https://cdn.futbin.com/content/fifa23/img/players/228702.png?v=23", "CM"));
-        playerItems.add(new PlayerItem("Messi", "https://cdn.futbin.com/content/fifa23/img/players/158023.png?v=23", "RW"));
-        playerItems.add(new PlayerItem("Kane", "https://cdn.futbin.com/content/fifa23/img/players/202126.png?v=23", "ST"));
-        playerItems.add(new PlayerItem("Neymar", "https://cdn.futbin.com/content/fifa23/img/players/190871.png?v=23", "LW"));
+        List<Player> players = activity.getPlayers();
+        if (players != null) {
+            for (Player player : players) {
+                playerItems.add(playerToPlayerItem(player));
+            }
+        }
         addAutocomplete(playerItems, context);
+    }
+
+    private PlayerItem playerToPlayerItem(Player player){
+        return new PlayerItem(player.getName(), player.getAvatar(), player.getPosition(), player.getNationality(), player.getNumber(), player.getName());
     }
 
     private void addAutocomplete(List<PlayerItem> playerItems, Context context) {

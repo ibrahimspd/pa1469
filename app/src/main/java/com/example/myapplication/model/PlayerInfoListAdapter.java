@@ -18,13 +18,14 @@ import com.example.myapplication.R;
 import com.example.myapplication.entites.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAdapter.ViewHolder>{
 
     private final Context context;
-    private final ArrayList<Player> playerArrayList;
+    private final List<Player> playerArrayList;
 
-    public PlayerInfoListAdapter(Context context, ArrayList<Player> playerArrayList) {
+    public PlayerInfoListAdapter(Context context, List<Player> playerArrayList) {
         this.context = context;
         this.playerArrayList = playerArrayList;
     }

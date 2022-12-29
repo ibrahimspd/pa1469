@@ -27,14 +27,14 @@ public class LoginModel {
 
     public void signIn(String email, String password) {
         auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Intent intent = new Intent(context, MainActivity.class);
-                        intent.putExtra("id",  task.getResult().getUser().getUid());
-                        context.startActivity(intent);
-                    } else {
-                        Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        .addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("id",  task.getResult().getUser().getUid());
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -224,6 +224,17 @@ public class FirestoreImpl implements Database {
     }
 
     @Override
+    public void getPlayersByTeam(OnGetMultiplePlayers listener, String teamId) {
+        Query query = db.collection("players").whereEqualTo("teamId", teamId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                listener.onTeamFilled(task.getResult().toObjects(Player.class));
+            }
+        });
+    }
+
+    @Override
     public boolean deleteAccount(Credentials credentials) {
         return false;
     }

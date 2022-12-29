@@ -37,6 +37,8 @@ public interface Database
 
     void getPlayersToInvite(OnGetMultiplePlayers listener, String searchString);
 
+    void getPlayersByTeam(OnGetMultiplePlayers listener, String teamId);
+
     boolean deleteAccount(Credentials credentials);
     void addUserFcm();
 }
