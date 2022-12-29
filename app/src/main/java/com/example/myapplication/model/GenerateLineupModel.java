@@ -116,7 +116,7 @@ public class GenerateLineupModel extends ViewModel {
         }).start();
     }
 
-    private Bitmap getBitmapFromResponse(Response response) {
+    public Bitmap getBitmapFromResponse(Response response) {
         InputStream inputStream = Objects.requireNonNull(response.body()).byteStream();
         return BitmapFactory.decodeStream(inputStream);
     }
@@ -131,7 +131,7 @@ public class GenerateLineupModel extends ViewModel {
     }
 
     @NonNull
-    private Response getResponse(Request request) throws IOException {
+    public Response getResponse(Request request) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         return client.newCall(request).execute();
     }
@@ -154,7 +154,7 @@ public class GenerateLineupModel extends ViewModel {
     }
 
     @NonNull
-    private List<Player> getPlayerFromInputFields() {
+    public List<Player> getPlayerFromInputFields() {
         List<Player> players = new ArrayList<>();
         for (AutoCompleteTextView positionInputField : inputFields) {
             players.add(addPlayerFromInputField(positionInputField));
