@@ -67,5 +67,6 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="show_profile" />
+    <string name="loadingImageToImageViewError">Error loading image on displayTeamInfo()</string>
 
 </resources>

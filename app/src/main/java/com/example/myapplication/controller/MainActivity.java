@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
+import com.example.myapplication.database.listeners.player.OnGetMultiplePlayers;
 import com.example.myapplication.database.listeners.player.OnGetPlayerListener;
 import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.entites.Player;
@@ -24,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Player player;
     private Team team;
+    private List<Player> players;
 
     private FirestoreImpl firestore = new FirestoreImpl();
 
@@ -38,18 +42,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        binding.appBarMain.toolbar.setTitle("Home");
-
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
+
+        OnGetMultiplePlayers onGetMultiplePlayersListener = new OnGetMultiplePlayers() {
+            @Override
+            public void onTeamFilled(List<Player> players) {
+                MainActivity.this.players = players;
+                showScreen();
+                Toast.makeText(MainActivity.this, "Fetched Players Successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Toast.makeText(MainActivity.this, "Error fetching players", Toast.LENGTH_SHORT).show();
+            }
+        };
 
         OnGetTeamListener onGetTeamListener = new OnGetTeamListener() {
             @Override
             public void onTeamFilled(Team team) {
                 MainActivity.this.team = team;
+                firestore.getPlayersByTeam(onGetMultiplePlayersListener, team.getTeamId());
             }
 
             @Override
@@ -73,11 +87,18 @@ public class MainActivity extends AppCompatActivity {
         };
 
         firestore.getPlayerByUuid(onGetPlayerListener, id);
+    }
+
+    private void showScreen() {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.appBarMain.toolbar.setTitle("Home");
+
 
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
 
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
         NavigationView navigationView = binding.navView;
 
@@ -134,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
     public Team getTeam() {
         return team;
     }
+
+    public List<Player> getPlayers() { return this.players; }
 
     public void setPlayer(Player player) {
         this.player = player;
