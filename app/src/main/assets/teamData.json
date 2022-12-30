@@ -1,5 +1,5 @@
 {
-  "teamId": 1,
+  "teamId": "1",
   "name": "Baitmen",
   "language": "en",
   "kit": "https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/3ec3016c-fe2e-45c2-3694-83e9ab090800/public",
@@ -11,5 +11,5 @@
   "lineupStyle": "TEST",
   "fontColor": "#ffffff",
   "font": "rajdhani-bold",
-  "manager": "Rydelll"
+  "managerId": "Rydelll"
 }

@@ -27,10 +27,8 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        Button discordLoginBtn = findViewById(R.id.loginDiscordBtn);
-        discordLoginBtn.setOnClickListener(view -> {
-            loginWithDiscord();
-        });
+        Button sandboxBtn = findViewById(R.id.SandboxBtn);
+        showGenerateLineupFragment(sandboxBtn);
 
         Button databaseLoginBtn = findViewById(R.id.loginDatabaseBtn);
         showHompageOnClick(databaseLoginBtn);
@@ -39,39 +37,10 @@ public class StartActivity extends AppCompatActivity {
         showRegisterPageOnClick(registerBtn);
     }
 
-    private void loginWithDiscord() {
-        Runnable runnable = () -> {
-            AuthorizationServiceConfiguration serviceConfig = new AuthorizationServiceConfiguration(
-                    Uri.parse("https://discord.com/api/oauth2/authorize"),  // authorization endpoint
-                    Uri.parse("https://discord.com/api/oauth2/token")  // token endpoint
-            );
-
-            String clientId = "1047179104157446207";
-
-            List<String> discordScopes = new ArrayList<String>();
-            discordScopes.add("identify");
-            discordScopes.add("email");
-
-            AuthorizationRequest authRequest = new AuthorizationRequest.Builder(
-                    serviceConfig,  // the authorization service configuration
-                    clientId,  // the client ID, typically pre-registered and static
-                    ResponseTypeValues.CODE,  // the response_type value: we want a code
-                    Uri.parse(REDIRECT_URI)
-            )
-                    .setScopes(discordScopes)
-                    .setCodeVerifier(null, null, null) // THIS IS A HACK, NOT RECOMMENDED, BUT NEEDED
-                    .build();
-
-            AuthorizationService authService = new AuthorizationService(this);
-
-           // System.out.println("Performing authorization request to " + authRequest.configuration.authorizationEndpoint);
-            Intent authIntent = authService.getAuthorizationRequestIntent(authRequest);
-
-          //startActivityForResult(authIntent, 200);
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
+    private void showGenerateLineupFragment(Button sandboxBtn) {
+        sandboxBtn.setOnClickListener(view -> openGenerateLineupFragment());
     }
+
 
     private void showHompageOnClick(Button databaseLoginBtn) {
         databaseLoginBtn.setOnClickListener(view -> openLoginActivity());
@@ -79,6 +48,12 @@ public class StartActivity extends AppCompatActivity {
 
     private void showRegisterPageOnClick(Button registerBtn) {
         registerBtn.setOnClickListener(view -> openRegisterPageActivity());
+    }
+
+    private void openGenerateLineupFragment() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("isSandbox", true);
+        startActivity(intent);
     }
 
     private void openLoginActivity() {

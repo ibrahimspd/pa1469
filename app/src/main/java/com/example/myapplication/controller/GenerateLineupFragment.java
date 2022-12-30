@@ -39,11 +39,11 @@ public class GenerateLineupFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GenerateLineupModel generateLineupModel = new GenerateLineupModel(context, (MainActivity) getActivity());
 
         binding = FragmentGenerateLineupBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = root.getContext();
+        GenerateLineupModel generateLineupModel = new GenerateLineupModel(context, (MainActivity) getActivity());
 
         mainActivity = (MainActivity) getActivity();
         
