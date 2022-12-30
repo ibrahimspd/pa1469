@@ -114,8 +114,10 @@ public class GenerateLineupModelTest {
         System.out.println(request.toString());
         assertNotNull(response);
     }
+    /*
     @Test
     public void getBitmapFromResponseTest1() throws IOException {
+
         List <Player> playerList = new ArrayList<Player>();
         for (int i = 0; i < 11; i++)
         {
@@ -136,5 +138,5 @@ public class GenerateLineupModelTest {
         assertNotNull(bitmap);
 
     }
-
+*/
 }
