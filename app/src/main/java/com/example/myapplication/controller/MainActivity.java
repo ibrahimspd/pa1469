@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         String id = intent.getStringExtra("id");
         isSandbox = intent.getBooleanExtra("isSandbox", false);
 
-
         OnGetMultiplePlayers onGetMultiplePlayersListener = new OnGetMultiplePlayers() {
             @Override
             public void onTeamFilled(List<Player> players) {
