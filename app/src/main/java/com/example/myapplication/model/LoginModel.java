@@ -31,6 +31,7 @@ public class LoginModel {
             if (task.isSuccessful()) {
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.putExtra("id",  task.getResult().getUser().getUid());
+                intent.putExtra("isSandbox", false);
                 context.startActivity(intent);
             } else {
                 Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show();

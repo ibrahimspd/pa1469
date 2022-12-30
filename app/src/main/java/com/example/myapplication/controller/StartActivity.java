@@ -28,9 +28,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         Button sandboxBtn = findViewById(R.id.SandboxBtn);
-        sandboxBtn.setOnClickListener(view -> {
-            showGenerateLineupFragment(sandboxBtn);
-        });
+        showGenerateLineupFragment(sandboxBtn);
 
         Button databaseLoginBtn = findViewById(R.id.loginDatabaseBtn);
         showHompageOnClick(databaseLoginBtn);
