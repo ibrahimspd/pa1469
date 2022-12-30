@@ -16,15 +16,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginDiscordBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/SandboxBtn" />
 
     <Button
-        android:id="@+id/loginDiscordBtn"
+        android:id="@+id/SandboxBtn"
         android:layout_width="146dp"
         android:layout_height="53dp"
         android:layout_marginTop="360dp"
         android:background="#7289d9"
-        android:text="@string/discord"
+        android:text="@string/sandbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

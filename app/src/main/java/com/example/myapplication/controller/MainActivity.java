@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Player player;
     private Team team;
     private List<Player> players;
+    private boolean isSandbox;
 
     private FirestoreImpl firestore = new FirestoreImpl();
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
+        isSandbox = intent.getBooleanExtra("isSandbox", false);
 
         OnGetMultiplePlayers onGetMultiplePlayersListener = new OnGetMultiplePlayers() {
             @Override
@@ -113,21 +115,41 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.generateLineup:
-                        binding.appBarMain.toolbar.setTitle("Generate Lineup");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, generateLineupFragment).commit();
-                        return true;
-                    case R.id.teamInfo:
-                        binding.appBarMain.toolbar.setTitle("Team Info");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, teamInfoFragment).commit();
-                        return true;
-                    case R.id.players:
-                        binding.appBarMain.toolbar.setTitle("Players");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, playersFragment).commit();
-                        return true;
+                if (isSandbox)
+                {
+                    switch (item.getItemId()) {
+                        case R.id.generateLineup:
+                            binding.appBarMain.toolbar.setTitle("Generate Lineup");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, generateLineupFragment).commit();
+                            return true;
+                        case R.id.teamInfo:
+                            Toast.makeText(MainActivity.this, "You Are Not Logged In", Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.players:
+                            Toast.makeText(MainActivity.this, "You Are Not Logged In", Toast.LENGTH_SHORT).show();
+                            return true;
+                    }
+                    return false;
                 }
-                return false;
+                else
+                {
+                    switch (item.getItemId()) {
+                        case R.id.generateLineup:
+                            binding.appBarMain.toolbar.setTitle("Generate Lineup");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, generateLineupFragment).commit();
+                            return true;
+                        case R.id.teamInfo:
+                            binding.appBarMain.toolbar.setTitle("Team Info");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, teamInfoFragment).commit();
+                            return true;
+                        case R.id.players:
+                            binding.appBarMain.toolbar.setTitle("Players");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, playersFragment).commit();
+                            return true;
+                    }
+                    return false;
+
+                }
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.generateLineup);
