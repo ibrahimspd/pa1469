@@ -47,7 +47,7 @@ public class TeamModel {
                 .setSecondaryColor("#000000")
                 .setTeamLogo("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
                 .setBackground("https://media.discordapp.net/attachments/996135352240717838/996156253472567336/output.png")
-                .setLineupStyle("4-4-2")
+                .setLayout("4-4-2")
                 .setFontColor("#ffffff")
                 .setFont("rajdhani-bold")
                 .setManagerId(playerId)

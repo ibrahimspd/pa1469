@@ -105,17 +105,15 @@ public class MainActivity extends AppCompatActivity {
             firestore.getPlayerByUuid(onGetPlayerListener, id);
         }
     }
-    
+
     private void showScreen() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.appBarMain.toolbar.setTitle("Home");
 
-
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
-
 
         NavigationView navigationView = binding.navView;
 
@@ -170,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.generateLineup);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.teamInfoFragment, R.id.generateLineupFragment, R.id.playersFragment)
+                R.id.profileFragment, R.id.inboxFragment, R.id.aboutFragment, R.id.adminFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

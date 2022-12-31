@@ -17,6 +17,19 @@
         <item>User4</item>
     </string-array>
 
+    <string-array name="kitStyle">
+        <item>Player Avatar</item>
+        <item>Playercard</item>
+        <item>Kit</item>
+        <item>Kitnumbers</item>
+    </string-array>
+
+    <string-array name="lineupStyle">
+        <item>Style 1</item>
+        <item>Style 2</item>
+        <item>Style 2</item>
+    </string-array>
+
     <string-array name="positions">
         <item>GK</item>
         <item>LWB</item>

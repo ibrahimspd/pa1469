@@ -33,6 +33,8 @@ public class TeamInfoModel extends ViewModel {
 
     private MainActivity activity;
 
+    private Boolean changed = false;
+
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public TeamInfoModel(Context context, MainActivity activity) {

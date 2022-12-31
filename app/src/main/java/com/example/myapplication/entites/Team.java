@@ -10,10 +10,11 @@ public class Team {
     private String secondaryColor;
     private String teamLogo;
     private String background;
-    private String lineupStyle;
+    private String layout;
     private String fontColor;
     private String font;
     private String managerId;
+    private String kitStyle;
 
     public Team() {}
 
@@ -27,10 +28,11 @@ public class Team {
         this.secondaryColor = builder.secondaryColor;
         this.teamLogo = builder.teamLogo;
         this.background = builder.background;
-        this.lineupStyle = builder.lineupStyle;
+        this.layout = builder.layout;
         this.fontColor = builder.fontColor;
         this.font = builder.font;
         this.managerId = builder.managerId;
+        this.kitStyle = builder.kitStyle;
     }
 
     public String getTeamId() {
@@ -105,12 +107,12 @@ public class Team {
         this.background = background;
     }
 
-    public String getLineupStyle() {
-        return lineupStyle;
+    public String getLayout() {
+        return layout;
     }
 
-    public void setLineupStyle(String lineupStyle) {
-        this.lineupStyle = lineupStyle;
+    public void setLayout(String layout) {
+        this.layout = layout;
     }
 
     public String getFontColor() {
@@ -137,6 +139,14 @@ public class Team {
         this.managerId = managerId;
     }
 
+    public String getKitStyle() {
+        return kitStyle;
+    }
+
+    public void setKitStyle(String kitStyle) {
+        this.kitStyle = kitStyle;
+    }
+
     @Override
     public String toString() {
         return "Team{}";
@@ -152,10 +162,11 @@ public class Team {
         private String secondaryColor;
         private String teamLogo;
         private String background;
-        private String lineupStyle;
+        private String layout;
         private String fontColor;
         private String font;
         private String managerId;
+        private String kitStyle;
 
         public TeamBuilder setTeamId(String teamId) {
             this.teamId = teamId;
@@ -202,8 +213,8 @@ public class Team {
             return this;
         }
 
-        public TeamBuilder setLineupStyle(String lineupStyle) {
-            this.lineupStyle = lineupStyle;
+        public TeamBuilder setLayout(String layout) {
+            this.layout = layout;
             return this;
         }
 
@@ -219,6 +230,11 @@ public class Team {
 
         public TeamBuilder setManagerId(String managerId) {
             this.managerId = managerId;
+            return this;
+        }
+
+        public TeamBuilder setKitStyle(String kitStyle) {
+            this.kitStyle = kitStyle;
             return this;
         }
 
