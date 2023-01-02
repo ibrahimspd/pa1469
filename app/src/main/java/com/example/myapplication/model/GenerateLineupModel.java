@@ -122,12 +122,14 @@ public class GenerateLineupModel extends ViewModel {
     }
 
     private void storeBitMapInAppdata(Bitmap bitmap) throws IOException {
-        File file = new File(context.getFilesDir(), "lineup.png");
-        FileOutputStream fos = new FileOutputStream(file);
+        if (bitmap != null) {
+            File file = new File(context.getFilesDir(), "lineup.png");
+            FileOutputStream fos = new FileOutputStream(file);
 
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        fos.flush();
-        fos.close();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+        }
     }
 
     @NonNull

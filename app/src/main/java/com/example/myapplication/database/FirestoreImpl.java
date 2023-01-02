@@ -182,8 +182,6 @@ public class FirestoreImpl implements Database {
                     if (documentSnapshot.exists()) {
                         Player player = documentSnapshot.toObject(Player.class);
                         listener.onPlayerFilled(player);
-                    } else {
-                        Log.d(TAG, "onComplete: no shit");
                     }
                 } else {
                     Log.d(TAG, "failed ", task.getException());

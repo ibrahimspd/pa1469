@@ -65,6 +65,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".controller.ColorPicker"
             android:exported="false"
@@ -85,6 +86,7 @@
         <service
             android:name=".controller.NotificationHandler"
             android:enabled="true"
+            android:directBootAware="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
