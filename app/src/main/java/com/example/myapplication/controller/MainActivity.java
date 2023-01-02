@@ -12,6 +12,7 @@ import com.example.myapplication.database.listeners.player.OnGetPlayerListener;
 import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
+import com.example.myapplication.model.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -24,8 +25,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,15 +39,19 @@ public class MainActivity extends AppCompatActivity {
     private Player player;
     private Team team;
     private List<Player> players;
+    private boolean isSandbox = false;
+    private final Gson gson = new Gson();
 
     private FirestoreImpl firestore = new FirestoreImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
+        isSandbox = intent.getBooleanExtra("isSandbox", false);
 
         OnGetMultiplePlayers onGetMultiplePlayersListener = new OnGetMultiplePlayers() {
             @Override
@@ -85,8 +93,17 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Error getting player", Toast.LENGTH_SHORT).show();
             }
         };
-
-        firestore.getPlayerByUuid(onGetPlayerListener, id);
+        if(isSandbox)
+        {
+            String sandboxString = Utils.getJsonFromAssets(MainActivity.this, "teamData.json");
+            Team sandboxTeam = gson.fromJson(sandboxString, Team.class);
+            team = sandboxTeam;
+            showScreen();
+        }
+        else
+        {
+            firestore.getPlayerByUuid(onGetPlayerListener, id);
+        }
     }
 
     private void showScreen() {
@@ -95,10 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.appBarMain.toolbar.setTitle("Home");
 
-
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
-
 
         NavigationView navigationView = binding.navView;
 
@@ -113,27 +128,47 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.generateLineup:
-                        binding.appBarMain.toolbar.setTitle("Generate Lineup");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, generateLineupFragment).commit();
-                        return true;
-                    case R.id.teamInfo:
-                        binding.appBarMain.toolbar.setTitle("Team Info");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, teamInfoFragment).commit();
-                        return true;
-                    case R.id.players:
-                        binding.appBarMain.toolbar.setTitle("Players");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, playersFragment).commit();
-                        return true;
+                if (isSandbox)
+                {
+                    switch (item.getItemId()) {
+                        case R.id.generateLineup:
+                            binding.appBarMain.toolbar.setTitle("Generate Lineup");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, generateLineupFragment).commit();
+                            return true;
+                        case R.id.teamInfo:
+                            Toast.makeText(MainActivity.this, "You Are Not Logged In", Toast.LENGTH_SHORT).show();
+                            return true;
+                        case R.id.players:
+                            Toast.makeText(MainActivity.this, "You Are Not Logged In", Toast.LENGTH_SHORT).show();
+                            return true;
+                    }
+                    return false;
                 }
-                return false;
+                else
+                {
+                    switch (item.getItemId()) {
+                        case R.id.generateLineup:
+                            binding.appBarMain.toolbar.setTitle("Generate Lineup");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, generateLineupFragment).commit();
+                            return true;
+                        case R.id.teamInfo:
+                            binding.appBarMain.toolbar.setTitle("Team Info");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, teamInfoFragment).commit();
+                            return true;
+                        case R.id.players:
+                            binding.appBarMain.toolbar.setTitle("Players");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, playersFragment).commit();
+                            return true;
+                    }
+                    return false;
+
+                }
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.generateLineup);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.teamInfoFragment, R.id.generateLineupFragment, R.id.playersFragment)
+                R.id.profileFragment, R.id.inboxFragment, R.id.aboutFragment, R.id.adminFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

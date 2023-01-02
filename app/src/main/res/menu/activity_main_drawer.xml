@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/teamInfoFragment"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Log out (Not added)" />
-        <item
-            android:id="@+id/generateLineupFragment"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Profile (Not added)" />
-        <item
-            android:id="@+id/playersFragment"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Admin View (Not added)" />
-    </group>
+  <group android:checkableBehavior="single">
+    <item
+      android:id="@+id/profileFragment"
+      android:icon="@drawable/ic_baseline_person_24"
+      android:title="My Profile" />
+    <item
+      android:id="@+id/inboxFragment"
+      android:icon="@drawable/ic_baseline_inbox_24"
+      android:title="Invitiations" />
+    <item
+      android:id="@+id/aboutFragment"
+      android:icon="@drawable/ic_baseline_info_24"
+      android:title="About" />
+    <item
+      android:id="@+id/adminFragment"
+      android:icon="@drawable/ic_baseline_admin_panel_settings_24"
+      android:title="Admin view" />
+  </group>
 </menu>

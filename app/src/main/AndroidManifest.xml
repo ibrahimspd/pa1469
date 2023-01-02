@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".controller.RegisterActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -52,6 +53,7 @@
         </activity>
         <activity
             android:name=".controller.StartActivity"
+            android:theme="@style/Theme.MyApplication.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -71,13 +73,31 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+      <activity
+        android:name=".controller.GenerateBackground"
+        android:exported="false"
+        android:theme="@style/Theme.AppCompat.Dialog.Alert">
+        <meta-data
+          android:name="android.app.lib_name"
+          android:value="" />
+      </activity>
         <activity
             android:name=".controller.LoginActivity"
             android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar"
             android:label="@string/login">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <service
+            android:name=".controller.NotificationHandler"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
+            </intent-filter>
+        </service>
     </application>
+
 </manifest>

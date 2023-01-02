@@ -50,21 +50,9 @@
             android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:layout_marginStart="8dp"
-            android:text="Guss"
+            android:text="Team Name"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/show"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="22dp"
-            android:layout_marginStart="8dp"
-            android:text="CB"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView14"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
         <ImageView

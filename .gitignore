@@ -88,3 +88,4 @@ lint/tmp/
 
 *.deb
 .idea
+.idea/androidTestResultsUserPreferences.xml

@@ -7,29 +7,31 @@
     android:background="@drawable/startingxifront"
     tools:context=".controller.StartActivity">
 
-    <Button
-        android:id="@+id/loginDatabaseBtn"
-        android:layout_width="146dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/normalLoginText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginDiscordBtn" />
+  <Button
+    android:id="@+id/loginDatabaseBtn"
+    android:layout_width="0dp"
+    android:layout_height="60dp"
+    android:layout_marginTop="24dp"
+    android:drawableLeft="@drawable/ic_baseline_login_24"
+    android:text="@string/normalLoginText"
+    app:layout_constraintEnd_toEndOf="@+id/registerBtn"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="@+id/registerBtn"
+    app:layout_constraintTop_toBottomOf="@+id/SandboxBtn" />
 
-    <Button
-        android:id="@+id/loginDiscordBtn"
-        android:layout_width="146dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="360dp"
-        android:background="#7289d9"
-        android:text="@string/discord"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+  <Button
+    android:id="@+id/SandboxBtn"
+    android:layout_width="0dp"
+    android:layout_height="53dp"
+    android:layout_marginTop="360dp"
+    android:background="#7289d9"
+    android:drawableLeft="@drawable/ic_baseline_category_24"
+    android:text="@string/sandbox"
+    app:layout_constraintEnd_toEndOf="@+id/loginDatabaseBtn"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="@+id/loginDatabaseBtn"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerBtn"
@@ -37,10 +39,11 @@
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:text="Register"
+        android:drawableLeft="@drawable/ic_baseline_assignment_24"
         android:textColor="?android:textColorPrimary"
         app:backgroundTint="?colorSecondaryVariant"
         app:strokeColor="@color/green"
-        app:strokeWidth="4dp"
+        app:strokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginDatabaseBtn" />

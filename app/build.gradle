@@ -6,7 +6,7 @@ plugins {
 android {
     namespace 'com.example.myapplication'
     compileSdk 32
-
+    useLibrary 'android.test.mock'
     defaultConfig {
         applicationId "com.example.myapplication"
         minSdk 23
@@ -34,7 +34,6 @@ android {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.0.2')
     implementation 'com.google.firebase:firebase-auth'
-
     // Add the dependency for the Cloud Storage library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-storage'
@@ -65,11 +64,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
-
+    implementation 'com.google.firebase:firebase-messaging:23.1.1'
+    implementation 'com.google.firebase:firebase-analytics:21.2.0'
 }
+
