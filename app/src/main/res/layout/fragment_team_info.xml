@@ -14,21 +14,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Save Changes"
+        android:text="Save"
+        android:drawableLeft="@drawable/ic_baseline_save_24"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/disardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Discard"
+        android:drawableLeft="@drawable/ic_baseline_keyboard_return_24"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +63,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -67,27 +80,42 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/team" />
 
-                <TextView
-                    android:id="@+id/language"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:text="@string/teamLanguage"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/manager" />
+              <TextView
+                android:id="@+id/language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Language:"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manager" />
 
-                <TextView
-                    android:id="@+id/manager"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:text="@string/teamManager"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/teamName" />
+              <com.hbb20.CountryPickerView
+                android:id="@+id/countryPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/input_fields"
+                android:nextFocusDown="@+id/positionSpinner"
+                app:layout_constraintBottom_toBottomOf="@+id/language"
+                app:layout_constraintStart_toEndOf="@+id/language"
+                app:layout_constraintTop_toTopOf="@+id/language"
+                app:layout_constraintVertical_bias="0.187" />
+
+              <TextView
+                android:id="@+id/manager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/teamManager"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/teamName" />
 
                 <TextView
                     android:id="@+id/team"
@@ -99,7 +127,6 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,7 +138,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/coreInfoBox">
@@ -140,7 +167,7 @@
 
                 <Spinner
                     android:id="@+id/layoutDropDown"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     app:layout_constraintBottom_toBottomOf="@+id/layoutTxt"
                     app:layout_constraintStart_toEndOf="@+id/layoutTxt"
@@ -159,7 +186,7 @@
 
                 <Spinner
                     android:id="@+id/kitStyleDropDown"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     app:layout_constraintBottom_toBottomOf="@+id/kit_style"
                     app:layout_constraintStart_toEndOf="@+id/kit_style"
@@ -444,7 +471,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/background_ek2"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:contentDescription="@string/todo"
                     android:maxWidth="100dp"
                     android:maxHeight="200dp"
@@ -519,7 +546,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createTeamTitle" />
 
-
         <Button
             android:id="@+id/createTeamButton"
             android:layout_width="wrap_content"
@@ -530,6 +556,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createTeamInput" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

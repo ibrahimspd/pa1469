@@ -96,18 +96,7 @@ public class ColorPicker extends AppCompatActivity {
 
         logoRadioButton.setOnClickListener(v -> {
             try {
-                Glide.with(context)
-                        .load("https://virtualprogaming.com/cdn-cgi/imagedelivery/cl8ocWLdmZDs72LEaQYaYw/4d71d645-abaf-49f0-af82-71dc49285800/public")
-                        .into(new CustomTarget<Drawable>() {
-                            @Override
-                            public void onResourceReady(@NonNull Drawable resource, Transition<? super Drawable> transition) {
-                                colorPickerView.setPaletteDrawable(resource);
-                            }
-
-                            @Override
-                            public void onLoadCleared(@Nullable Drawable placeholder) {
-                            }
-                        });
+                colorPickerView.setPaletteDrawable(getDrawable(R.drawable.test_logo));
             } catch ( Exception e) {
                 e.printStackTrace();
             }

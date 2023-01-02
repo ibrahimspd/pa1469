@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/mobile_navigation"
+  app:startDestination="@+id/profileFragment">
+  <fragment
+    android:id="@+id/profileFragment"
+    android:name="com.example.myapplication.controller.ProfileFragment"
+    android:label="My Profile"
+    tools:layout="@layout/fragment_profile" />
+  <fragment
+    android:id="@+id/inboxFragment"
+    android:name="com.example.myapplication.controller.InboxFragment"
+    android:label="Invatations"
+    tools:layout="@layout/fragment_inbox" />
+  <fragment
+    android:id="@+id/aboutFragment"
+    android:name="com.example.myapplication.controller.AboutFragment"
+    android:label="About"
+    tools:layout="@layout/fragment_about" />
+  <fragment
+    android:id="@+id/adminFragment"
+    android:name="com.example.myapplication.controller.AdminFragment"
+    android:label="Admin View"
+    tools:layout="@layout/fragment_admin" />
+</navigation>

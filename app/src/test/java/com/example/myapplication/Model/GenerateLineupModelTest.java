@@ -2,23 +2,17 @@ package com.example.myapplication.Model;
 import com.example.myapplication.model.GenerateLineupModel;
 import static org.junit.Assert.*;
 
-import android.graphics.Bitmap;
-
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
-import com.google.gson.JsonParser;
 
 import org.junit.Test;
 
-import okhttp3.MediaType;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +32,8 @@ public class GenerateLineupModelTest {
             .setSecondaryColor("#000000")
             .setTeamLogo("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
             .setBackground("https://media.discordapp.net/attachments/996135352240717838/996156253472567336/output.png")
-            .setLineupStyle("4-4-2")
+            .setLayout("Standard")
+            .setKitStyle("kit")
             .setFontColor("#ffffff")
             .setFont("rajdhani-bold")
             .setManagerId("13")
