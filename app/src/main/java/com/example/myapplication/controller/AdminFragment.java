@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.listeners.team.OnGetMultipleTeamsListener;
 import com.example.myapplication.databinding.FragmentAdminBinding;
 import com.example.myapplication.entites.Team;
@@ -17,6 +18,8 @@ import java.util.List;
 public class AdminFragment extends Fragment {
 
   private FragmentAdminBinding binding;
+
+  FirestoreImpl firestore = new FirestoreImpl();
 
   private List<Team> teams;
 
@@ -35,6 +38,8 @@ public class AdminFragment extends Fragment {
 
       }
     };
+
+    firestore.getAllTeams(listener);
 
     binding = FragmentAdminBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
