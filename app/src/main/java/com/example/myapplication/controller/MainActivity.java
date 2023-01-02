@@ -1,7 +1,10 @@
 package com.example.myapplication.controller;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -13,6 +16,8 @@ import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.example.myapplication.model.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -25,6 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-
+    private List<Player> playersToInvite;
     private Player player;
     private Team team;
     private List<Player> players;
@@ -52,7 +58,20 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         isSandbox = intent.getBooleanExtra("isSandbox", false);
+        OnGetMultiplePlayers onGetMultiplePlayersInvite = new OnGetMultiplePlayers() {
+            @Override
+            public void onTeamFilled(List<Player> players) {
+                MainActivity.this.playersToInvite = players;
+                Toast.makeText(MainActivity.this, "Fetched players you can invite", Toast.LENGTH_SHORT).show();
 
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                Toast.makeText(MainActivity.this, "Error fetching players", Toast.LENGTH_SHORT).show();
+            }
+        };
+        firestore.getPlayersByTeam(onGetMultiplePlayersInvite, "0");
         OnGetMultiplePlayers onGetMultiplePlayersListener = new OnGetMultiplePlayers() {
             @Override
             public void onTeamFilled(List<Player> players) {
@@ -207,5 +226,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public List<Player> getPlayersToInvite() {
+        return playersToInvite;
     }
 }
