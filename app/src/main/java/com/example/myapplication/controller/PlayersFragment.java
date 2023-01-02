@@ -38,13 +38,14 @@ public class PlayersFragment extends Fragment {
 
         MainActivity mainActivity = (MainActivity) getActivity();
         List<Player> players = mainActivity.getPlayers();
+        if (players != null) {
+            PlayerInfoListAdapter courseAdapter = new PlayerInfoListAdapter(context, players);
 
-        PlayerInfoListAdapter courseAdapter = new PlayerInfoListAdapter(context, players);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-
-        courseRV.setLayoutManager(linearLayoutManager);
-        courseRV.setAdapter(courseAdapter);
+            courseRV.setLayoutManager(linearLayoutManager);
+            courseRV.setAdapter(courseAdapter);
+        }
         return root;
     }
 

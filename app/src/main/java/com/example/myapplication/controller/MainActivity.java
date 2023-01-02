@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(Exception exception) {
+                showScreen();
                 Toast.makeText(MainActivity.this, "Error fetching players", Toast.LENGTH_SHORT).show();
             }
         };
@@ -70,8 +71,13 @@ public class MainActivity extends AppCompatActivity {
         OnGetTeamListener onGetTeamListener = new OnGetTeamListener() {
             @Override
             public void onTeamFilled(Team team) {
-                MainActivity.this.team = team;
-                firestore.getPlayersByTeam(onGetMultiplePlayersListener, team.getTeamId());
+                System.out.println("Team Filled");
+                if(team != null) {
+                    MainActivity.this.team = team;
+                    firestore.getPlayersByTeam(onGetMultiplePlayersListener, team.getTeamId());
+                }else {
+                    showScreen();
+                }
             }
 
             @Override
@@ -83,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
         OnGetPlayerListener onGetPlayerListener = new OnGetPlayerListener() {
             @Override
             public void onPlayerFilled(Player player) {
-
                 MainActivity.this.player = player;
+                System.out.println("Player: ");
                 firestore.getTeamByPlayerId(onGetTeamListener, player.getId());
             }
 
@@ -93,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Error getting player", Toast.LENGTH_SHORT).show();
             }
         };
+        System.out.println("ID: " + id);
+        System.out.println("isSandbox: " + isSandbox);
         if(isSandbox)
         {
             String sandboxString = Utils.getJsonFromAssets(MainActivity.this, "teamData.json");

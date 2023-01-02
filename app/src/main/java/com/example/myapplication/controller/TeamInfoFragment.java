@@ -174,6 +174,7 @@ public class TeamInfoFragment extends Fragment {
                         binding.createTeamBox.setVisibility(View.GONE);
                         Toast.makeText(context, "Team created successfully", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onTeamFilled: " + team.getName());
+                        activity.setTeam(team);
                         displayTeamInfo(team);
                         makeBoxesVisible();
                     } else
@@ -186,6 +187,7 @@ public class TeamInfoFragment extends Fragment {
                 }
             };
             firestore.addTeam(listener, team);
+
         });
 
         backgroundGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
