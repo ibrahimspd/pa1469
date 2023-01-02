@@ -25,6 +25,12 @@ public class InvitePlayers extends Fragment {
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentInvitePlayersBinding.inflate(inflater,container,false);

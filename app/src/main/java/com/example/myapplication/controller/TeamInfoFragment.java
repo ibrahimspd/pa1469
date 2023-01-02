@@ -33,6 +33,7 @@ import com.example.myapplication.databinding.FragmentTeamInfoBinding;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.example.myapplication.model.TeamInfoModel;
+import com.hbb20.countrypicker.flagprovider.CPFlagProvider;
 
 import java.util.Date;
 
@@ -44,7 +45,7 @@ public class TeamInfoFragment extends Fragment {
     private TextView manager;
     private TextView language;
     private ImageView teamLogo;
-    private Spinner fontPicker;
+
     private ImageView teamBackground;
     private ImageView teamKit;
     private ImageView teamGkKit;
@@ -52,9 +53,20 @@ public class TeamInfoFragment extends Fragment {
     private ImageView secondaryColorImgView;
     private ImageView fontColorImgView;
 
+    private CPFlagProvider languagePicker;
+
+    private Spinner fontPicker;
+    private Spinner lineupStylePicker;
+    private Spinner kitStylePicker;
+
     private Team team;
     private Player player;
     private Team updatedTeam;
+
+    private Boolean changed = false;
+
+    private Button saveButton;
+    private Button discardButton;
 
     private final FirestoreImpl firestore = new FirestoreImpl();
 
@@ -68,7 +80,7 @@ public class TeamInfoFragment extends Fragment {
 
     private TeamInfoModel teamInfoModel;
 
-    private FragmentTeamInfoBinding binding;
+    private static FragmentTeamInfoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -98,16 +110,40 @@ public class TeamInfoFragment extends Fragment {
         secondaryColorImgView = binding.secondaryColor;
         fontColorImgView = binding.fontColor;
 
-        Button saveButton = binding.saveButton;
+        saveButton = binding.saveButton;
+        saveButton.setOnClickListener(v -> firestore.updateTeam(updatedTeam));
+
+        discardButton = binding.disardButton;
+        discardButton.setOnClickListener(v -> {
+            updatedTeam = team;
+            displayTeamInfo(updatedTeam);
+            toggleSaveDiscardButtons(View.INVISIBLE);
+        });
+
         Button createTeamButton = binding.createTeamButton;
 
         fontPicker = binding.fontDropDown;
+        ArrayAdapter<CharSequence> fontAdapter = ArrayAdapter.createFromResource(context,
+                R.array.fonts, android.R.layout.simple_spinner_item);
+        fontAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        fontPicker.setAdapter(fontAdapter);
 
-        if(team != null) {
-            displayTeamInfo();
+        lineupStylePicker = binding.layoutDropDown;
+        ArrayAdapter<CharSequence> layoutAdapter = ArrayAdapter.createFromResource(context,
+                R.array.lineupStyle, android.R.layout.simple_spinner_item);
+        layoutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lineupStylePicker.setAdapter(layoutAdapter);
+
+        kitStylePicker = binding.kitStyleDropDown;
+        ArrayAdapter<CharSequence> kitStyleAdapter = ArrayAdapter.createFromResource(context,
+                R.array.kitStyle, android.R.layout.simple_spinner_item);
+        kitStyleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        kitStylePicker.setAdapter(kitStyleAdapter);
+
+        if (team != null) {
+            displayTeamInfo(team);
             makeBoxesVisible();
-        }
-        else
+        } else
             binding.createTeamBox.setVisibility(View.VISIBLE);
 
         createTeamButton.setOnClickListener(view -> {
@@ -126,7 +162,7 @@ public class TeamInfoFragment extends Fragment {
                     .setSecondaryColor("#000000")
                     .setTeamLogo("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
                     .setBackground("https://media.discordapp.net/attachments/996135352240717838/996156253472567336/output.png")
-                    .setLineupStyle("4-4-2")
+                    .setLayout("4-4-2")
                     .setFontColor("#ffffff")
                     .setFont("rajdhani-bold")
                     .setManagerId(player.getId())
@@ -138,10 +174,9 @@ public class TeamInfoFragment extends Fragment {
                         binding.createTeamBox.setVisibility(View.GONE);
                         Toast.makeText(context, "Team created successfully", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onTeamFilled: " + team.getName());
-                        displayTeamInfo();
+                        displayTeamInfo(team);
                         makeBoxesVisible();
-                    }
-                    else
+                    } else
                         Log.d(TAG, "onTeamFilled: " + "Team not added");
                 }
 
@@ -153,16 +188,12 @@ public class TeamInfoFragment extends Fragment {
             firestore.addTeam(listener, team);
         });
 
-        saveButton.setOnClickListener(v -> firestore.updateTeam(updatedTeam));
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.fonts, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        fontPicker.setAdapter(adapter);
-
         backgroundGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             String imageName = team.getName() + "_background";
+            if(!changed){
+                this.toggleSaveDiscardButtons(View.VISIBLE);
+            }
+
             updatedTeam.setKit(imageName);
 
             teamInfoModel.handleResult(result, imageName, teamKit);
@@ -171,6 +202,9 @@ public class TeamInfoFragment extends Fragment {
         kitGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             String imageName = team.getName() + "_kit";
             updatedTeam.setKit(imageName);
+            if(!changed){
+                this.toggleSaveDiscardButtons(View.VISIBLE);
+            }
 
             teamInfoModel.handleResult(result, imageName, teamKit);
         });
@@ -178,6 +212,9 @@ public class TeamInfoFragment extends Fragment {
         gkKitGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             String imageName = team.getName() + "_gkKit";
             updatedTeam.setGkKit(imageName);
+            if(!changed){
+                this.toggleSaveDiscardButtons(View.VISIBLE);
+            }
 
             teamInfoModel.handleResult(result, imageName, teamGkKit);
         });
@@ -185,16 +222,19 @@ public class TeamInfoFragment extends Fragment {
         logoGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             String imageName = team.getName() + "_logo";
             updatedTeam.setTeamLogo(imageName);
+            if(!changed){
+                this.toggleSaveDiscardButtons(View.VISIBLE);
+            }
 
             teamInfoModel.handleResult(result, imageName, teamLogo);
         });
 
-        teamBackground.setOnClickListener(v ->{
+        teamBackground.setOnClickListener(v -> {
             Intent intent = getPhotoPickerIntent("background");
             backgroundGalleryLauncher.launch(intent);
         });
 
-        teamKit.setOnClickListener(v ->{
+        teamKit.setOnClickListener(v -> {
             Intent intent = getPhotoPickerIntent("kit");
             kitGalleryLauncher.launch(intent);
         });
@@ -221,14 +261,23 @@ public class TeamInfoFragment extends Fragment {
                         switch (colorType) {
                             case "mainColor":
                                 mainColorImgView.setBackgroundColor(color);
+                                if(!changed){
+                                    this.toggleSaveDiscardButtons(View.VISIBLE);
+                                }
                                 updatedTeam.setMainColor(hexColor);
                                 break;
                             case "secondaryColor":
                                 secondaryColorImgView.setBackgroundColor(color);
+                                if(!changed){
+                                    this.toggleSaveDiscardButtons(View.VISIBLE);
+                                }
                                 updatedTeam.setSecondaryColor(hexColor);
                                 break;
                             case "fontColor":
                                 fontColorImgView.setBackgroundColor(color);
+                                if(!changed){
+                                    this.toggleSaveDiscardButtons(View.VISIBLE);
+                                }
                                 updatedTeam.setFontColor(hexColor);
                                 break;
                             default:
@@ -242,8 +291,46 @@ public class TeamInfoFragment extends Fragment {
         fontPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(updatedTeam != null){
+                if (updatedTeam != null) {
+                    if (!changed) {
+                        //TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
+                    }
                     updatedTeam.setFont(fontPicker.getSelectedItem().toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // TODO document why this method is empty
+            }
+        });
+
+
+        lineupStylePicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (updatedTeam != null) {
+                    if (!changed) {
+                        //TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
+                    }
+                    updatedTeam.setLayout(lineupStylePicker.getSelectedItem().toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // TODO document why this method is empty
+            }
+        });
+
+        kitStylePicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (updatedTeam != null) {
+                    if (!changed) {
+                        //TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
+                    }
+                    updatedTeam.setKitStyle(kitStylePicker.getSelectedItem().toString());
                 }
             }
 
@@ -263,18 +350,17 @@ public class TeamInfoFragment extends Fragment {
         return photoPickerIntent;
     }
 
-    public void displayTeamInfo() {
+    public void displayTeamInfo(Team team) {
         manager.setText("Manager: " + team.getManagerId());
         teamName.setText("Name: " + team.getName());
-        language.setText("Language: " + team.getLanguage());
+        language.setText("Language: ");
         fontPicker.setPrompt(team.getFont());
 
         String fontColor = team.getFontColor();
         String mainColor = team.getMainColor();
         String secondaryColor = team.getSecondaryColor();
 
-
-        if(!teamInfoModel.loadImage(team.getTeamLogo(), teamLogo)
+        if (!teamInfoModel.loadImage(team.getTeamLogo(), teamLogo)
                 || !teamInfoModel.loadImage(team.getKit(), teamKit)
                 || !teamInfoModel.loadImage(team.getGkKit() != null ? team.getGkKit() : team.getKit(), teamGkKit)
                 || !teamInfoModel.loadImage(team.getBackground(), teamBackground)) {
@@ -308,7 +394,6 @@ public class TeamInfoFragment extends Fragment {
         binding.kitBox.setVisibility(View.VISIBLE);
         binding.gkKitBox.setVisibility(View.VISIBLE);
         binding.backgroundBox.setVisibility(View.VISIBLE);
-        binding.saveButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -320,5 +405,11 @@ public class TeamInfoFragment extends Fragment {
     private void displayErrorToast(String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "displayErrorToast: " + message);
+    }
+
+    private static void toggleSaveDiscardButtons(int visibility) {
+        System.out.println("toggleSaveDiscardButtons");
+        binding.saveButton.setVisibility(visibility);
+        binding.disardButton.setVisibility(visibility);
     }
 }

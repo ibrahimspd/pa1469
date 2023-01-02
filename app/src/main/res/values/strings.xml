@@ -1,72 +1,72 @@
 <resources>
-    <string name="app_name">Starting XI</string>
-    <!-- Settings Activity Title -->
-    <string name="title_activity_settings">SettingsActivity</string>
+  <string name="app_name">Starting XI</string>
+  <!-- Settings Activity Title -->
+  <string name="title_activity_settings">SettingsActivity</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+  <!-- Preference Titles -->
+  <string name="messages_header">Messages</string>
+  <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+  <!-- Messages Preferences -->
+  <string name="signature_title">Your signature</string>
+  <string name="reply_title">Default reply action</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+  <!-- Sync Preferences -->
+  <string name="sync_title">Sync email periodically</string>
+  <string name="attachment_title">Download incoming attachments</string>
+  <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="sandbox">Sandbox</string>
-    <string name="normalLoginText">Login</string>
-    <string name="todo">TODO</string>
+  <string name="attachment_summary_off">Only download attachments when manually requested</string>
+  <string name="sandbox">Sandbox</string>
+  <string name="normalLoginText">Login</string>
+  <string name="todo">TODO</string>
 
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close</string>
+  <string name="nav_open">Open</string>
+  <string name="nav_close">Close</string>
 
-    <!-- Generate Lineup -->
-    <string name="background_ek2_string">Background</string>
-    <string name="kit_string">Kit</string>
-    <string name="colors_ek1_string">Colors</string>
-    <string name="main__string">Main: </string>
-    <string name="secondary__string">Secondary: </string>
-    <string name="font__string">Font: </string>
-    <string name="teamLineupConfig">Lineup Config</string>
-    <string name="layout__default_string">Layout: Default</string>
-    <string name="kit_style__logo_string">Kit-Style: Logo </string>
-    <string name="font__monterrat_string">Font: Monterrat </string>
-    <string name="logo_ek1_string">Logo</string>
-    <string name="teamName">Name: Baitmen Esports</string>
-    <string name="teamLanguage">Language: English </string>
-    <string name="teamManager">Manager: Gustafsson_45 </string>
-    <string name="team_string">Team</string>
-    <string name="confirm">Confirm</string>
-    <string name="cancel">discard</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="logo">Logo</string>
-    <string name="colorwheel">Color Wheel</string>
-    <string name="gallery">Gallery</string>
-    <string name="ffffff">#ffffff</string>
-    <string name="GenerateLineupTitle">Generate Lineup</string>
-    <string name="teamInfo">Team Info</string>
-    <string name="players">Players</string>
-    <string name="generateLineup">Generate Lineup</string>
-    <string name="menu_slideshow" />
-    <string name="menu_gallery" />
-    <string name="menu_home" />
-    <string name="nav_header_desc"> Test</string>
-    <string name="nav_header_title">Title</string>
-    <string name="nav_header_subtitle">Sub Title</string>
-    <string name="login">Login</string>
-    <string name="title_activity_navigation_drawer">NavigationDrawer</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
-    <string name="show_profile" />
-    <string name="loadingImageToImageViewError">Error loading image on displayTeamInfo()</string>
+  <!-- Generate Lineup -->
+  <string name="background_ek2_string">Background</string>
+  <string name="kit_string">Kit</string>
+  <string name="colors_ek1_string">Colors</string>
+  <string name="main__string">Main: </string>
+  <string name="secondary__string">Secondary: </string>
+  <string name="font__string">Font: </string>
+  <string name="teamLineupConfig">Lineup Config</string>
+  <string name="layout__default_string">Layout: Default</string>
+  <string name="kit_style__logo_string">Kit-Style: Logo </string>
+  <string name="font__monterrat_string">Font: Monterrat </string>
+  <string name="logo_ek1_string">Logo</string>
+  <string name="teamName">Name: Baitmen Esports</string>
+  <string name="teamLanguage">Language: English </string>
+  <string name="teamManager">Manager: Gustafsson_45 </string>
+  <string name="team_string">Team</string>
+  <string name="confirm">Confirm</string>
+  <string name="cancel">discard</string>
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="logo">Logo</string>
+  <string name="colorwheel">Color Wheel</string>
+  <string name="gallery">Gallery</string>
+  <string name="ffffff">#ffffff</string>
+  <string name="GenerateLineupTitle">Generate Lineup</string>
+  <string name="teamInfo">Team Info</string>
+  <string name="players">Players</string>
+  <string name="generateLineup">Generate Lineup</string>
+  <string name="menu_slideshow" />
+  <string name="menu_gallery" />
+  <string name="menu_home" />
+  <string name="nav_header_desc"> Test</string>
+  <string name="nav_header_title">Title</string>
+  <string name="nav_header_subtitle">Sub Title</string>
+  <string name="login">Login</string>
+  <string name="title_activity_navigation_drawer">NavigationDrawer</string>
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
+  <string name="action_settings">Settings</string>
+  <string name="title_activity_main">MainActivity</string>
+  <string name="drawer_open">Open</string>
+  <string name="drawer_close">Close</string>
+  <string name="show_profile" />
+  <string name="loadingImageToImageViewError">Error loading image on displayTeamInfo()</string>
 
 </resources>

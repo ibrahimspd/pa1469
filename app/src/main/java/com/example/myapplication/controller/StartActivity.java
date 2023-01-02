@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StartActivity extends AppCompatActivity {
-    private static final String REDIRECT_URI = "com.example.myapplication";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

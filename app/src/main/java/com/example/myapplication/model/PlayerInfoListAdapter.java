@@ -104,6 +104,8 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
             hiddenGroup = itemView.findViewById(R.id.card_group);
             arrow = itemView.findViewById(R.id.show);
 
+
+
             arrow.setOnClickListener(view -> {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
 

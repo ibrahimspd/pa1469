@@ -5,6 +5,7 @@ import com.example.myapplication.database.listeners.player.OnAddPlayerListener;
 import com.example.myapplication.database.listeners.player.OnGetPlayerListener;
 import com.example.myapplication.database.listeners.team.OnAddTeamListener;
 import com.example.myapplication.database.listeners.player.OnGetMultiplePlayers;
+import com.example.myapplication.database.listeners.team.OnGetMultipleTeamsListener;
 import com.example.myapplication.database.listeners.team.OnGetTeamListener;
 import com.example.myapplication.database.listeners.user.OnAddUserListener;
 import com.example.myapplication.database.listeners.user.OnGetUserListener;
@@ -40,4 +41,6 @@ public interface Database
 
     boolean deleteAccount(Credentials credentials);
     void addUserFcm();
+
+    void getAllTeams(OnGetMultipleTeamsListener listener);
 }
