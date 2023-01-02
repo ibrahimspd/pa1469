@@ -190,27 +190,6 @@ public class FirestoreImpl implements Database {
   }
 
   @Override
-  public void getPlayerByUsername(OnGetPlayerListener listener, String username) {
-    DocumentReference documentReference = db.collection("players").document(username);
-    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-      @Override
-      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-        if (task.isSuccessful()) {
-          DocumentSnapshot documentSnapshot = task.getResult();
-          if (documentSnapshot.exists()) {
-            Player player = documentSnapshot.toObject(Player.class);
-            listener.onPlayerFilled(player);
-          } else {
-            Log.d(TAG, "onComplete: no shit");
-          }
-        } else {
-          Log.d(TAG, "failed ", task.getException());
-        }
-      }
-    });
-  }
-
-  @Override
   public void getPlayerByUuid(OnGetPlayerListener listener, String uuid) {
     Query documentReference = db.collection("players").whereEqualTo("uuid", uuid);
     documentReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
