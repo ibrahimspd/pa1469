@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
             String prefPos = positionDropdown.getSelectedItem().toString();
             String username = userName.getText().toString();
             String number = numberText.getText().toString();
-
+            int numberInt = Integer.parseInt(number);
             Matcher matcher = pattern.matcher(email);
 
             if(username.matches("")
@@ -94,7 +94,12 @@ public class RegisterActivity extends AppCompatActivity {
                     || confirmPassword.matches("")
                     || email.matches("")){
                 Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
-            }else{
+            }
+            else if (1 > numberInt || numberInt > 99)
+            {
+                Toast.makeText(getApplicationContext(), "Number is out of range. Only numbers 1 - 99 are allowed", Toast.LENGTH_SHORT).show();
+            }
+            else{
                 if(password.equals(confirmPassword) && matcher.matches()){
                     Player player = new Player.PlayerBuilder()
                             .setPosition(prefPos)
