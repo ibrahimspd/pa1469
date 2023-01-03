@@ -68,27 +68,55 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
         Glide.with(context).load(player.getAvatar()).into(holder.courseIV);
         if (player.getTeamId().equals("0")){
             holder.button.setImageResource(R.drawable.ic_baseline_add_24);
-        }
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        holder.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CollectionReference collectionReference = firestore.collection("invitations");
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            holder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CollectionReference collectionReference = firestore.collection("invitations");
 
-                Invitations invitations = new Invitations(currentPlayer.getTeamId(), currentPlayer.getUuid(), player.getUuid());
-                collectionReference.document(player.getUuid()).set(invitations).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(context, "Successfully invited player: " +  player.getName(), Toast.LENGTH_SHORT).show();
-                        }else
-                        {
-                             Toast.makeText(context, "Could not invite player: " +  player.getName(), Toast.LENGTH_SHORT).show();
+                    Invitations invitations = new Invitations(currentPlayer.getTeamId(), currentPlayer.getUuid(), player.getUuid());
+                    collectionReference.document(player.getUuid()).set(invitations).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                playerArrayList.remove(position);
+                                notifyItemRangeChanged(position, playerArrayList.size());
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "Successfully invited player: " +  player.getName(), Toast.LENGTH_SHORT).show();
+                            }else
+                            {
+                                Toast.makeText(context, "Could not invite player: " +  player.getName(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
+        else
+        {
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            holder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    firestore.collection("players")
+                            .document(player.getName()).update("teamId", "0")
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        playerArrayList.remove(position);
+                                        notifyItemRangeChanged(position, playerArrayList.size());
+                                        notifyDataSetChanged();
+                                        Toast.makeText(context, "Successfully removed player from team: " +  player.getName(), Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(context, "Failed to remove player from team: " +  player.getName(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+            });
+        }
+
     }
 
     @Override
