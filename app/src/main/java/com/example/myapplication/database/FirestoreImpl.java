@@ -121,12 +121,14 @@ public class FirestoreImpl implements Database {
     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
       @Override
       public void onComplete(@NonNull Task<QuerySnapshot> task) {
-        if (task.isSuccessful()) {
-          QuerySnapshot querySnapshot = task.getResult();
-          if (!querySnapshot.isEmpty()) {
-            Team team = querySnapshot.getDocuments().get(0).toObject(Team.class);
-            listener.onTeamFilled(team);
-          }
+          if (task.isSuccessful()) {
+              QuerySnapshot querySnapshot = task.getResult();
+              if (querySnapshot.isEmpty()) {
+                  listener.onTeamFilled(null);
+              } else {
+                  Team team = querySnapshot.getDocuments().get(0).toObject(Team.class);
+                  listener.onTeamFilled(team);
+              }
         }
       }
     });
@@ -136,6 +138,7 @@ public class FirestoreImpl implements Database {
   public void addTeam(OnAddTeamListener listener, Team team) {
     CollectionReference teams = db.collection("teams");
     teams.document(team.getName()).set(team);
+    listener.onTeamFilled(true);
   }
 
   @Override

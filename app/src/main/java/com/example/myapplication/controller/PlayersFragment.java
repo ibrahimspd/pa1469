@@ -39,20 +39,21 @@ public class PlayersFragment extends Fragment {
 
         MainActivity mainActivity = (MainActivity) getActivity();
         List<Player> players = mainActivity.getPlayers();
+        if (players != null) {
+            PlayerInfoListAdapter courseAdapter = new PlayerInfoListAdapter(context, players, mainActivity.getPlayer());
 
-        PlayerInfoListAdapter courseAdapter = new PlayerInfoListAdapter(context, players, mainActivity.getPlayer());
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-
-        courseRV.setLayoutManager(linearLayoutManager);
-        courseRV.setAdapter(courseAdapter);
-        Button inviteButton = binding.button;
-        inviteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, invitePlayers).commit();
-            }
-        });
+            courseRV.setLayoutManager(linearLayoutManager);
+            courseRV.setAdapter(courseAdapter);
+            Button inviteButton = binding.button;
+            inviteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, invitePlayers).commit();
+                }
+            });
+        }
         return root;
     }
 
