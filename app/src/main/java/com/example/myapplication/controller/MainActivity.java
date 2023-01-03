@@ -118,8 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Error getting player", Toast.LENGTH_SHORT).show();
             }
         };
-        System.out.println("ID: " + id);
-        System.out.println("isSandbox: " + isSandbox);
+
         if(isSandbox)
         {
             String sandboxString = Utils.getJsonFromAssets(MainActivity.this, "teamData.json");
