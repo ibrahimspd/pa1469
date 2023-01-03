@@ -31,8 +31,9 @@ public class ProfileFragment  extends Fragment {
 
         player = mainActivity.getPlayer();
 
-       binding.usernameTextView.setText(player.getName());
-
+        if (player != null) {
+            binding.usernameTextView.setText(player.getName());
+        }
 
         return root;
     }
