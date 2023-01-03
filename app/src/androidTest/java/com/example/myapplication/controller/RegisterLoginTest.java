@@ -1,7 +1,6 @@
 package com.example.myapplication.controller;
 
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -11,7 +10,6 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -24,10 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -46,22 +41,7 @@ import org.junit.runner.RunWith;
 /***************IMPORTANT: DISABLE ANIMATIONS ON DEVICE BEFORE RUNNING TEST***************/
 /***************Window animation scale -> off***************/
 /***************Transition animation scale -> off***************/
-/***************Animator duration scale -> off***************/
 
-final class randomStore {
-    static int randomNumber;
-    public static int getNumber()
-    {
-        return randomNumber;
-    }
-    public static void setNumber()
-    {
-        int min = 0;
-        int max = 1000000;
-        Random random = new Random();
-        randomNumber = random.nextInt(max - min + 1) + min;
-    }
-}
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class RegisterLoginTest {
@@ -73,8 +53,8 @@ public class RegisterLoginTest {
     @Test
     public void registerUser() throws InterruptedException {
 
-        randomStore.setNumber();
-        int randomNumber = randomStore.getNumber();
+        RandomStore.setNumber();
+        int randomNumber = RandomStore.getNumber();
         String randomNumberString = Integer.toString(randomNumber);
         String email = "emil-TEST" +randomNumberString +"@live.se";
         String username = "emil_baller";
