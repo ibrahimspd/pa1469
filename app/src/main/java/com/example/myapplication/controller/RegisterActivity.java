@@ -86,18 +86,28 @@ public class RegisterActivity extends AppCompatActivity {
             String prefPos = positionDropdown.getSelectedItem().toString();
             String username = userName.getText().toString();
             String number = numberText.getText().toString();
-            int numberInt = Integer.parseInt(number);
+            int numberInt = 0;
+            if (number.length() > 0)
+            {
+                numberInt = Integer.parseInt(number);
+            }
+
             Matcher matcher = pattern.matcher(email);
 
             if(username.matches("")
                     || password.matches("")
                     || confirmPassword.matches("")
-                    || email.matches("")){
+                    || email.matches("")
+                    || number.matches("")){
                 Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             }
             else if (1 > numberInt || numberInt > 99)
             {
                 Toast.makeText(getApplicationContext(), "Number is out of range. Only numbers 1 - 99 are allowed", Toast.LENGTH_SHORT).show();
+            }
+            else if (username.length() > 12)
+            {
+                Toast.makeText(getApplicationContext(), "Username too long. Max length 12.", Toast.LENGTH_SHORT).show();
             }
             else{
                 if(password.equals(confirmPassword) && matcher.matches()){
