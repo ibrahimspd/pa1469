@@ -28,7 +28,7 @@ public class AdminTeamListAdapter extends RecyclerView.Adapter<AdminTeamListAdap
     @NonNull
     @Override
     public AdminTeamListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_info_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_team_card, parent, false);
         return new ViewHolder(view);
     }
 
