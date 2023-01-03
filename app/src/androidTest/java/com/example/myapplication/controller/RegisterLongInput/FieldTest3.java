@@ -35,14 +35,14 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
-public class AllFieldTest {
+public class FieldTest3 {
     /*limit for email length is about 250 characters from firestore it seems, so wont test higher*/
     @Rule
     public ActivityScenarioRule<RegisterActivity> RegisterActivityRule =
             new ActivityScenarioRule<>(RegisterActivity.class);
 
     @Test
-    public void allLongFields() {
+    public void usernameNotLong() {
         RandomStore obj = new RandomStore();
         obj.setNumber();
         int randomNum = obj.getNumber();
@@ -52,10 +52,12 @@ public class AllFieldTest {
         String longStr10000 = stringObj.getLongStr10000();
         String longStr2500 = stringObj.getLongStr2500();
         String longStr200 = stringObj.getLongStr200();
+        String lagomUsername = "user" + randomNumberString;
+        String lagomPassword = "123456";
 
 
 
-        String lagomEmail = "emil-TEST" +randomNumberString + longStr200 + "@live.se";
+        String lagomEmail = "emil-TEST" +randomNumberString +"@live.se";
 
 
         ViewInteraction countryPickerView = onView(
@@ -78,10 +80,10 @@ public class AllFieldTest {
         constraintLayout.perform(click());
 
         onView(withId(R.id.textEmail)).perform(replaceText(lagomEmail), closeSoftKeyboard());
-        onView(withId(R.id.textUsername)).perform(replaceText(longStr10000), closeSoftKeyboard());
-        onView(withId(R.id.textPassword)).perform(replaceText(longStr2500), closeSoftKeyboard());
-        onView(withId(R.id.textConfirmPassword)).perform(replaceText(longStr2500), closeSoftKeyboard());
-        onView(withId(R.id.number)).perform(replaceText("691337420"), closeSoftKeyboard());
+        onView(withId(R.id.textUsername)).perform(replaceText(lagomUsername), closeSoftKeyboard());
+        onView(withId(R.id.textPassword)).perform(replaceText(lagomPassword), closeSoftKeyboard());
+        onView(withId(R.id.textConfirmPassword)).perform(replaceText(lagomPassword), closeSoftKeyboard());
+        onView(withId(R.id.number)).perform(replaceText("1337"), closeSoftKeyboard());
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
@@ -95,25 +97,25 @@ public class AllFieldTest {
         }
         onView(withId(R.id.emailTxt)).check(doesNotExist());
         onView(withId(R.id.passwordTxt)).check(doesNotExist());
-        /*should not get past registration since username is too long*/
+        /*should not get past registration since squad number is too long*/
     }
 
-        private static Matcher<View> childAtPosition(
-        final Matcher<View> parentMatcher, final int position) {
+    private static Matcher<View> childAtPosition(
+            final Matcher<View> parentMatcher, final int position) {
 
-            return new TypeSafeMatcher<View>() {
-                @Override
-                public void describeTo(Description description) {
-                    description.appendText("Child at position " + position + " in parent ");
-                    parentMatcher.describeTo(description);
-                }
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Child at position " + position + " in parent ");
+                parentMatcher.describeTo(description);
+            }
 
-                @Override
-                public boolean matchesSafely(View view) {
-                    ViewParent parent = view.getParent();
-                    return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                            && view.equals(((ViewGroup) parent).getChildAt(position));
-                }
-            };
-        }
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup && parentMatcher.matches(parent)
+                        && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
 }

@@ -109,6 +109,10 @@ public class RegisterActivity extends AppCompatActivity {
             {
                 Toast.makeText(getApplicationContext(), "Username too long. Max length 12.", Toast.LENGTH_SHORT).show();
             }
+            else if (password.length() > 100)
+            {
+                Toast.makeText(getApplicationContext(), "Password too long. Max length 100 characters.", Toast.LENGTH_SHORT).show();
+            }
             else{
                 if(password.equals(confirmPassword) && matcher.matches()){
                     Player player = new Player.PlayerBuilder()
