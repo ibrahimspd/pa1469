@@ -1,22 +1,49 @@
 package com.example.myapplication.entites;
 
 public class Invitations {
-    private final String teamId;
-    private final String fromUser;
-    private final String userId;
+    private String teamId;
+    private String fromUserId;
+    private String userId;
+    private String fromUsername;
+    private String toUsername;
 
-    public Invitations(String teamId, String fromUser, String userId) {
+    public Invitations(String teamId, String fromUser, String userId, String fromUsername, String toUsername) {
         this.teamId = teamId;
-        this.fromUser = fromUser;
+        this.fromUserId = fromUser;
         this.userId = userId;
+        this.fromUsername = fromUsername;
+        this.toUsername = toUsername;
+    }
+
+    public Invitations() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Invitations{" +
+                "teamId='" + teamId + '\'' +
+                ", fromUserId='" + fromUserId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", fromUsername='" + fromUsername + '\'' +
+                ", toUsername='" + toUsername + '\'' +
+                '}';
+    }
+
+    public String getFromUsername() {
+        return fromUsername;
+    }
+
+    public String getToUsername() {
+        return toUsername;
     }
 
     public String getTeamId() {
         return teamId;
     }
 
-    public String getFromUser() {
-        return fromUser;
+    public String getFromUserId() {
+        return fromUserId;
     }
 
     public String getUserId() {

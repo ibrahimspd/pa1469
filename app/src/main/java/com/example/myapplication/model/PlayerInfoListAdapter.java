@@ -2,6 +2,7 @@ package com.example.myapplication.model;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -50,7 +51,7 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlayerInfoListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlayerInfoListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Player player = playerArrayList.get(position);
 
         holder.username.setText(player.getName());
@@ -74,7 +75,7 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
                 public void onClick(View view) {
                     CollectionReference collectionReference = firestore.collection("invitations");
 
-                    Invitations invitations = new Invitations(currentPlayer.getTeamId(), currentPlayer.getUuid(), player.getUuid());
+                    Invitations invitations = new Invitations(currentPlayer.getTeamId(), currentPlayer.getUuid(), player.getUuid(), currentPlayer.getName(), player.getName());
                     collectionReference.document(player.getUuid()).set(invitations).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
