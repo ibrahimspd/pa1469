@@ -101,7 +101,6 @@ public class ColorPicker extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
-
     }
 
     @Override

@@ -9,4 +9,8 @@
         android:width="120dp"
         android:height="120dp"/>
 
+    <border
+        android:width="4dp"
+        android:color="#000000"/>
+
 </shape>

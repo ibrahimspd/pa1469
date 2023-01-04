@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -90,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         OnGetTeamListener onGetTeamListener = new OnGetTeamListener() {
             @Override
             public void onTeamFilled(Team team) {
-                System.out.println("Team Filled");
                 if(team != null) {
                     MainActivity.this.team = team;
                     firestore.getPlayersByTeam(onGetMultiplePlayersListener, team.getTeamId());
@@ -186,19 +186,20 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                     }
                     return false;
-
                 }
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.generateLineup);
+        if(!isSandbox){
+            bottomNavigationView.setSelectedItemId(R.id.generateLineup);
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.profileFragment, R.id.inboxFragment, R.id.aboutFragment, R.id.adminFragment)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.profileFragment, R.id.inboxFragment, R.id.aboutFragment, R.id.adminFragment)
+                    .setOpenableLayout(drawer)
+                    .build();
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+            NavigationUI.setupWithNavController(navigationView, navController);
+        }
     }
 
     @Override
