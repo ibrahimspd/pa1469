@@ -118,7 +118,7 @@ public class FirestoreImpl implements Database {
 
     @Override
     public void getTeamByPlayerId(OnGetTeamListener listener, String playerId) {
-        Query query = db.collection("teams").whereEqualTo("managerId", playerId);
+        Query query = db.collection("teams").whereEqualTo("teamId", playerId);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

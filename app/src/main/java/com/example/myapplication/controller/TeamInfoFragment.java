@@ -47,6 +47,10 @@ public class TeamInfoFragment extends Fragment {
     private TextView language;
     private ImageView teamLogo;
 
+    private TextView kitStyle;
+    private TextView layout;
+    private TextView font;
+
     private ImageView teamBackground;
     private ImageView teamKit;
     private ImageView teamGkKit;
@@ -88,6 +92,8 @@ public class TeamInfoFragment extends Fragment {
 
         activity = (MainActivity) getActivity();
 
+
+
         assert activity != null;
         team = activity.getTeam();
         updatedTeam = team;
@@ -98,12 +104,17 @@ public class TeamInfoFragment extends Fragment {
 
         context = getContext();
 
+        Toast.makeText(context,"Loaded", Toast.LENGTH_SHORT).show();
+
         teamInfoModel = new TeamInfoModel(context, activity);
 
         teamName = binding.teamName;
         manager = binding.manager;
         language = binding.language;
         teamLogo = binding.teamLogo;
+        kitStyle = binding.kitStyleValue;
+        layout = binding.layoutValue;
+        font = binding.fontValue;
         teamBackground = binding.teamBackground;
         teamGkKit = binding.teamgKkit;
         teamKit = binding.teamKit;
@@ -209,9 +220,7 @@ public class TeamInfoFragment extends Fragment {
             if(!changed){
                 this.toggleSaveDiscardButtons(View.VISIBLE);
             }
-
             updatedTeam.setKit(imageName);
-
             teamInfoModel.handleResult(result, imageName, teamKit);
         });
 
@@ -308,9 +317,10 @@ public class TeamInfoFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (updatedTeam != null) {
-                    if (!changed) {
-                        //TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
+                    if (changed) {
+                        TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
                     }
+                    font.setText(fontPicker.getSelectedItem().toString());
                     updatedTeam.setFont(fontPicker.getSelectedItem().toString());
                 }
             }
@@ -326,9 +336,10 @@ public class TeamInfoFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (updatedTeam != null) {
-                    if (!changed) {
-                        //TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
+                    if (changed) {
+                        TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
                     }
+                    layout.setText(lineupStylePicker.getSelectedItem().toString());
                     updatedTeam.setLayout(lineupStylePicker.getSelectedItem().toString());
                 }
             }
@@ -344,8 +355,9 @@ public class TeamInfoFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (updatedTeam != null) {
                     if (!changed) {
-                        //TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
+                       // TeamInfoFragment.toggleSaveDiscardButtons(View.VISIBLE);
                     }
+                    kitStyle.setText(kitStylePicker.getSelectedItem().toString());
                     updatedTeam.setKitStyle(kitStylePicker.getSelectedItem().toString());
                 }
             }
@@ -370,7 +382,9 @@ public class TeamInfoFragment extends Fragment {
         manager.setText("Manager: " + team.getManagerId());
         teamName.setText("Name: " + team.getName());
         language.setText("Language: ");
-        fontPicker.setPrompt(team.getFont());
+
+        kitStyle.setText(team.getKitStyle());
+        layout.setText(team.getLayout());
 
         String fontColor = team.getFontColor();
         String mainColor = team.getMainColor();

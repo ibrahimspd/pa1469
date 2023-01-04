@@ -138,7 +138,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/coreInfoBox">
@@ -154,7 +154,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/layoutTxt"
+                    android:id="@+id/layoutTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -165,16 +165,28 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lineup_config" />
 
+                <TextView
+                    android:id="@+id/layoutValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/layoutTitle"
+                    app:layout_constraintStart_toEndOf="@+id/layoutTitle"
+                    app:layout_constraintTop_toTopOf="@+id/layoutTitle" />
+
+
                 <Spinner
                     android:id="@+id/layoutDropDown"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="28dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/layoutTxt"
-                    app:layout_constraintStart_toEndOf="@+id/layoutTxt"
-                    app:layout_constraintTop_toTopOf="@+id/layoutTxt" />
+                    app:layout_constraintBottom_toBottomOf="@+id/layoutValue"
+                    app:layout_constraintStart_toEndOf="@+id/layoutValue"
+                    app:layout_constraintTop_toTopOf="@+id/layoutValue" />
 
                 <TextView
-                    android:id="@+id/kit_style"
+                    android:id="@+id/kitStyleTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -182,18 +194,29 @@
                     android:text="Kit Style:"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutTxt" />
+                    app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+
+                <TextView
+                    android:id="@+id/kitStyleValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/kitStyleTitle"
+                    app:layout_constraintStart_toEndOf="@+id/kitStyleTitle"
+                    app:layout_constraintTop_toTopOf="@+id/kitStyleTitle" />
 
                 <Spinner
                     android:id="@+id/kitStyleDropDown"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="28dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/kit_style"
-                    app:layout_constraintStart_toEndOf="@+id/kit_style"
-                    app:layout_constraintTop_toTopOf="@+id/kit_style" />
+                    app:layout_constraintBottom_toBottomOf="@+id/kitStyleValue"
+                    app:layout_constraintStart_toEndOf="@+id/kitStyleValue"
+                    app:layout_constraintTop_toTopOf="@+id/kitStyleValue" />
 
                 <TextView
-                    android:id="@+id/font"
+                    android:id="@+id/fontTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -201,17 +224,27 @@
                     android:text="@string/font__string"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/kit_style" />
+                    app:layout_constraintTop_toBottomOf="@+id/kitStyleTitle" />
+                <TextView
+                    android:id="@+id/fontValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fontTitle"
+                    app:layout_constraintStart_toEndOf="@+id/fontTitle"
+                    app:layout_constraintTop_toTopOf="@+id/fontTitle"/>
 
                 <Spinner
                     android:id="@+id/fontDropDown"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/font"
-                    app:layout_constraintStart_toEndOf="@+id/font"
-                    app:layout_constraintTop_toTopOf="@+id/font"
-                    app:layout_constraintVertical_bias="0.454" />
-
+                    app:layout_constraintBottom_toBottomOf="@+id/fontValue"
+                    app:layout_constraintStart_toEndOf="@+id/fontValue"
+                    app:layout_constraintTop_toTopOf="@+id/fontValue"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -223,7 +256,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/box_background"
                 android:padding="12dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.492"
                 app:layout_constraintStart_toStartOf="parent"
@@ -278,6 +311,8 @@
                     android:layout_height="24dp"
                     android:layout_marginStart="8dp"
 
+                    android:padding="1dp"
+                    android:background="#000000"
                     android:contentDescription="@string/todo"
                     app:layout_constraintBottom_toBottomOf="@+id/mainColorText"
                     app:layout_constraintStart_toEndOf="@+id/mainColorText"
@@ -288,6 +323,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="8dp"
+                    android:padding="1dp"
                     android:contentDescription="@string/todo"
                     app:layout_constraintBottom_toBottomOf="@+id/fontColorTxt"
                     app:layout_constraintStart_toEndOf="@+id/fontColorTxt"
@@ -299,6 +335,7 @@
                     android:layout_height="24dp"
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@+id/secondaryColorTxt"
+                    android:padding="1dp"
                     android:contentDescription="@string/todo"
                     app:layout_constraintBottom_toBottomOf="@+id/secondaryColorTxt"
                     app:layout_constraintStart_toEndOf="@+id/secondaryColorTxt"
