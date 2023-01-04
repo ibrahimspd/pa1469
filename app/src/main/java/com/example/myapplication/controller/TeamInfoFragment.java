@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
+import com.example.myapplication.database.listeners.player.OnUpdatePlayerListener;
 import com.example.myapplication.database.listeners.team.OnAddTeamListener;
 import com.example.myapplication.databinding.FragmentTeamInfoBinding;
 import com.example.myapplication.entites.Player;
@@ -151,9 +152,10 @@ public class TeamInfoFragment extends Fragment {
 
             EditText input = new EditText(context);
             input.setInputType(InputType.TYPE_CLASS_TEXT);
-
+            String teamId = new Date().getTime() + "";
+            player.setTeamId(teamId);
             team = new Team.TeamBuilder()
-                    .setTeamId(new Date().getTime() + "")
+                    .setTeamId(teamId)
                     .setName(teamName)
                     .setLanguage("en")
                     .setKit("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
@@ -186,8 +188,20 @@ public class TeamInfoFragment extends Fragment {
                     Log.d(TAG, "onError: " + exception.getMessage());
                 }
             };
-            firestore.addTeam(listener, team);
+            OnUpdatePlayerListener onUpdatePlayerListener = new OnUpdatePlayerListener() {
+                @Override
+                public void onPlayerAdded(Boolean added) {
+                    if (added) {
+                        firestore.addTeam(listener, team);
+                    }
+                }
 
+                @Override
+                public void onError(Exception exception) {
+                    Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+                }
+            };
+            firestore.updatePlayer(onUpdatePlayerListener, player);
         });
 
         backgroundGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

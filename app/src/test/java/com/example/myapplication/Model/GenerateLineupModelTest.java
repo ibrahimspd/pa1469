@@ -40,7 +40,6 @@ public class GenerateLineupModelTest {
             .build();
     String formation = "352";
 
-
     @Test
     public void createLineupRequestTest1() {
         List <Player> playerList = new ArrayList<Player>();
