@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPlayerFilled(Player player) {
                 MainActivity.this.player = player;
-                System.out.println("Player: ");
                 firestore.getTeamByPlayerId(onGetTeamListener, player.getId());
             }
 

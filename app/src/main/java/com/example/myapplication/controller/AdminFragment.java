@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.database.FirestoreImpl;
 import com.example.myapplication.database.listeners.team.OnGetMultipleTeamsListener;
 import com.example.myapplication.databinding.FragmentAdminBinding;
-import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
 import com.example.myapplication.model.AdminTeamListAdapter;
-import com.example.myapplication.model.PlayerInfoListAdapter;
 
 import java.util.List;
 

@@ -52,8 +52,19 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
     @Override
     public void onBindViewHolder(@NonNull PlayerInfoListAdapter.ViewHolder holder, int position) {
         Player player = playerArrayList.get(position);
+
         holder.username.setText(player.getName());
         holder.position.setText(player.getPosition());
+        holder.gamerTag.setText(player.getName());
+        holder.nationality.setText(player.getNationality());
+
+        try {
+            holder.number.setText(player.getNumber());
+        } catch (Exception e) {
+            Log.d(TAG, "onBindViewHolder: " + e.getMessage());
+        }
+
+
         Glide.with(context).load(player.getAvatar()).into(holder.courseIV);
         if (player.getTeamId().equals("0")){
             holder.button.setImageResource(R.drawable.ic_baseline_add_24);
@@ -89,13 +100,22 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
         private final ImageView courseIV;
         private final TextView username;
         private final TextView position;
+        private final TextView nationality;
+        private final TextView number;
+        private final TextView gamerTag;
+
         ImageView button;
         CardView cardView;
         ImageView arrow;
         Group hiddenGroup;
 
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            nationality = itemView.findViewById(R.id.nationality);
+            number = itemView.findViewById(R.id.playerNumber);
+            gamerTag = itemView.findViewById(R.id.gamertag);
             courseIV = itemView.findViewById(R.id.imageView2);
             username = itemView.findViewById(R.id.textView14);
             position = itemView.findViewById(R.id.textView3);
@@ -103,8 +123,6 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
             cardView = itemView.findViewById(R.id.player_info_card);
             hiddenGroup = itemView.findViewById(R.id.card_group);
             arrow = itemView.findViewById(R.id.show);
-
-
 
             arrow.setOnClickListener(view -> {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());

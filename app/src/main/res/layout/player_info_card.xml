@@ -89,6 +89,31 @@
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         <TextView
+            android:id="@+id/nationality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Nationality:"
+            android:textColor="#838383"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView15"
+            app:layout_constraintStart_toEndOf="@+id/textView15"
+            app:layout_constraintTop_toTopOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/gamertag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Nationality:"
+            android:textColor="#838383"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView16"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toTopOf="@+id/textView16"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,6 +136,19 @@
             app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
+        <TextView
+            android:id="@+id/playerNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Number:"
+            android:textColor="#838383"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintStart_toEndOf="@+id/textView17"
+            app:layout_constraintTop_toTopOf="@+id/textView17"
+            app:layout_constraintVertical_bias="1.0" />
+
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="80dp"
@@ -125,7 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="textView15,textView16,textView17, imageView2" />
+            app:constraint_referenced_ids="textView15,textView16,textView17, imageView2, gamertag, playerNumber, nationality" />
 
         <ImageView
             android:id="@+id/imageView3"
