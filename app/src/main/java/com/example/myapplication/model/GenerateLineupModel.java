@@ -19,9 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.controller.MainActivity;
-import com.example.myapplication.database.FirestoreImpl;
-import com.example.myapplication.database.listeners.player.OnAddPlayerListener;
 import com.example.myapplication.entites.Lineup;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.entites.Team;
@@ -34,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -50,13 +50,25 @@ public class GenerateLineupModel extends ViewModel {
 
     List<AutoCompleteTextView> inputFields = new ArrayList<>();
 
+    Map<String, Player> players = new HashMap<>();
+
     private MainActivity activity;
 
     private final Context context;
 
+
     public GenerateLineupModel(Context context, MainActivity activity) {
         this.context = context;
         this.activity = activity;
+        if(activity.getPlayers() != null) {
+            for (Player player : activity.getPlayers()) {
+                players.put(player.getName(), player);
+            }
+        }
+    }
+
+    public void drawLoading(ImageView imageView){
+        Glide.with(context).load("https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif").into(imageView);
     }
 
     public void saveImage(ImageView imageView) throws IOException {
@@ -166,7 +178,10 @@ public class GenerateLineupModel extends ViewModel {
 
     public Player addPlayerFromInputField(AutoCompleteTextView editText){
         String playerName = editText.getText().toString();
-        if (playerName.equals("")) playerName = "Bot";
+        if (playerName.equals(""))
+            playerName = "Bot";
+        else if(players.containsKey(playerName))
+            return players.get(playerName);
         return new Player.PlayerBuilder().setName(playerName).setPosition(editText.getHint().toString())
                 .setAvatar("https://media.discordapp.net/attachments/987416205507833867/1001913008915742781/uknoiwkn_player.png")
                 .setNumber(1)

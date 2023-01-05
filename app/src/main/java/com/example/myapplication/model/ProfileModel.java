@@ -27,15 +27,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class TeamInfoModel extends ViewModel {
+public class ProfileModel extends ViewModel {
 
     private Context context;
 
     private MainActivity activity;
 
+    private Boolean changed = false;
+
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    public TeamInfoModel(Context context, MainActivity activity) {
+    public ProfileModel(Context context, MainActivity activity) {
         this.context = context;
         this.activity = activity;
     }
@@ -126,3 +128,4 @@ public class TeamInfoModel extends ViewModel {
         return intent;
     }
 }
+

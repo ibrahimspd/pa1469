@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,50 +22,64 @@ import java.util.List;
 
 public class AdminFragment extends Fragment {
 
-  private FragmentAdminBinding binding;
+    private FragmentAdminBinding binding;
 
-  FirestoreImpl firestore = new FirestoreImpl();
+    FirestoreImpl firestore = new FirestoreImpl();
 
-  private List<Team> teams;
+    private List<Team> teams;
 
-  @Override
-  public View onCreateView(@NonNull LayoutInflater inflater,
-                           ViewGroup container, Bundle savedInstanceState) {
+    private Context context;
 
-    OnGetMultipleTeamsListener listener = new OnGetMultipleTeamsListener() {
-      @Override
-      public void onTeamsFilled(List<Team> teams) {
-        AdminFragment.this.teams = teams;
-      }
+    private RecyclerView teamsRV;
 
-      @Override
-      public void onError(Exception exception) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
 
-      }
-    };
+        binding = FragmentAdminBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-    firestore.getAllTeams(listener);
+        teamsRV = binding.recyclerView;
 
-    binding = FragmentAdminBinding.inflate(inflater, container, false);
-    View root = binding.getRoot();
+        context = getContext();
 
-      RecyclerView courseRV = binding.recyclerView;
+        OnGetMultipleTeamsListener listener = new OnGetMultipleTeamsListener() {
+            @Override
+            public void onTeamsFilled(List<Team> teams) {
 
-      Context context = getContext();
+                AdminFragment.this.teams = teams;
+                Toast.makeText(getContext(), teams.size() + "", Toast.LENGTH_SHORT).show();
+                showScreen();
+            }
 
-      AdminTeamListAdapter courseAdapter = new AdminTeamListAdapter(context, teams);
+            @Override
+            public void onError(Exception exception) {
 
-      LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            }
+        };
 
-      courseRV.setLayoutManager(linearLayoutManager);
-      courseRV.setAdapter(courseAdapter);
+        firestore.getAllTeams(listener);
 
-    return root;
-  }
 
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-    binding = null;
-  }
+        return root;
+    }
+
+    public void showScreen() {
+
+
+        AdminTeamListAdapter courseAdapter = new AdminTeamListAdapter(context, teams);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+
+        teamsRV.setLayoutManager(linearLayoutManager);
+        teamsRV.setAdapter(courseAdapter);
+
+        binding.recyclerView.setAdapter(courseAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         confPassText = findViewById(R.id.textConfirmPassword);
         cpp = findViewById(R.id.countryPicker);
         numberText = findViewById(R.id.number);
-        positionDropdown = findViewById(R.id.positionSpinner);
+        positionDropdown = findViewById(R.id.profilePositionSpinner);
         register = findViewById(R.id.registerButton);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

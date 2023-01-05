@@ -52,6 +52,10 @@ public class Player
         return avatar;
     }
 
+    public void setAvatar(String avatar){
+        this.avatar = avatar;
+    }
+
     public String getNationality() { return nationality; }
 
     public String getName() {

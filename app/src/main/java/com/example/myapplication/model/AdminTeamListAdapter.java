@@ -35,7 +35,7 @@ public class AdminTeamListAdapter extends RecyclerView.Adapter<AdminTeamListAdap
     @Override
     public void onBindViewHolder(@NonNull AdminTeamListAdapter.ViewHolder holder, int position) {
         Team team = playerArrayList.get(position);
-        holder.username.setText(team.getName());
+        holder.teamName.setText(team.getName());
         holder.manager.setText(team.getManagerId());
     }
 
@@ -45,15 +45,15 @@ public class AdminTeamListAdapter extends RecyclerView.Adapter<AdminTeamListAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView username;
+        private final TextView teamName;
         private final TextView manager;
 
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            username = itemView.findViewById(R.id.textView14);
-            manager = itemView.findViewById(R.id.textView3);
+            teamName = itemView.findViewById(R.id.teamNameValue);
+            manager = itemView.findViewById(R.id.managerValue);
 
             cardView = itemView.findViewById(R.id.player_info_card);        }
     }

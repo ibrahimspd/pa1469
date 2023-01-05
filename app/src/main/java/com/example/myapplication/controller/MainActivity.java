@@ -118,8 +118,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        if(isSandbox)
-        {
+        if(isSandbox) {
             String sandboxString = Utils.getJsonFromAssets(MainActivity.this, "teamData.json");
             Team sandboxTeam = gson.fromJson(sandboxString, Team.class);
             team = sandboxTeam;

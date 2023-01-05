@@ -52,10 +52,10 @@
         android:nextFocusDown="@+id/textUsername"
         android:numeric="integer"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/positionSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/profilePositionSpinner"
         app:layout_constraintEnd_toEndOf="@+id/countryPicker"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toTopOf="@+id/positionSpinner" />
+        app:layout_constraintTop_toTopOf="@+id/profilePositionSpinner" />
 
     <EditText
         android:id="@+id/textPassword"
@@ -96,6 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="112dp"
         android:text="Register"
+        android:drawableLeft="@drawable/ic_baseline_assignment_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -107,13 +108,13 @@
         android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/input_fields"
-        android:nextFocusDown="@+id/positionSpinner"
+        android:nextFocusDown="@+id/profilePositionSpinner"
         app:layout_constraintBottom_toTopOf="@+id/number"
         app:layout_constraintEnd_toEndOf="@+id/textConfirmPassword"
         app:layout_constraintStart_toStartOf="@+id/textConfirmPassword" />
 
     <Spinner
-        android:id="@+id/positionSpinner"
+        android:id="@+id/profilePositionSpinner"
         android:layout_width="0dp"
         android:layout_height="46dp"
         android:layout_marginEnd="8dp"

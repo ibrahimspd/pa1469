@@ -19,28 +19,13 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/deleteAccountButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/disardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:drawableLeft="@drawable/ic_baseline_keyboard_return_24"
-        android:text="Discard"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/deleteAccountButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profileBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/box_background"
@@ -60,20 +45,20 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.435"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/profileImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:minWidth="150dp"
+            android:minHeight="150dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.456"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/team"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/unkown_player" />
 
         <TextView
             android:id="@+id/usernameTextView"
@@ -86,20 +71,20 @@
             android:text="Username:"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
         <TextView
-            android:id="@+id/manager"
+            android:id="@+id/profileUsernameValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:text="Email:"
+            android:text=""
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
+            app:layout_constraintBottom_toBottomOf="@+id/usernameTextView"
+            app:layout_constraintStart_toEndOf="@+id/usernameTextView"
+            app:layout_constraintTop_toTopOf="@+id/usernameTextView" />
 
         <TextView
             android:id="@+id/language"
@@ -112,7 +97,31 @@
             android:text="Country:"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/manager" />
+            app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
+
+        <com.hbb20.CountryPickerView
+            android:id="@+id/countryPicker"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/input_fields"
+            android:nextFocusDown="@+id/profilePositionSpinner"
+            app:layout_constraintBottom_toBottomOf="@+id/language"
+            app:layout_constraintStart_toEndOf="@+id/playerCountryValue"
+            app:layout_constraintTop_toTopOf="@+id/language" />
+
+        <TextView
+            android:id="@+id/playerCountryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text=""
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/language"
+            app:layout_constraintStart_toEndOf="@+id/language"
+            app:layout_constraintTop_toTopOf="@+id/language" />
 
         <TextView
             android:id="@+id/language2"
@@ -128,6 +137,29 @@
             app:layout_constraintTop_toBottomOf="@+id/language" />
 
         <TextView
+            android:id="@+id/playerPoitionValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text=""
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/language2"
+            app:layout_constraintStart_toEndOf="@+id/language2"
+            app:layout_constraintTop_toTopOf="@+id/language2" />
+
+        <Spinner
+            android:id="@+id/profilePositionSpinner"
+            android:layout_width="40dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="8dp"
+            android:nextFocusDown="@+id/profilePositionSpinner"
+            app:layout_constraintBottom_toBottomOf="@+id/language2"
+            app:layout_constraintStart_toEndOf="@+id/playerPoitionValue"
+            app:layout_constraintTop_toTopOf="@+id/language2" />
+
+        <TextView
             android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,6 +171,29 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/language2" />
+
+        <TextView
+            android:id="@+id/playerNumberValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text=""
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/number"
+            app:layout_constraintStart_toEndOf="@+id/number"
+            app:layout_constraintTop_toTopOf="@+id/number" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:layout_constraintBottom_toBottomOf="@+id/number"
+            app:layout_constraintStart_toEndOf="@+id/playerNumberValue"
+            app:layout_constraintTop_toTopOf="@+id/number" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
@@ -147,6 +202,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Delete Account"
+        android:drawableLeft="@drawable/ic_baseline_delete_24"
         android:backgroundTint="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

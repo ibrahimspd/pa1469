@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/startingxifront"
-    tools:context=".controller.RegisterActivity">
+    tools:context=".controller.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:id="@+id/passwordTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:autofillHints="password"
             android:background="@drawable/input_fields"
             android:ems="12"
@@ -53,8 +53,9 @@
             android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="Login"
+            android:drawableLeft="@drawable/ic_baseline_login_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"

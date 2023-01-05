@@ -25,34 +25,39 @@ public class PlayersFragment extends Fragment {
 
     private FragmentPlayersBinding binding;
     private InvitePlayers invitePlayers = new InvitePlayers();
+
+    private Button inviteButton;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        PlayersModel slideshowViewModel =
-                new ViewModelProvider(this).get(PlayersModel.class);
 
         binding = FragmentPlayersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        RecyclerView courseRV = binding.recyclerView;
+        RecyclerView playerRV = binding.recyclerView;
+
+        inviteButton = binding.button;
 
         Context context = getContext();
 
         MainActivity mainActivity = (MainActivity) getActivity();
+
+        assert mainActivity != null;
+        if(!mainActivity.getPlayer().getIsManager()){
+            inviteButton.setVisibility(View.INVISIBLE);
+        }
+
         List<Player> players = mainActivity.getPlayers();
         if (players != null) {
-            PlayerInfoListAdapter courseAdapter = new PlayerInfoListAdapter(context, players, mainActivity.getPlayer());
+            PlayerInfoListAdapter playerInfoListAdapter = new PlayerInfoListAdapter(context, players, mainActivity.getPlayer());
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 
-            courseRV.setLayoutManager(linearLayoutManager);
-            courseRV.setAdapter(courseAdapter);
-            Button inviteButton = binding.button;
-            inviteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, invitePlayers).commit();
-                }
-            });
+            playerRV.setLayoutManager(linearLayoutManager);
+            playerRV.setAdapter(playerInfoListAdapter);
+
+            inviteButton.setOnClickListener(view ->
+                    mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, invitePlayers).commit());
         }
         return root;
     }
