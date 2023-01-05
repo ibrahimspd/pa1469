@@ -9,6 +9,7 @@ public class Player
     private int number;
     private int team;
     private boolean isManager;
+    private boolean isAdmin;
     private String uuid;
     private String id;
     private String teamId;
@@ -23,6 +24,7 @@ public class Player
         this.number = builder.number;
         this.team = builder.team;
         this.isManager = builder.isManager;
+        this.isAdmin = builder.isAdmin;
         this.uuid = builder.uuid;
         this.id = builder.id;
         this.teamId = builder.teamId;
@@ -102,6 +104,14 @@ public class Player
         this.teamId = teamId;
     }
 
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     public static class PlayerBuilder{
         private String name;
         private String position;
@@ -110,6 +120,7 @@ public class Player
         private int number;
         private int team;
         private boolean isManager;
+        private boolean isAdmin;
         private String uuid;
         private String id;
         private String teamId;
@@ -161,6 +172,11 @@ public class Player
 
         public PlayerBuilder setTeamId(String teamId){
             this.teamId = teamId;
+            return this;
+        }
+
+        public PlayerBuilder setIsAdmin(boolean isAdmin){
+            this.isAdmin = isAdmin;
             return this;
         }
 

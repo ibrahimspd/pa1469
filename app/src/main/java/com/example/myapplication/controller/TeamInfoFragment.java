@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.database.FirestoreImpl;
+import com.example.myapplication.database.listeners.player.OnGetPlayerListener;
 import com.example.myapplication.database.listeners.player.OnUpdatePlayerListener;
 import com.example.myapplication.database.listeners.team.OnAddTeamListener;
 import com.example.myapplication.databinding.FragmentTeamInfoBinding;
@@ -99,8 +100,6 @@ public class TeamInfoFragment extends Fragment {
         View root = binding.getRoot();
 
         context = getContext();
-
-        Toast.makeText(context,"Loaded", Toast.LENGTH_SHORT).show();
 
         teamInfoModel = new TeamInfoModel(context, activity);
 
@@ -210,6 +209,14 @@ public class TeamInfoFragment extends Fragment {
             firestore.updatePlayer(onUpdatePlayerListener, player);
         });
 
+        if(team != null)
+            if(player.getIsManager())
+                addOnClickListeners();
+
+        return root;
+    }
+
+    public void addOnClickListeners(){
         backgroundGalleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             String imageName = team.getName() + "_background";
             this.toggleSaveButtons(View.VISIBLE);
@@ -261,37 +268,37 @@ public class TeamInfoFragment extends Fragment {
         });
 
         colorPickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    assert data != null;
-                    String colorType = data.getStringExtra("colorType");
-                    String hexColor = data.getStringExtra("hexColor");
-                    int color = data.getIntExtra("color", 0);
-                    switch (colorType) {
-                        case "mainColor":
-                            mainColorImgView.setBackgroundColor(color);
-                            this.toggleSaveButtons(View.VISIBLE);
-                            updatedTeam.setMainColor(hexColor);
-                            break;
-                        case "secondaryColor":
-                            secondaryColorImgView.setBackgroundColor(color);
-                            this.toggleSaveButtons(View.VISIBLE);
-                            updatedTeam.setSecondaryColor(hexColor);
-                            break;
-                        case "fontColor":
-                            fontColorImgView.setBackgroundColor(color);
-                            this.toggleSaveButtons(View.VISIBLE);
-                            updatedTeam.setFontColor(hexColor);
-                            break;
-                        default:
-                            Log.d(TAG, "onActivityResult: " + "Color type not found");
-                            break;
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        assert data != null;
+                        String colorType = data.getStringExtra("colorType");
+                        String hexColor = data.getStringExtra("hexColor");
+                        int color = data.getIntExtra("color", 0);
+                        switch (colorType) {
+                            case "mainColor":
+                                mainColorImgView.setBackgroundColor(color);
+                                toggleSaveButtons(View.VISIBLE);
+                                updatedTeam.setMainColor(hexColor);
+                                break;
+                            case "secondaryColor":
+                                secondaryColorImgView.setBackgroundColor(color);
+                                toggleSaveButtons(View.VISIBLE);
+                                updatedTeam.setSecondaryColor(hexColor);
+                                break;
+                            case "fontColor":
+                                fontColorImgView.setBackgroundColor(color);
+                                toggleSaveButtons(View.VISIBLE);
+                                updatedTeam.setFontColor(hexColor);
+                                break;
+                            default:
+                                Log.d(TAG, "onActivityResult: " + "Color type not found");
+                                break;
+                        }
+                        Log.d(TAG, "onActivityResult: " + colorType + " " + color);
                     }
-                    Log.d(TAG, "onActivityResult: " + colorType + " " + color);
                 }
-            }
         );
 
         fontPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -344,7 +351,21 @@ public class TeamInfoFragment extends Fragment {
                 // TODO document why this method is empty
             }
         });
-        return root;
+
+        mainColorImgView.setOnClickListener(view -> {
+            Intent intent = teamInfoModel.getColorPickerIntent("mainColor", team.getMainColor());
+            colorPickerLauncher.launch(intent);
+        });
+
+        secondaryColorImgView.setOnClickListener(view -> {
+            Intent intent = teamInfoModel.getColorPickerIntent("secondaryColor", team.getSecondaryColor());
+            colorPickerLauncher.launch(intent);
+        });
+
+        fontColorImgView.setOnClickListener(view -> {
+            Intent intent = teamInfoModel.getColorPickerIntent("fontColor", team.getFontColor());
+            colorPickerLauncher.launch(intent);
+        });
     }
 
     @NonNull
@@ -356,7 +377,20 @@ public class TeamInfoFragment extends Fragment {
     }
 
     public void displayTeamInfo(Team team) {
-        manager.setText("Manager: " + team.getManagerId());
+        FirestoreImpl firestore = new FirestoreImpl();
+        OnGetPlayerListener onGetPlayerListener = new OnGetPlayerListener() {
+            @Override
+            public void onPlayerFilled(Player player) {
+                manager.setText("Manager: " + player.getName());
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        };
+        firestore.getPlayerById(onGetPlayerListener, team.getManagerId());
+
         teamName.setText("Name: " + team.getName());
         language.setText("Language: ");
 
@@ -376,22 +410,8 @@ public class TeamInfoFragment extends Fragment {
         }
 
         mainColorImgView.setBackgroundColor(Color.parseColor(mainColor));
-        mainColorImgView.setOnClickListener(view -> {
-            Intent intent = teamInfoModel.getColorPickerIntent("mainColor", mainColor);
-            colorPickerLauncher.launch(intent);
-        });
-
         secondaryColorImgView.setBackgroundColor(Color.parseColor(secondaryColor));
-        secondaryColorImgView.setOnClickListener(view -> {
-            Intent intent = teamInfoModel.getColorPickerIntent("secondaryColor", secondaryColor);
-            colorPickerLauncher.launch(intent);
-        });
-
         fontColorImgView.setBackgroundColor(Color.parseColor(fontColor));
-        fontColorImgView.setOnClickListener(view -> {
-            Intent intent = teamInfoModel.getColorPickerIntent("fontColor", fontColor);
-            colorPickerLauncher.launch(intent);
-        });
     }
 
     private void makeBoxesVisible() {
