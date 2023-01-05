@@ -59,12 +59,13 @@
             android:id="@+id/managerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:text="Manager:"
             android:textColor="#838383"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline1"
-            app:layout_constraintTop_toBottomOf="@+id/teamNameValue" />
+            app:layout_constraintBottom_toBottomOf="@+id/teamNameValue"
+            app:layout_constraintStart_toEndOf="@+id/teamNameValue"
+            app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
         <TextView
             android:id="@+id/managerValue"
@@ -78,15 +79,6 @@
             app:layout_constraintStart_toEndOf="@+id/managerTitle"
             app:layout_constraintTop_toTopOf="@+id/managerTitle" />
 
-
-        <ImageView
-            android:id="@+id/teamLogo"
-            android:layout_width="80dp"
-            android:layout_height="81dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline3"
-            tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/card_group"
