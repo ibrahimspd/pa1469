@@ -13,4 +13,3 @@
         android:id="@+id/players"
         android:icon="@drawable/ic_baseline_people_24"/>
 </menu>
-

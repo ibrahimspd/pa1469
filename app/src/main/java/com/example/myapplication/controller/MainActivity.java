@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -63,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTeamFilled(List<Player> players) {
                 MainActivity.this.playersToInvite = players;
-                Toast.makeText(MainActivity.this, "Fetched players you can invite", Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTeamFilled(List<Player> players) {
                 MainActivity.this.players = players;
                 showScreen();
-                Toast.makeText(MainActivity.this, "Fetched Players Successfully", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -118,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        if(isSandbox)
-        {
+        if(isSandbox) {
             String sandboxString = Utils.getJsonFromAssets(MainActivity.this, "teamData.json");
             Team sandboxTeam = gson.fromJson(sandboxString, Team.class);
             team = sandboxTeam;
@@ -199,6 +196,9 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
             NavigationUI.setupWithNavController(navigationView, navController);
+
+            TextView username = navigationView.getHeaderView(0).findViewById(R.id.profileNameTextView);
+            username.setText(player.getName());
         }
     }
 

@@ -21,7 +21,7 @@ import java.util.List;
 @RunWith(JUnit4.class)
 public class GenerateLineupModelTest {
 
-    GenerateLineupModel generateLineupModel = new GenerateLineupModel(null, null);
+    GenerateLineupModel generateLineupModel = new GenerateLineupModel(null, null, null);
     Team testTeam = new Team.TeamBuilder()
             .setTeamId(new Date().getTime() + "")
             .setName("New Team")
@@ -32,7 +32,7 @@ public class GenerateLineupModelTest {
             .setSecondaryColor("#000000")
             .setTeamLogo("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
             .setBackground("https://media.discordapp.net/attachments/996135352240717838/996156253472567336/output.png")
-            .setLayout("Standard")
+            .setLayout("Clean Background")
             .setKitStyle("kit")
             .setFontColor("#ffffff")
             .setFont("rajdhani-bold")
@@ -47,7 +47,8 @@ public class GenerateLineupModelTest {
         {
             Player testPlayer = new Player.PlayerBuilder()
                     .setPosition("test")
-                    .setNationality("test")
+                    .setNationality("sweden")
+                    .setAvatar("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
                     .setName("test")
                     .setNumber(1)
                     .setIsManager(false)
@@ -66,7 +67,8 @@ public class GenerateLineupModelTest {
         {
             Player testPlayer = new Player.PlayerBuilder()
                     .setPosition("test")
-                    .setNationality("test")
+                    .setNationality("sweden")
+                    .setAvatar("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
                     .setName("test")
                     .setNumber(1)
                     .setIsManager(false)
@@ -94,7 +96,8 @@ public class GenerateLineupModelTest {
         {
             Player testPlayer = new Player.PlayerBuilder()
                     .setPosition("test")
-                    .setNationality("test")
+                    .setNationality("sweden")
+                    .setAvatar("https://media.discordapp.net/attachments/788769960695431178/1045406323778523136/test_logo.png")
                     .setName("test")
                     .setNumber(1)
                     .setIsManager(false)

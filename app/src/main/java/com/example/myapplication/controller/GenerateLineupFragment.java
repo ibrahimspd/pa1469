@@ -43,10 +43,13 @@ public class GenerateLineupFragment extends Fragment {
         binding = FragmentGenerateLineupBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = root.getContext();
-        GenerateLineupModel generateLineupModel = new GenerateLineupModel(context, (MainActivity) getActivity());
 
         mainActivity = (MainActivity) getActivity();
-        
+
+        GenerateLineupModel generateLineupModel = new GenerateLineupModel(context, (MainActivity) getActivity(), mainActivity.getPlayers());
+
+        generateLineupModel.drawLoading(binding.lineupImageView);
+
         generateLineupModel.setActivity(mainActivity);
 
         formationDropdown = binding.formationSpinner;
@@ -65,11 +68,7 @@ public class GenerateLineupFragment extends Fragment {
 
         team = mainActivity.getTeam();
 
-        File imgFile = new File(context.getFilesDir(),  "lineup.png");
-        if (imgFile.exists()) {
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            binding.lineupImageView.setImageBitmap(myBitmap);
-        }else {
+        if(team != null){
             try {
                 generateLineupModel.createLineup(team, getFormation(), binding.lineupImageView);
             } catch (IOException e) {
@@ -79,7 +78,7 @@ public class GenerateLineupFragment extends Fragment {
 
         generateLineupModel.loadPlayerDropdown(context);
         generateLineupModel.setHints(getFormation(), context);
-        
+
         formationDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -101,6 +100,7 @@ public class GenerateLineupFragment extends Fragment {
 
         Button generateLineupButton = binding.generateLineup;
         generateLineupButton.setOnClickListener(view -> {
+            generateLineupModel.drawLoading(binding.lineupImageView);
             Team team =  mainActivity.getTeam();
             String formation = getFormation();
             try {
@@ -134,7 +134,7 @@ public class GenerateLineupFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-    
+
     private String getFormation(){
         if(formationDropdown.getSelectedItem() != null){
             return formationDropdown.getSelectedItem().toString();

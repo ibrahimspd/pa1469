@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         confPassText = findViewById(R.id.textConfirmPassword);
         cpp = findViewById(R.id.countryPicker);
         numberText = findViewById(R.id.number);
-        positionDropdown = findViewById(R.id.positionSpinner);
+        positionDropdown = findViewById(R.id.profilePositionSpinner);
         register = findViewById(R.id.registerButton);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -113,34 +113,42 @@ public class RegisterActivity extends AppCompatActivity {
             {
                 Toast.makeText(getApplicationContext(), "Password too long. Max length 100 characters.", Toast.LENGTH_SHORT).show();
             }
+            else if (password.length() < 6){
+                Toast.makeText(getApplicationContext(), "Password too short. Min length 6 characters.", Toast.LENGTH_SHORT).show();
+            }
+            else if (!password.equals(confirmPassword))
+            {
+                Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
+            }
+            else if (!matcher.matches())
+            {
+                Toast.makeText(getApplicationContext(), "Invalid email", Toast.LENGTH_SHORT).show();
+            }
             else{
-                if(password.equals(confirmPassword) && matcher.matches()){
-                    Player player = new Player.PlayerBuilder()
-                            .setPosition(prefPos)
-                            .setNationality(countryName)
-                            .setName(username)
-                            .setNumber(Integer.parseInt(number))
-                            .setIsManager(false)
-                            .setId(new Date().getTime()+"")
-                            .setTeamId("0")
-                            .build();
-                    FirestoreImpl firestore = new FirestoreImpl();
-                    auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-                            player.setUuid(task.getResult().getUser().getUid());
-                            firestore.addPlayer(listener, player);
-                            Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Log.d("RegisterActivity", task.getException().getMessage());
-                            Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }else{
-                    Toast.makeText(getApplicationContext(), "Passwords do not match or email is invalid", Toast.LENGTH_SHORT).show();
-                }
+                Player player = new Player.PlayerBuilder()
+                        .setPosition(prefPos)
+                        .setNationality(countryName)
+                        .setName(username)
+                        .setNumber(Integer.parseInt(number))
+                        .setIsManager(false)
+                        .setId(new Date().getTime()+"")
+                        .setTeamId("0")
+                        .setIsAdmin(false)
+                        .build();
+                FirestoreImpl firestore = new FirestoreImpl();
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        player.setUuid(task.getResult().getUser().getUid());
+                        firestore.addPlayer(listener, player);
+                        Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Log.d("RegisterActivity", task.getException().getMessage());
+                        Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

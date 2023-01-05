@@ -32,7 +32,7 @@ public interface Database
 
     void addPlayer(OnAddPlayerListener listener, Player player);
 
-    void getPlayerByUsername(OnGetPlayerListener listener, String teamName);
+    void getPlayerById(OnGetPlayerListener listener, String playerId);
 
     void getPlayerByUuid(OnGetPlayerListener listener, String uuid);
 
