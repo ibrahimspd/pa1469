@@ -78,14 +78,5 @@
             app:layout_constraintBottom_toBottomOf="@+id/managerTitle"
             app:layout_constraintStart_toEndOf="@+id/managerTitle"
             app:layout_constraintTop_toTopOf="@+id/managerTitle" />
-
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/card_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:constraint_referenced_ids="teamLogo,nationalityTitle,textView17, imageView2" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
