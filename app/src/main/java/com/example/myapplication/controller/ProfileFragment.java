@@ -24,6 +24,7 @@ import com.example.myapplication.database.listeners.player.OnUpdatePlayerListene
 import com.example.myapplication.databinding.FragmentProfileBinding;
 import com.example.myapplication.entites.Player;
 import com.example.myapplication.model.ProfileModel;
+import com.hbb20.CountryPickerView;
 
 public class ProfileFragment  extends Fragment {
 
@@ -49,11 +50,9 @@ public class ProfileFragment  extends Fragment {
     private ProfileModel profileModel;
 
     private Button saveButton;
-    private Button cancelButton;
 
     private Spinner positionDropdown;
 
-    private boolean changed = false;
 
     private ActivityResultLauncher<Intent> galleryLauncher;
 
@@ -72,6 +71,7 @@ public class ProfileFragment  extends Fragment {
 
         player = mainActivity.getPlayer();
         updatedPlayer = player;
+
 
         if (player != null) {
             nationality =  binding.playerCountryValue;
@@ -95,7 +95,6 @@ public class ProfileFragment  extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String positionSelected = parent.getItemAtPosition(position).toString();
                     if (!positionSelected.equals(player.getPosition())) {
-                        changed = true;
                         updatedPlayer.setPosition(positionSelected);
                         playerPosition.setText(positionSelected);
                         toggleSaveButtons(View.VISIBLE);
@@ -130,9 +129,8 @@ public class ProfileFragment  extends Fragment {
 
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             String imageName = player.getName() + "_profileImage";
-            if(!changed){
-                this.toggleSaveButtons(View.VISIBLE);
-            }
+            this.toggleSaveButtons(View.VISIBLE);
+
             updatedPlayer.setAvatar(imageName);
             profileModel.handleResult(result, imageName, profileImage);
         });
@@ -153,7 +151,6 @@ public class ProfileFragment  extends Fragment {
     }
 
     private void setFields(Player player) {
-        Toast.makeText(getContext(), player.getPosition(), Toast.LENGTH_SHORT).show();
         nationality.setText(player.getNationality());
         playerPosition.setText(player.getPosition());
         playerPosition.invalidate();

@@ -365,7 +365,7 @@ public class TeamInfoFragment extends Fragment {
                 String selectedLanguage = languageSpinner.getSelectedItem().toString();
                 if (!selectedLanguage.equals(team.getLanguage())) {
                     TeamInfoFragment.toggleSaveButtons(View.VISIBLE);
-                    kitStyle.setText(languageSpinner.getSelectedItem().toString());
+                    language.setText(languageSpinner.getSelectedItem().toString());
                     updatedTeam.setLanguage(languageSpinner.getSelectedItem().toString());
                 }
             }

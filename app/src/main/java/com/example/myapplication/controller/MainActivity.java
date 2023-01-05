@@ -64,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTeamFilled(List<Player> players) {
                 MainActivity.this.playersToInvite = players;
-                Toast.makeText(MainActivity.this, "Fetched players you can invite", Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTeamFilled(List<Player> players) {
                 MainActivity.this.players = players;
                 showScreen();
-                Toast.makeText(MainActivity.this, "Fetched Players Successfully", Toast.LENGTH_SHORT).show();
             }
 
             @Override

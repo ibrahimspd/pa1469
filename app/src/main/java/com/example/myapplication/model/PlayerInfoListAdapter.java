@@ -64,7 +64,7 @@ public class PlayerInfoListAdapter extends RecyclerView.Adapter<PlayerInfoListAd
         if(player.getAvatar() != null)
             loadImage(player.getAvatar(), holder.profileImage);
         try {
-            holder.number.setText(player.getNumber());
+            holder.number.setText(player.getNumber()+ "");
         } catch (Exception e) {
             Log.d(TAG, "onBindViewHolder: " + e.getMessage());
         }

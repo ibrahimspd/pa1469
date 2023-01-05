@@ -33,8 +33,6 @@ public class ProfileModel extends ViewModel {
 
     private MainActivity activity;
 
-    private Boolean changed = false;
-
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public ProfileModel(Context context, MainActivity activity) {
@@ -101,7 +99,7 @@ public class ProfileModel extends ViewModel {
             InputStream imageStream = getInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] data2 = baos.toByteArray();
 
             StorageReference storageRef = storage.getReference();
