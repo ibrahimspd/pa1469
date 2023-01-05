@@ -72,7 +72,7 @@
                     android:id="@+id/language"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Language:"
@@ -80,24 +80,32 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/manager" />
 
-                <com.hbb20.CountryPickerView
-                    android:id="@+id/countryPicker"
+                <TextView
+                    android:id="@+id/languageValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/input_fields"
-                    android:nextFocusDown="@+id/profilePositionSpinner"
+                    android:text=""
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/language"
                     app:layout_constraintStart_toEndOf="@+id/language"
-                    app:layout_constraintTop_toTopOf="@+id/language"
-                    app:layout_constraintVertical_bias="0.187" />
+                    app:layout_constraintTop_toTopOf="@+id/language" />
+
+                <Spinner
+                    android:id="@+id/languagePicker"
+                    android:layout_width="40dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="8dp"
+                    android:nextFocusDown="@+id/profilePositionSpinner"
+                    app:layout_constraintBottom_toBottomOf="@+id/language"
+                    app:layout_constraintStart_toEndOf="@+id/languageValue"
+                    app:layout_constraintTop_toTopOf="@+id/language" />
 
                 <TextView
                     android:id="@+id/manager"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="@string/teamManager"

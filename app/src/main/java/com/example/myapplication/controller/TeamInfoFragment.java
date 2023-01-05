@@ -64,6 +64,7 @@ public class TeamInfoFragment extends Fragment {
     private Spinner fontPicker;
     private Spinner lineupStylePicker;
     private Spinner kitStylePicker;
+    private Spinner languageSpinner;
 
     private Team team;
     private Player player;
@@ -105,7 +106,7 @@ public class TeamInfoFragment extends Fragment {
 
         teamName = binding.teamName;
         manager = binding.manager;
-        language = binding.language;
+        language = binding.languageValue;
         teamLogo = binding.teamLogo;
         kitStyle = binding.kitStyleValue;
         layout = binding.layoutValue;
@@ -143,6 +144,12 @@ public class TeamInfoFragment extends Fragment {
                 R.array.kitStyle, android.R.layout.simple_spinner_item);
         kitStyleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         kitStylePicker.setAdapter(kitStyleAdapter);
+
+        languageSpinner = binding.languagePicker;
+        ArrayAdapter<CharSequence> languageAdapter = ArrayAdapter.createFromResource(context,
+                R.array.languages, android.R.layout.simple_spinner_item);
+        languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        languageSpinner.setAdapter(languageAdapter);
 
         if (team != null) {
             displayTeamInfo(team);
@@ -352,6 +359,23 @@ public class TeamInfoFragment extends Fragment {
             }
         });
 
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedLanguage = languageSpinner.getSelectedItem().toString();
+                if (!selectedLanguage.equals(team.getLanguage())) {
+                    TeamInfoFragment.toggleSaveButtons(View.VISIBLE);
+                    kitStyle.setText(languageSpinner.getSelectedItem().toString());
+                    updatedTeam.setLanguage(languageSpinner.getSelectedItem().toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // TODO document why this method is empty
+            }
+        });
+
         mainColorImgView.setOnClickListener(view -> {
             Intent intent = teamInfoModel.getColorPickerIntent("mainColor", team.getMainColor());
             colorPickerLauncher.launch(intent);
@@ -392,7 +416,7 @@ public class TeamInfoFragment extends Fragment {
         firestore.getPlayerById(onGetPlayerListener, team.getManagerId());
 
         teamName.setText("Name: " + team.getName());
-        language.setText("Language: ");
+        language.setText(team.getLanguage());
 
         kitStyle.setText(team.getKitStyle());
         layout.setText(team.getLayout());
