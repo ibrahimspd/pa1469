@@ -43,7 +43,7 @@ public class GenerateLineupFragment extends Fragment {
         binding = FragmentGenerateLineupBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = root.getContext();
-        GenerateLineupModel generateLineupModel = new GenerateLineupModel(context, (MainActivity) getActivity());
+        GenerateLineupModel generateLineupModel = new GenerateLineupModel(context, (MainActivity) getActivity(), mainActivity.getPlayers());
 
         mainActivity = (MainActivity) getActivity();
 

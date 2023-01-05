@@ -57,12 +57,12 @@ public class GenerateLineupModel extends ViewModel {
     private final Context context;
 
 
-    public GenerateLineupModel(Context context, MainActivity activity) {
+    public GenerateLineupModel(Context context, MainActivity activity, List<Player> players) {
         this.context = context;
         this.activity = activity;
-        if(activity.getPlayers() != null) {
+        if(players != null) {
             for (Player player : activity.getPlayers()) {
-                players.put(player.getName(), player);
+                this.players.put(player.getName(), player);
             }
         }
     }
